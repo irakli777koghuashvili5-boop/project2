@@ -1,0 +1,231 @@
+$primary-orange: #ff7043;
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+.hero-section {
+  // 1. Full-width and fixed height to match image ratio
+  width: 100%;
+  height: 70vh; // Occupies 80% of screen height
+  min-height: 500px;
+  
+  // 2. Setup the background image
+  background-image: url('https://restaurant.stepacademy.ge/restaurant-food-spread.png');
+  background-size: cover; // Fills the space
+  background-position: center; // Keeps it centered
+  background-repeat: no-repeat;
+  
+  // 3. Layout: Center the content
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  // 4. Important: Darken the image slightly so text is readable
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative; // Moves it above the background overlay
+  z-index: 2;
+}
+
+.hero-content {
+  color: white; // Main text color
+  
+  h1 {
+    font-size: 3.5rem; // Large, bold typography
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    
+    // Smooth responsive typography
+    @media (max-width: 768px) { font-size: 2.2rem; }
+  }
+  
+  p {
+    font-size: 1.25rem; // Subtle subtitle
+    font-weight: 400;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    
+    @media (max-width: 768px) { font-size: 1.1rem; }
+  }
+}
+
+// 5. Button Styling
+.primary-btn {
+  background-color: $primary-orange; // Matches filter panel accents
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px; // Design shape
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0 4px 15px rgba($primary-orange, 0.3);
+  
+  &:hover {
+    background-color: darken($primary-orange, 5%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba($primary-orange, 0.4);
+  }
+}
+
+
+$primary-orange: #ff7043;
+$shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+.popular-section {
+  padding: 60px 0;
+  text-align: center;
+}
+.section-title{
+    padding-bottom: 40px;
+}
+
+// THE FLEXBOX CONTAINER
+.product-flex-container {
+  display: flex;
+  flex-wrap: wrap; // Allows cards to drop to the next line
+  justify-content: center; // Centers the cards in the row
+  gap: 30px; // Spacing between cards
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: $shadow;
+  border: 1px solid #f0f0f0;
+  text-align: left;
+  
+  // CONTROL CARD WIDTH
+  // Default: 3 cards per row (approx 33% minus gap)
+  flex: 0 1 calc(33.333% - 20px); 
+  min-width: 280px; // Ensures they don't get too skinny
+
+  @media (max-width: 992px) {
+    // 2 cards per row on tablets
+    flex: 0 1 calc(50% - 30px);
+  }
+
+  @media (max-width: 600px) {
+    // 1 card per row on mobile
+    flex: 0 1 100%;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-content {
+    padding: 20px;
+
+    .product-title { font-weight: 700; margin-bottom: 8px; }
+    .product-description { font-size: 0.9rem; color: #777; margin-bottom: 15px; }
+
+    .product-meta {
+      margin-bottom: 20px;
+      .price { font-size: 1.4rem; font-weight: 800; color: $primary-orange; }
+      .rating .star { color: #fbc02d; }
+    }
+
+    .add-to-cart-btn {
+      width: 100%;
+      background: $primary-orange;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+}
+
+$primary-orange: #ff7043;
+$text-color: #555;
+
+.story-section {
+  padding: 80px 0;
+  background-color: #fff;
+}
+
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  // Responsive: Stack on small screens
+  @media (max-width: 992px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+}
+
+.image-container {
+  flex: 1;
+  width: 100%;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px; // Matching your design's rounded corners
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: block;
+  }
+}
+
+.text-container {
+  flex: 1;
+
+  .story-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: #000;
+  }
+
+  .story-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: $text-color;
+    margin-bottom: 20px;
+  }
+
+  .explore-btn {
+    background-color: $primary-orange;
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    margin-top: 10px;
+
+    &:hover {
+      background-color: darken($primary-orange, 5%);
+      transform: translateY(-2px);
+    }
+  }
+}

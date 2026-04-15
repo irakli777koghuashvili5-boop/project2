@@ -1,0 +1,129 @@
+$brand-orange: #ff7043;
+$text-gray: #666;
+
+.product-page {
+  padding: 40px 20px;
+  background-color: #fff;
+}
+
+.product-container {
+  display: flex;
+  align-items: stretch; // Ensures image and text have equal height
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.product-visual {
+  flex: 1;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // Fills space without stretching
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+}
+
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .product-header {
+    .title { font-size: 2.5rem; font-weight: 800; margin: 0; }
+    
+    .rating {
+      margin: 8px 0;
+      .stars { color: #fbc02d; margin-right: 8px; }
+      .count { color: #aaa; font-size: 0.9rem; }
+    }
+
+    .price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: $brand-orange;
+      margin-bottom: 12px;
+    }
+
+    .badge.vegetarian {
+      display: inline-flex;
+      align-items: center;
+      background: #4caf50;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      gap: 5px;
+    }
+  }
+
+  .description {
+    font-size: 1.1rem;
+    color: $text-gray;
+    line-height: 1.6;
+    margin: 20px 0;
+  }
+}
+
+.info-block {
+  margin-bottom: 24px;
+  h3 { font-size: 1.1rem; margin-bottom: 10px; border-bottom: 2px solid #f5f5f5; padding-bottom: 5px; }
+  p { color: $text-gray; line-height: 1.5; font-size: 0.95rem; }
+  
+  .ingredients-list {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: $text-gray;
+    
+    .ing-col { flex: 1; line-height: 1.4; }
+    @media (max-width: 600px) { flex-direction: column; }
+  }
+}
+
+.product-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 30px;
+
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    
+    .qty-btn {
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      &:hover { background: #f9f9f9; }
+    }
+    .qty-num { padding: 0 15px; font-weight: 700; }
+  }
+
+  .add-to-cart {
+    flex: 1;
+    background: $brand-orange;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    
+    &:hover { background: darken($brand-orange, 5%); transform: translateY(-2px); }
+  }
+}

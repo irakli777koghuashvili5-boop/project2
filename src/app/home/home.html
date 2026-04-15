@@ -1,0 +1,63 @@
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Delicious Food Delivered to Your Door</h1>
+      <p>Fresh ingredients, authentic flavors, fast delivery</p>
+      
+      <button routerLink="/menu" class="primary-btn">Order Now</button>
+    </div>
+  </div>
+</section>
+
+
+<section class="popular-section">
+  <div class="container">
+    <h2 class="section-title">Popular Dishes</h2>
+
+    <div class="product-flex-container">
+          @for (item of DisplayProducts; track $index) {
+      <article class="product-card">
+        <div class="card-image">
+          <img [src]="item.image" [alt]="item.name">
+        </div>
+        
+        <div class="card-content">
+          <h3 class="product-title">{{ item.name }}</h3>
+          <p class="product-description">{{ item.description }}</p>
+          
+          <div class="product-meta">
+            <div class="rating">
+              <span class="star">★</span>
+              <span class="score">{{ item.rate }}</span>
+            </div>
+            <div class="price">${{ item.price }}</div>
+          </div>
+          
+          <button class="add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+    }
+    </div>
+
+  </div>
+</section>
+
+<section class="story-section">
+  <div class="container flex-wrapper">
+    <div class="image-container">
+      <img src="https://restaurant.stepacademy.ge/restaurant-kitchen-chef-cooking.jpg" alt="Chef cooking in kitchen">
+    </div>
+
+    <div class="text-container">
+      <h2 class="story-title">Our Story</h2>
+      <p class="story-description">
+        At Foodie, we believe that great food brings people together. Our chefs use only the freshest ingredients to create dishes that delight your taste buds and warm your heart.
+      </p>
+      <p class="story-description">
+        From traditional recipes passed down through generations to innovative modern cuisine, every dish is crafted with passion and care. We're committed to delivering not just meals, but memorable dining experiences right to your door.
+      </p>
+      
+      <button class="explore-btn">Explore Our Menu</button>
+    </div>
+  </div>
+</section>

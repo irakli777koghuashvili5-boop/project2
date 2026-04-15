@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+
+/* Customizing ngx-slider to match your Foodie brand */
+.ngx-slider {
+  .ngx-slider-bar {
+    background: #e0e0e0; // Background of the bar
+    height: 4px;
+  }
+  
+  .ngx-slider-selection {
+    background: #ff7043 !important; // Your primary orange
+  }
+
+  .ngx-slider-pointer {
+    width: 20px;
+    height: 20px;
+    top: -9px;
+    background-color: #fff !important;
+    border: 2px solid #ff7043 !important;
+    border-radius: 50%;
+    
+    &:after {
+      display: none; // Removes the default center dot
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  .ngx-slider-bubble {
+    color: #666 !important;
+    font-size: 12px !important;
+  }
+}

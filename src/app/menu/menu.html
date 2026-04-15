@@ -1,0 +1,103 @@
+
+<div class="page-layout">
+  <aside class="filters-sidebar" [class.active]="isFilterOpen">
+  <div class="sidebar-header">
+    <h3>Filters</h3>
+    <button class="close-drawer" (click)="toggleFilters()">&times;</button>
+  </div>
+
+  <div class="filter-search">
+    <label>Search</label>
+    <input [(ngModel)]="query" (input)="onFilterChange()" type="text" class="custom-input" placeholder="Search dishes...">
+  </div>
+
+  <div class="filter-group">
+    <label>Categories</label>
+    <div class="checkbox-list">
+      @for (item of CategoryArr; track $index) {
+        <label class="checkbox-item">
+          <input (change)="onFilterChange()"  [(ngModel)]="item.selected" type="checkbox">
+          <span class="custom-check"></span>
+          <span class="label-text">{{item.name}}</span>
+        </label>
+      }
+    </div>
+  </div>
+
+  <div class="filter-group toggle-group">
+    <label>Vegetarian Only</label>
+    <label class="toggle-switch">
+      <input (change)="onFilterChange()" [(ngModel)]="isVegie" type="checkbox">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <div class="filter-group">
+    <label>Minimum Spiciness (0-5)</label>
+    <input type="range" (input)="onFilterChange()" [(ngModel)]="spiciness" class="custom-range" min="0" max="5">
+    <span class="range-label">Level: {{spiciness}}</span>
+  </div>
+
+  <div class="filter-group">
+    <label>Minimum Rating</label>
+    <input type="range" [(ngModel)]="rating" (input)="onFilterChange()"  class="custom-range" min="0" max="5">
+    <span class="range-label"><span class="star">★</span>{{rating}}</span>
+  </div>
+  <div class="filter-group">
+  <label>Price Range</label>
+ <ngx-slider 
+  [(value)]="filters.MinPrice" 
+  [(highValue)]="filters.MaxPrice" 
+  [options]="options" 
+  (valueChange)="onFilterChange()">
+</ngx-slider>
+</div>
+
+
+  <button class="clear-btn" (click)="clearFilters()">Clear All Filters</button>
+</aside>
+  @if (isFilterOpen) {
+    <div class="filter-overlay" (click)="toggleFilters()"></div>
+  }
+
+  <section class="content-area">
+    <header class="menu-header">
+      <h1>Menu</h1>
+      <p>Showing {{ CardInside.length }} products</p>
+      <button class="mobile-filter-trigger" (click)="toggleFilters()">
+  <i class="fa-solid fa-filter"></i> Filters
+</button>
+
+    </header>
+
+    <main class="product-grid">
+      @for (item of CardInside; track item.id) {
+        <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}" >
+          <div class="card-image">
+            <img [src]="item.image" [alt]="item.name">
+          </div>
+          <div class="card-content">
+            <h2 class="product-title">{{ item.name }}</h2>
+            <p class="product-description">{{ item.description }}</p>
+            <div class="card-footer">
+              <div class="rating">
+                <span class="star">★</span> {{ item.rate }}
+              </div>
+              <div class="price">${{ item.price }}</div>
+            </div>
+            <button class="add-to-cart">Add to Cart</button>
+          </div>
+        </article>
+      }
+    </main>
+
+    <div class="pagination-container">
+      <button class="pag-btn" (click)="onPrevious()" [disabled]="currentPage === 1" >
+        ← Previous
+      </button>
+      <button class="pag-btn" (click)="onNext()" [disabled]="currentPage === ApplyLimitComponent">
+        Next →
+      </button>
+    </div>
+  </section>
+</div>

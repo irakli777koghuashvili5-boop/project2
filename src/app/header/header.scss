@@ -1,0 +1,223 @@
+// Variables
+$primary: #ff7043;
+$primary-hover: #f4511e;
+$text-dark: #333333;
+$text-light: #666666;
+$header-height: 80px;
+
+// Glassmorphism Header
+.glass-header {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 80px;
+  height: $header-height;
+  background: rgba(255, 255, 255, 0.523);
+  backdrop-filter: blur(12px); // Glossy glass effect
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 100%;
+
+  @media (max-width: 768px) { padding: 0 20px; }
+}
+
+// Logo
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: $primary;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+// Desktop Navigation & Cool Hovers
+.desktop-nav {
+  display: flex;
+  gap: 40px;
+
+  .nav-link {
+    text-decoration: none;
+    color: $text-dark;
+    font-weight: 500;
+    font-size: 1rem;
+    position: relative;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+
+    // Animated Underline
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $primary;
+      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    &:hover {
+      color: $primary;
+      &::after { width: 100%; }
+    }
+  }
+}
+
+// Actions (Cart, Login, Sign Up)
+.actions-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  .cart-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $text-dark;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      color: $primary;
+      transform: translateY(-2px);
+    }
+  }
+
+  .login-link {
+    text-decoration: none;
+    color: $text-dark;
+    font-weight: 500;
+    transition: color 0.2s;
+    &:hover { color: $primary; }
+  }
+}
+
+.signup-btn {
+  background: $primary;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba($primary, 0.3);
+
+  &:hover {
+    background: $primary-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba($primary, 0.4);
+  }
+  
+  &:active { transform: translateY(0); }
+}
+
+// Animated Hamburger Menu
+.hamburger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  z-index: 1001; // Keep above mobile menu overlay
+
+  .line {
+    width: 24px;
+    height: 2px;
+    background-color: $text-dark;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
+  }
+
+  // Morph to 'X' animation
+  &.active {
+    .line-1 { transform: rotate(45deg) translate(0, -2px); }
+    .line-2 { opacity: 0; }
+    .line-3 { transform: rotate(-45deg) translate(0, 2px); }
+  }
+}
+
+// Mobile Menu Overlay
+.mobile-menu-overlay {
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - #{$header-height});
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px;
+  
+  // Animation setup
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    .mobile-link {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $text-dark;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover { color: $primary; }
+      &.login { font-size: 1.2rem; color: $text-light; }
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: #eee;
+      border: none;
+      margin: 10px 0;
+    }
+
+    .mobile-signup {
+      width: 100%;
+      max-width: 300px;
+      padding: 14px;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Responsive Toggles
+.desktop-only { display: flex; }
+.mobile-only { display: none; }
+
+@media (max-width: 768px) {
+  .desktop-only { display: none; }
+  .desktop-nav { display: none; }
+  .mobile-only { display: flex; }
+}

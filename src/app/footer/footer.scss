@@ -1,0 +1,231 @@
+$primary: #ff7043;
+$primary-hover: #f4511e;
+$bg-color: #fafafa;
+$text-main: #333;
+$text-light: #666;
+$border-color: #eaeaea;
+$transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+.site-footer {
+  background-color: $bg-color;
+  padding: 60px 20px 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+  border-top: 1px solid $border-color;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// ------------------------------------
+// CSS Grid for Perfect Responsiveness
+// ------------------------------------
+.footer-grid {
+  display: grid;
+  // This automatically creates columns that wrap based on screen size
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+
+  .col-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-main;
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: $text-light;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+}
+
+// Brand Column
+.brand-col {
+  .footer-logo {
+    color: $primary;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: $text-light;
+      background: #fff;
+      border: 1px solid $border-color;
+      transition: $transition-smooth;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        transition: $transition-smooth;
+      }
+
+      // Smooth lift and color fill on hover
+      &:hover {
+        color: #fff;
+        background: $primary;
+        border-color: $primary;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 15px rgba($primary, 0.2);
+
+        svg { transform: scale(1.1); }
+      }
+    }
+  }
+}
+
+// Lists & Links
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  li {
+    color: $text-light;
+    font-size: 0.95rem;
+  }
+
+  // Animated Underline Hover Effect
+  .hover-link {
+    text-decoration: none;
+    color: $text-light;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $primary;
+      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    &:hover {
+      color: $primary;
+      &::after { width: 100%; }
+    }
+  }
+}
+
+// Newsletter Form
+.newsletter-form {
+  .input-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+
+    input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid $border-color;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: $transition-smooth;
+
+      &:focus {
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+    }
+
+    .subscribe-btn {
+      padding: 12px 24px;
+      background-color: $primary;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: $transition-smooth;
+
+      &:hover {
+        background-color: $primary-hover;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($primary, 0.25);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+// Bottom Bar
+.footer-bottom {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid $border-color;
+  
+  p {
+    font-weight: 600;
+    color: $text-main;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .creator-link {
+    color: $primary;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: $transition-smooth;
+
+    &:hover {
+      text-decoration-color: $primary;
+    }
+  }
+}
+
+// Mobile Adjustments
+@media (max-width: 768px) {
+  .footer-grid {
+    // Stack columns on smaller tablets and mobile
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .newsletter-form .input-group {
+    
+    
+    .subscribe-btn {
+      width: 100%;
+    }
+  }
+}
+
+
+@media (max-width: 1200px){
+    .newsletter-form .input-group {
+        flex-direction: column;
+    }
+
+}

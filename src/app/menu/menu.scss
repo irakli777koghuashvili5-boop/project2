@@ -1,0 +1,461 @@
+
+main{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+
+$primary-orange: #ff7043;
+$text-dark: #333;
+$bg-light: #f8f9fa;
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 320px; // Matches your card width
+  margin: 24px auto;
+  padding: 0 10px;
+  gap: 20px;
+
+  .pag-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px; // Capsule shape
+    background-color: white;
+    color: $text-dark;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    .icon {
+      font-size: 1.1rem;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: $primary-orange;
+      color: $primary-orange;
+      background-color: rgba($primary-orange, 0.05);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: $bg-light;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+  }
+}
+
+  .menu-header {
+    display: flex;
+    flex-direction:column;
+    padding: 10px;
+    margin-bottom: 10px;
+    gap: 20px;
+    h1 { font-size: 2rem;  }
+    p { color: #888; }
+   
+  }
+
+
+
+  .pagination-container {
+    margin-top: 40px;
+    justify-content: flex-start; // Align with the grid
+    max-width: none;
+  }
+
+
+
+$primary: #ff7043;
+$primary-dark: #f4511e;
+$text-main: #2c3e50;
+$radius: 16px;
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+}
+
+// Sidebar & Drawer Logic
+.filters-sidebar {
+  background: white;
+  padding: 24px;
+  border-radius: $radius;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+
+  @media (max-width: 992px) {
+    position: fixed;
+    top: 0;
+    left: -100%; // Hidden by default
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    z-index: 1000;
+    border-radius: 0;
+    transition: $transition;
+    &.active { left: 0; }
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    
+    h3 { margin: 0; font-size: 1.4rem; }
+    .close-drawer {
+      display: none;
+      background: none; border: none; font-size: 2rem; cursor: pointer;
+      @media (max-width: 992px) { display: block; }
+    }
+  }
+}
+
+// Floating Filter Button
+.mobile-filter-trigger {
+  display: none;
+  z-index: 99;
+  background: $primary;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba($primary, 0.4);
+  cursor: pointer;
+
+  @media (max-width: 992px) { display: flex; align-items: center; gap: 10px; justify-content: center; }
+}
+
+.filter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+// Product Grid
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.product-card {
+  background: white;
+  border-radius: $radius;
+  overflow: hidden;
+  border: 1px solid #eee;
+  transition: $transition;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  }
+
+  .card-image img {
+    width: 100%; height: 200px; object-fit: cover;
+  }
+
+  .card-content {
+    padding: 20px;
+    .product-title { font-size: 1.2rem; margin: 0 0 10px; }
+    .product-description { font-size: 0.9rem; color: #777; margin-bottom: 20px; }
+    .card-footer {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+      .price { font-size: 1.3rem; font-weight: 800; color: $primary; }
+      .rating { font-weight: 600; .star { color: #f1c40f; } }
+    }
+  }
+}
+
+.add-to-cart {
+  width: 100%; padding: 12px; background: $primary; color: white;
+  border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+  &:hover { background: $primary-dark; }
+}
+
+// Custom Inputs
+.custom-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+.clear-btn { width: 100%; margin-top: 5px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; }
+$primary-orange: #ff7043;
+$input-bg: #f5f5f5;
+$text-light: #666;
+
+.filters-sidebar {
+  font-family: 'Inter', sans-serif;
+  color: #000;
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+}
+
+.filter-group, .filter-search {
+  margin-bottom: 5px;
+  
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+  }
+}
+
+// 1. Search Input Style
+.custom-input {
+  width: 100%;
+  padding: 8px 8px;
+  background: $input-bg;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: rgba($primary-orange, 0.3);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba($primary-orange, 0.1);
+  }
+}
+
+// 2. Category Checkboxes
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #333;
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: $primary-orange; // Quick way to color it orange
+      cursor: pointer;
+    }
+
+    &:hover .label-text {
+      color: $primary-orange;
+    }
+  }
+}
+
+// 3. Vegetarian Toggle Switch
+.toggle-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+
+    input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #e0e0e0;
+      transition: .4s;
+      border-radius: 34px;
+
+      &:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #000; // design uses black for active toggle
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(22px);
+    }
+  }
+}
+
+// 4. Range Sliders
+.custom-range {
+  width: 100%;
+  accent-color: $primary-orange;
+  margin: 10px 0;
+}
+
+.range-label {
+  display: block;
+  font-size: 0.85rem;
+  color: $text-light;
+  margin-top: 4px;
+
+  .star { color: $primary-orange; }
+}
+
+// 5. Clear Button
+.clear-btn {
+  width: 100%;
+  padding: 14px;
+  background: $input-bg;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: darken($input-bg, 5%);
+  }
+}
+
+
+$primary-orange: #ff7043;
+
+.filters-sidebar {
+  // Fix to full screen height
+  height: 100vh;
+  position: sticky;
+  top: 80px;
+  
+  // Layout logic
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  background: #ffffffb3;
+  border-right: 1px solid #eee;
+  box-sizing: border-box;
+
+  // Header stays at the top
+  .sidebar-header {
+    padding: 7px;
+    flex-shrink: 0; 
+    border-bottom: 1px solid #f9f9f9;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h3 { margin: 0; font-size: 1.5rem; font-weight: 800; }
+  }
+
+  // This section expands to take all available space
+  .scrollable-content {
+    flex: 1; 
+    overflow-y: auto;
+    padding: 24px;
+
+    // Subtle scrollbar for "glossy" feel
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #e0e0e0;
+      border-radius: 10px;
+    }
+  }
+
+  // Footer stays at the bottom
+  .sidebar-footer {
+    padding: 24px;
+    flex-shrink: 0;
+    border-top: 1px solid #eee;
+    background: #fff;
+
+    .clear-btn {
+      width: 100%;
+      padding: 14px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #ebebeb;
+      }
+    }
+  }
+}
+
+// Ensure the checkboxes look clean
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+  
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    
+    input {
+      width: 18px;
+      height: 18px;
+      accent-color: $primary-orange;
+    }
+  }
+}
+
+// Mobile Slide-in Correction
+@media (max-width: 992px) {
+  .filters-sidebar {
+    position: fixed;
+    z-index: 1000;
+    left: -100%;
+    transition: left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    &.active {
+      left: 0;
+    }
+  }
+}

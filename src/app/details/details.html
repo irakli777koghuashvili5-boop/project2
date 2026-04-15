@@ -1,0 +1,51 @@
+<div class="product-page">
+  <div class="product-container">
+    <div class="product-visual">
+      <img [src]="products.image" alt="Sfogliatelle">
+    </div>
+
+    <div class="product-details">
+      <header class="product-header">
+        <h1 class="title">{{products.name}}</h1>
+        <div class="rating">
+          <span class="stars">★</span>
+          <span class="count">({{products.rate}} rating)</span>
+        </div>
+        <div class="price">${{products.price}}</div>
+        <div class="badge vegetarian">
+          <i class="fa-solid fa-leaf"></i> Vegetarian
+        </div>
+      </header>
+
+      <p class="description">
+              {{products.description}}
+      </p>
+
+      <section class="info-block">
+        <h3>Ingredients:</h3>
+        <div class="ingredients-list">
+          <div class="ing-col">
+            <strong>For dough:</strong> {{products.ingredients[0]}},{{products.ingredients[1]}},{{products.ingredients[2]}},
+          </div>
+          <div class="ing-col">
+            <strong>For filling:</strong>{{products.ingredients[3]}},{{products.ingredients[4]}},{{products.ingredients[5]}}
+          </div>
+        </div>
+      </section>
+
+      <section class="info-block">
+        <h3>Preparation Method:</h3>
+        <p>{{products.method}}</p>
+      </section>
+
+      <footer class="product-actions">
+        <div class="quantity-control">
+          <button class="qty-btn">-</button>
+          <span class="qty-num">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </footer>
+    </div>
+  </div>
+</div>
