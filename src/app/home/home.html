@@ -15,8 +15,8 @@
     <h2 class="section-title">Popular Dishes</h2>
 
     <div class="product-flex-container">
-          @for (item of DisplayProducts; track $index) {
-      <article class="product-card">
+          @for (item of DisplayProducts; track item.id) {
+      <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}" >
         <div class="card-image">
           <img [src]="item.image" [alt]="item.name">
         </div>
@@ -27,7 +27,7 @@
           
           <div class="product-meta">
             <div class="rating">
-              <span class="star">★</span>
+              <span class="star">{{getStars(item.rate)}}</span>
               <span class="score">{{ item.rate }}</span>
             </div>
             <div class="price">${{ item.price }}</div>
@@ -57,7 +57,7 @@
         From traditional recipes passed down through generations to innovative modern cuisine, every dish is crafted with passion and care. We're committed to delivering not just meals, but memorable dining experiences right to your door.
       </p>
       
-      <button class="explore-btn">Explore Our Menu</button>
+      <button class="explore-btn" routerLink="/menu"  >Explore Our Menu</button>
     </div>
   </div>
 </section>

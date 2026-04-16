@@ -115,6 +115,10 @@ $shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   flex: 0 1 calc(33.333% - 20px); 
   min-width: 280px; // Ensures they don't get too skinny
 
+
+  
+  
+
   @media (max-width: 992px) {
     // 2 cards per row on tablets
     flex: 0 1 calc(50% - 30px);
@@ -151,8 +155,12 @@ $shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       padding: 12px;
       border-radius: 8px;
       font-weight: 700;
-      cursor: pointer;
+      cursor: pointer
     }
+  }
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   }
 }
 

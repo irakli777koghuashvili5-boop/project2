@@ -11,18 +11,27 @@ import { RouterLink } from "@angular/router";
   styleUrl: './home.scss',
 })
 export class Home {
-  constructor(private api: Services, private cdr: ChangeDetectorRef) {}
+  getStars(rating: number): string {
+    let validRating = Math.max(0, rating || 0);
+    let filledStars = '⭐'.repeat(validRating);
+    let emptyStars = '☆'.repeat(validRating === 5 ? 5 - validRating : 6 - validRating);
+    return filledStars + emptyStars;
+  }
+  constructor(
+    private api: Services,
+    private cdr: ChangeDetectorRef,
+  ) {}
   DisplayProducts: any = [];
   ngOnInit() {
-    this.api.getAll(`/api/products/filter?take=6&page=1&maxPrice=500&minPrice=0&query=&rate=0`)
-    .subscribe({
-      next: (res: any) => {
-        console.log(res.data.products);
-        this.DisplayProducts = res.data.products;
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error(err), 
-    })
+    this.api
+      .getAll(`/api/products/filter?take=6&page=1&maxPrice=500&minPrice=0&query=&rate=0`)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res.data.products);
+          this.DisplayProducts = res.data.products;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error(err),
+      });
   }
-  
 }

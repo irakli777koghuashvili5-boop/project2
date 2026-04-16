@@ -1,0 +1,135 @@
+$primary-orange: #ff7043;
+$input-bg: #f8f9fa;
+$text-muted: #6c757d;
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.auth-card {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  padding-right:40px ;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.auth-header {
+  margin-bottom: 30px;
+  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  p { color: $text-muted; }
+}
+
+.auth-form {
+  text-align: left;
+
+  .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    
+    @media (max-width: 480px) { flex-direction: column; }
+  }
+
+  .form-group {
+    flex: 1;
+    margin-bottom: 20px;
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      background: $input-bg;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+
+      // HOVER & FOCUS STATES
+      &:hover { border-color: #ccc; }
+      &:focus {
+        outline: none;
+        background: white;
+        border-color: $primary-orange;
+        box-shadow: 0 0 0 4px rgba($primary-orange, 0.1);
+      }
+    }
+  }
+}
+
+.password-group {
+  .input-wrapper {
+    position: relative;
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: $text-muted;
+      cursor: pointer;
+      svg { width: 20px; height: 20px; }
+    }
+  }
+}
+
+.requirements {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+  li {
+    color: $text-muted;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    &::before { content: "• "; color: #ccc; margin-right: 5px; }
+  }
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: $primary-orange;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  // HOVER STATE
+  &:hover {
+    background-color: darken($primary-orange, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba($primary-orange, 0.3);
+  }
+  
+  &:active { transform: translateY(0); }
+}
+
+.auth-footer {
+  margin-top: 25px;
+  color: $text-muted;
+  a {
+    color: $primary-orange;
+    text-decoration: none;
+    font-weight: 600;
+    &:hover { text-decoration: underline; }
+  }
+}

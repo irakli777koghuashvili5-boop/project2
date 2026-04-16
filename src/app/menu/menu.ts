@@ -11,6 +11,12 @@ import { RouterLink } from "@angular/router";
   styleUrl: './menu.scss',
 })
 export class Menu {
+  getStars(rating: number): string {
+    let validRating = Math.max(0, rating || 0);
+    let filledStars = '⭐'.repeat(validRating);
+    let emptyStars = '☆'.repeat(validRating === 5 ? 5 - validRating : 6 - validRating);
+    return filledStars + emptyStars;
+  }
   query: string = '';
   isVegie: boolean = false;
   spiciness: number = 0;

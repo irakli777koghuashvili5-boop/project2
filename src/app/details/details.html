@@ -8,13 +8,15 @@
       <header class="product-header">
         <h1 class="title">{{products.name}}</h1>
         <div class="rating">
-          <span class="stars">★</span>
+          <span class="stars">{{getStars(products.rate)}}</span>
           <span class="count">({{products.rate}} rating)</span>
         </div>
         <div class="price">${{products.price}}</div>
+        @if(products.vegetarian == true){
         <div class="badge vegetarian">
           <i class="fa-solid fa-leaf"></i> Vegetarian
         </div>
+      }
       </header>
 
       <p class="description">
@@ -25,10 +27,10 @@
         <h3>Ingredients:</h3>
         <div class="ingredients-list">
           <div class="ing-col">
-            <strong>For dough:</strong> {{products.ingredients[0]}},{{products.ingredients[1]}},{{products.ingredients[2]}},
+            {{products.ingredients[0]}}
           </div>
           <div class="ing-col">
-            <strong>For filling:</strong>{{products.ingredients[3]}},{{products.ingredients[4]}},{{products.ingredients[5]}}
+            {{products.ingredients[1]}}
           </div>
         </div>
       </section>
@@ -49,3 +51,34 @@
     </div>
   </div>
 </div>
+
+<section class="related-section">
+  <div class="container">
+    <h2 class="section-title">You May Also Like</h2>
+
+    <div class="related-flex-container">
+      @for (item of MightLike; track item.id) {
+      <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}">
+        <div class="card-image">
+          <img [src]="item.image" alt="Sfodfdle">
+        </div>
+        
+        <div class="card-content">
+          <h3 class="product-title">{{item.name}}</h3>
+          <p class="product-description">{{item.description}}</p>
+          
+          <div class="product-meta">
+            <div class="rating">
+              <span class="star">{{getStars(item.rate)}}</span>
+              <span class="score">{{item.rate}}</span>
+            </div>
+            <div class="price">{{item.price}}$</div>
+          </div>
+          
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </article>
+    }
+      </div>
+  </div>
+</section>

@@ -10,8 +10,15 @@ export class Services {
   getAll(url: string) {
     return this.http.get(this.baseURL + url, {
       headers: {
-         'X-API-KEY': '21a7c00e-2646-44fc-a137-bc51df9e8287'
-      }
+        'X-API-KEY': '21a7c00e-2646-44fc-a137-bc51df9e8287',
+      },
+    });
+  }
+  postAll(url: string, body: any) {
+    return this.http.post(this.baseURL + url, body, {
+      headers: {
+        'X-API-KEY': '21a7c00e-2646-44fc-a137-bc51df9e8287',
+      },
     });
   }
 }

@@ -1,7 +1,7 @@
 <header class="glass-header">
   <div class="nav-container">
     
-    <a href="/" class="logo">Foodie</a>
+    <a routerLink="/home" class="logo">Foodie</a>
 
     <nav class="desktop-nav">
       <a routerLink="/home" class="nav-link">Home</a>
@@ -16,8 +16,8 @@
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
         </svg>
       </button>
-      <a href="/login" class="login-link">Login</a>
-      <button class="signup-btn">Sign Up</button>
+      <a routerLink="/log-in" class="login-link">Login</a>
+      <button routerLink="/sign-up" class="signup-btn">Sign Up</button>
     </div>
 
     <button class="hamburger-btn mobile-only" 
@@ -32,11 +32,11 @@
 
   <div class="mobile-menu-overlay" [class.open]="isMenuOpen">
     <nav class="mobile-nav">
-      <a href="/home" class="mobile-link" (click)="closeMenu()">Home</a>
-      <a href="/menu" class="mobile-link" (click)="closeMenu()">Menu</a>
+      <a routerLink="/home" class="mobile-link" (click)="closeMenu()">Home</a>
+      <a routerLink="/menu" class="mobile-link" (click)="closeMenu()">Menu</a>
       <hr class="divider">
-      <a href="/login" class="mobile-link login" (click)="closeMenu()">Login</a>
-      <button class="signup-btn mobile-signup" (click)="closeMenu()">Sign Up</button>
+      <a routerLink="/log-in" class="mobile-link login" (click)="closeMenu()">Login</a>
+      <button routerLink="/sign-up" class="signup-btn mobile-signup" (click)="closeMenu()">Sign Up</button>
     </nav>
   </div>
 </header>

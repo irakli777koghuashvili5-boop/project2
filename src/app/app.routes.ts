@@ -19,6 +19,14 @@ export const routes: Routes = [
         loadComponent: () => import('./details/details').then(m => m.Details)
     },
     {
+        path: `sign-up`,
+        loadComponent: () => import('./sign-up/sign-up').then(m => m.SignUp)
+    },
+    {
+        path: `log-in`,
+        loadComponent: () => import('./log-in/log-in').then(m => m.LogIn)
+    },
+    {
         path:"**",
         loadComponent: () => import('./error/error').then(m => m.Error)
     }

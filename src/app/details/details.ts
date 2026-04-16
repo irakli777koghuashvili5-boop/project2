@@ -1,36 +1,63 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
 export class Details {
+  getStars(rating: number): string {
+    let validRating = Math.max(0, rating || 0);
+    let filledStars = '⭐'.repeat(validRating);
+    let emptyStars = '☆'.repeat(validRating === 5 ? 5 - validRating : 6 - validRating);
+    return filledStars + emptyStars;
+  }
   productId: string | null = null;
   products: any = [];
+  relatedProducts: any = {};
+  catId: number = 0;
+  MightLike: any = [];
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
   ) {}
-  ngOnInit() {
+
+  showProduct() {
     this.route.queryParams.subscribe((par: any) => {
       this.productId = par['id'];
-      console.log(this.productId);
+
+      if (this.productId) {
+        this.api.getAll(`/api/products/${this.productId}`).subscribe({
+          next: (res: any) => {
+            this.products = res.data;
+            this.relatedProducts = res; 
+            if (res.data && res.data.categoryId) {
+              this.getRelatedProducts(res.data.categoryId);
+            }
+
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error(err),
+        });
+      }
     });
-    if (this.productId) {
-    this.api.getAll(`/api/products/${this.productId}`)
-    .subscribe({
+  }
+
+  ngOnInit() {
+    this.showProduct();
+  }
+  getRelatedProducts(id: number) {
+    this.api.getAll(`/api/products/filter/?take=4&page=1&categoryId=${id}`).subscribe({
       next: (res: any) => {
-        console.log(res.data);
-        this.products = res.data;
+        console.log(res.data.products);
+        this.MightLike = res.data.products.filter((el: any)=> el.name !== this.products.name);
         this.cdr.detectChanges();
       },
-      error: (err) => console.error(err), 
-    })
-  }
+      error: (err) => console.error(err),
+    });
   }
 }

@@ -8,7 +8,7 @@ $text-gray: #666;
 
 .product-container {
   display: flex;
-  align-items: stretch; // Ensures image and text have equal height
+  align-items: stretch; 
   gap: 48px;
   max-width: 1200px;
   margin: 0 auto;
@@ -23,7 +23,7 @@ $text-gray: #666;
   flex: 1;
   img {
     width: 100%;
-    height: 100%;
+    height: 65vh;
     object-fit: cover; // Fills space without stretching
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -125,5 +125,106 @@ $text-gray: #666;
     transition: transform 0.2s;
     
     &:hover { background: darken($brand-orange, 5%); transform: translateY(-2px); }
+  }
+}
+$primary-orange: #ff7043;
+$shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+.related-section {
+  padding: 60px 0;
+  
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    padding-left: 20px;
+  }
+}
+
+// FLEXBOX CONTAINER
+.related-flex-container {
+  display: flex;
+  flex-wrap: wrap; // Drops to next line on small screens
+  gap: 24px;
+  padding: 0 20px;
+  justify-content: flex-start; // Aligns cards to the left
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: $shadow;
+  border: 1px solid #f0f0f0;
+  transition: transform 0.2s;
+  
+  // Set width for 3 or 4 cards per row
+  // For 4 cards: calc(25% - 18px)
+  // For 3 cards: calc(33.3% - 16px)
+  flex: 0 1 calc(25% - 18px); 
+  min-width: 250px; 
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .card-content {
+    padding: 16px;
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .product-description {
+      font-size: 0.85rem;
+      color: #666;
+      height: 2.5em;
+      overflow: hidden;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .product-meta {
+      .rating {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        .star { color: #fbc02d; }
+      }
+      .price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: $primary-orange;
+        margin-bottom: 15px;
+      }
+    }
+
+    .add-btn {
+      width: 100%;
+      background: $primary-orange;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      
+      &:hover {
+        background: darken($primary-orange, 5%);
+      }
+    }
+  }
+
+  // Mobile responsiveness
+  @media (max-width: 768px) {
+    flex: 0 1 100%; // Stacks 1 card per row on mobile
   }
 }

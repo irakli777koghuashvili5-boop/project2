@@ -1,0 +1,151 @@
+$brand-orange: #ff7043; // Standard brand color from your UI
+$bg-light: #f9f9f9;
+$border-soft: #e0e0e0;
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff; // Solid background as requested
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  padding: 50px 40px;
+  border-radius: 16px; // Matching the rounded edges of your product cards
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  border: 1px solid $border-soft;
+  text-align: center;
+}
+
+.auth-header {
+  margin-bottom: 35px;
+  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; color: #111; }
+  p { color: #777; font-size: 0.95rem; }
+}
+
+.auth-form {
+  text-align: left;
+
+  .form-group {
+    margin-bottom: 22px;
+    
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: #000;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      background: $bg-light; // Solid light grey fill
+      border: 1px solid $border-soft;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.2s;
+
+      &:focus {
+        outline: none;
+        background: #fff;
+        border-color: $brand-orange;
+        box-shadow: 0 0 0 4px rgba($brand-orange, 0.1);
+      }
+    }
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  .view-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 1.1rem;
+    &:hover { color: #444; }
+  }
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #555;
+    input { margin-right: 8px; width: 18px; height: 18px; }
+  }
+
+  .forgot-link {
+    color: $brand-orange;
+    text-decoration: none;
+    font-weight: 500;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.primary-btn {
+  width: 100%;
+  background-color: $brand-orange; // Primary action color
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+
+  &:hover {
+    background-color: darken($brand-orange, 5%);
+    transform: translateY(-2px);
+  }
+}
+
+.divider {
+  margin: 25px 0;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #eee;
+  }
+  span {
+    position: relative;
+    background: white;
+    padding: 0 15px;
+    color: #aaa;
+    font-size: 0.85rem;
+  }
+}
+
+.auth-footer {
+  font-size: 0.95rem;
+  color: #666;
+  a {
+    color: $brand-orange;
+    text-decoration: none;
+    font-weight: 600;
+    &:hover { text-decoration: underline; }
+  }
+}

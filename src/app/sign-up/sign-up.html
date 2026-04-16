@@ -1,0 +1,50 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <header class="auth-header">
+      <h1>Create Account</h1>
+      <p>Join us today</p>
+    </header>
+
+    <form class="auth-form" (ngSubmit)="register()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="Doe">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input [(ngModel)]="email" name="email" type="email" placeholder="you@example.com">
+      </div>
+
+      <div class="form-group password-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <input [(ngModel)]="password" name="password" type="password" placeholder="********">
+          <button type="button" class="toggle-password">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <ul class="requirements">
+        <li>At least 8 characters</li>
+        <li>Uppercase and lowercase letters</li>
+        <li>At least one number</li>
+      </ul>
+
+      <button type="submit" class="submit-btn">Create Account</button>
+    </form>
+
+    <footer class="auth-footer">
+      Already have an account? <a routerLink="/log-in">Sign in</a>
+    </footer>
+  </div>
+</div>
