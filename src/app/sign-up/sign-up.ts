@@ -16,12 +16,6 @@ export class SignUp {
   email: string = '';
   password: string = '';
   constructor(private api: Services, private cdr: ChangeDetectorRef) {}
-  ngOnInit() {
-    console.log(this.firstName);
-    
-  }
-
-
   register(){
     this.api.postAll(`/api/auth/register`, {
       "firstName": this.firstName,
