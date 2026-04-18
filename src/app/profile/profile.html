@@ -1,0 +1,109 @@
+<div class="profile-container">
+  <h1  style="margin-bottom: 20px;" >Profile Settings</h1>
+
+  <div class="tab-bar">
+    <button [class.active]="activeSection === 'personal'" (click)="setSection('personal')">Personal Info</button>
+    <button [class.active]="activeSection === 'password'" (click)="setSection('password')">Change Password</button>
+    <button [class.active]="activeSection === 'account'" (click)="setSection('account')">Account Settings</button>
+  </div>
+
+  <div class="content-area">
+   @if (activeSection === 'personal') {
+  <div class="personal-info-card">
+    <header class="section-header">
+      <h2>Personal Information</h2>
+      <p>Update your personal details</p>
+    </header>
+
+    <form class="profile-form" (onSubmit)="editData()" >
+      <div class="form-group picture-group">
+        <label>Picture</label>
+        <div class="picture-placeholder">
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" >
+        </div>
+        <div class="form-group flex-1">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="Enter phone number">
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea id="address" rows="4" placeholder="Enter your address"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" placeholder="Enter your age">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="save-changes-btn">Save Changes</button>
+      </div>
+    </form>
+  </div>
+}
+    @else if (activeSection === 'password') {
+     <div class="section-view">
+  <header class="section-header">
+    <h2>Change Password</h2>
+    <p>Update your password</p>
+  </header>
+
+  <form class="profile-form">
+    <div class="form-group">
+      <label for="currentPassword">Current Password</label>
+      <input type="password" id="currentPassword" placeholder="Enter current password">
+    </div>
+    <div class="form-group">
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" placeholder="Enter new password">
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm New Password</label>
+      <input type="password" id="confirmPassword" placeholder="Confirm new password">
+    </div>
+
+    <ul class="password-hints">
+      <li>At least 8 characters</li>
+      <li>Uppercase and lowercase letters</li>
+      <li>At least one number</li>
+    </ul>
+
+    <button type="submit" class="save-changes-btn">Update Password</button>
+  </form>
+</div>
+    } 
+    @else if (activeSection === 'account') {
+     <div class="section-view">
+  <header class="section-header">
+    <h2>Account Settings</h2>
+    <p>Manage your account</p>
+  </header>
+
+  <div class="danger-zone">
+    <h3>Danger Zone</h3>
+    <p>Once you delete your account, there is no going back. Please be certain.</p>
+    <button type="button" class="delete-btn">Delete My Account</button>
+  </div>
+</div>
+    }
+  </div>
+</div>

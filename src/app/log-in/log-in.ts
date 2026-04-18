@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { Services } from '../service/services';
 
 @Component({
@@ -11,7 +11,7 @@ import { Services } from '../service/services';
   styleUrl: './log-in.scss',
 })
 export class LogIn {
-  constructor(private api: Services, private cdr: ChangeDetectorRef){}
+  constructor(private api: Services, private cdr: ChangeDetectorRef, private router: Router){}
   password: string = '';
   email: string = '';
   SignIn(){
@@ -21,8 +21,12 @@ export class LogIn {
     }).subscribe({
       next: ((resp: any) => {
         console.log(resp);
-        localStorage.setItem('access_token', resp.access_token);
-        localStorage.setItem('refresh_token', resp.refresh_token); 
+        if(resp){
+          localStorage.setItem('accessToken', resp.data.accessToken);
+          localStorage.setItem('refreshToken', resp.data.refreshToken);
+          alert(`Logged in successfully`)
+          this.router.navigate(['/home']);
+        }
         this.cdr.detectChanges();
       }),
       error: (err => {

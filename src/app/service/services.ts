@@ -10,14 +10,22 @@ export class Services {
   getAll(url: string) {
     return this.http.get(this.baseURL + url, {
       headers: {
-        'X-API-KEY': '21a7c00e-2646-44fc-a137-bc51df9e8287',
+        'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
       },
     });
   }
   postAll(url: string, body: any) {
     return this.http.post(this.baseURL + url, body, {
       headers: {
-        'X-API-KEY': '21a7c00e-2646-44fc-a137-bc51df9e8287',
+        'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
+      },
+    });
+  }
+  putAll(url: string, body: any) {
+    return this.http.put(this.baseURL + url, body, {
+      headers: {
+        'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
       },
     });
   }

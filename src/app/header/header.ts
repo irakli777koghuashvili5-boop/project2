@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Component, ElementRef, HostListener } from '@angular/core';
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -9,6 +9,8 @@ import { RouterLink } from "@angular/router";
 })
 export class Header {
   isMenuOpen: boolean = false;
+  isProfileMenuOpen = false;
+  constructor(private el: ElementRef, private router: Router) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -22,5 +24,32 @@ export class Header {
   closeMenu() {
     this.isMenuOpen = false;
     document.body.style.overflow = 'auto';
+  }
+
+  get isLoggedIn(): boolean {
+    if (localStorage.getItem('accessToken')) {
+      return true;
+    }
+    return false;
+  }
+
+  toggleProfileMenu() {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+  closeProfileMenu() {
+    this.isProfileMenuOpen = false;
+  }
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.el.nativeElement.contains(event.target)) {
+      this.isProfileMenuOpen = false;
+    }
+  }
+
+  logOut(){
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    alert(`Logged out successfully`);
+    this.router.navigate(['/home']);
   }
 }

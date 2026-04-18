@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { guardGuard } from './guard/guard-guard';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,20 @@ export const routes: Routes = [
     {
         path: `log-in`,
         loadComponent: () => import('./log-in/log-in').then(m => m.LogIn)
+    },
+    {
+        path: `recover-passcode`,
+        loadComponent: () => import('./recover-passcode/recover-passcode').then(m => m.RecoverPasscode)
+    },
+    {
+        path: `cart`,
+        loadComponent: () => import('./cart/cart').then(m => m.Cart),
+        canActivate: [guardGuard]  
+    },
+    {
+        path: `profile`,
+        loadComponent: () => import('./profile/profile').then(m => m.Profile),
+        canActivate: [guardGuard]
     },
     {
         path:"**",

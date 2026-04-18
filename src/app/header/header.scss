@@ -78,7 +78,7 @@ $header-height: 80px;
 .actions-group {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
 
   .cart-btn {
     background: none;
@@ -151,6 +151,15 @@ $header-height: 80px;
     .line-2 { opacity: 0; }
     .line-3 { transform: rotate(-45deg) translate(0, 2px); }
   }
+  @media (min-width: 450px) { 
+    login-link{
+      display: none;
+    }
+    signup-btn{
+      display: none;
+    }
+    
+   }
 }
 
 // Mobile Menu Overlay
@@ -217,7 +226,90 @@ $header-height: 80px;
 .mobile-only { display: none; }
 
 @media (max-width: 768px) {
-  .desktop-only { display: none; }
   .desktop-nav { display: none; }
   .mobile-only { display: flex; }
+}
+.profile-btn {
+  width: 40px;
+  height: 40px;
+  background-color: #ff6633;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: darken(#ff6633, 10%);
+  }
+}
+.cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px; // Increases tap area for mobile devices
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; // Makes it circular on hover/active
+  transition: background-color 0.2s ease;
+
+  // Active state for mobile touch
+  &:active {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  // Ensure the SVG scales properly
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+  }
+}
+
+// Media Query adjustment
+@media (max-width: 768px) {
+  .cart-btn {
+    padding: 10px; // Slightly smaller for compact mobile headers
+  }
+}
+
+.profile-wrapper {
+  position: relative; // This anchors the absolute dropdown
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%; // Places it right below the button
+  right: 0;
+  margin-top: 10px;
+  width: 180px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 10px 0;
+  z-index: 1000;
+  
+  .dropdown-header {
+    padding: 10px 20px;
+    font-weight: 700;
+    border-bottom: 1px solid #eee;
+  }
+
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    text-align: left;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+    
+    &:hover { background: #f9f9f9; color: #ff6633; }
+  }
 }

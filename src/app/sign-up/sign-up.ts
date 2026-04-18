@@ -17,19 +17,21 @@ export class SignUp {
   password: string = '';
   constructor(private api: Services, private cdr: ChangeDetectorRef) {}
   register(){
-    this.api.postAll(`/api/auth/register`, {
-      "firstName": this.firstName,
-      "lastName": this.lastName,
-      "email": this.email,
-      "password": this.password
-    }).subscribe({
-      next: (resp => {
-        console.log(resp)
-        this.cdr.detectChanges();
-      }),
-      error: (err => {
-        console.log(err)
+    this.api
+      .postAll(`/api/auth/register`, {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
       })
-    })
+      .subscribe({
+        next: (resp) => {
+          console.log(resp);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

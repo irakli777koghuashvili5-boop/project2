@@ -1,0 +1,219 @@
+.profile-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+// Tab Bar Styling
+.tab-bar {
+  display: flex;
+  background: #f4f4f4; // Light grey background
+  padding: 6px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  gap: 4px;
+
+  button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #666;
+
+    &.active {
+      background: white;
+      color: #333;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  }
+}
+
+// Section View Card
+.section-view {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+
+  h2 { margin-top: 0; }
+  p { color: #888; margin-bottom: 25px; }
+}
+
+// Input and Button Alignment
+.form-group {
+  margin-bottom: 20px;
+  label { display: block; margin-bottom: 8px; font-weight: 600; }
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+}
+
+.save-btn {
+  background: #ff7043;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // This adds 20px between every direct child
+}
+.primary-btn {
+  margin-top: 10px; // Adds extra breathing room between input and button
+  width: 100%;
+}
+.form-row {
+  display: flex;
+  gap: 16px; // Space between First Name and Last Name
+  
+  .form-group {
+    flex: 1; // Makes them take equal width
+  }
+}
+.personal-info-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.section-header {
+  margin-bottom: 30px;
+  h2 { font-size: 1.8rem; margin-bottom: 8px; }
+  p { color: #888; font-size: 1rem; }
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // !!! THIS adds the gap between all inputs !!!
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; // Gap between label and input
+
+  label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    background: #fcfcfc; // Slight grey background seen in photo
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #333;
+
+    &::placeholder { color: #aaa; }
+    &:focus { border-color: #aaa; outline: none; }
+  }
+  
+  // Textarea resize handle adjustment
+  textarea { resize: vertical; }
+}
+
+// Layout for First Name/Last Name row
+.form-row {
+  display: flex;
+  gap: 20px; // Gap between the two inputs
+  
+  .flex-1 { flex: 1; } // Makes them share equal space
+}
+
+// Profile Picture Specific Styling
+.picture-placeholder {
+  width: 80px;
+  height: 80px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: #ccc;
+  border: 1px solid #eee;
+}
+
+// Save Changes Button Styling
+.form-actions {
+  margin-top: 10px; // Additional spacing before button
+
+  .save-changes-btn {
+    height: 50px;
+    width: 100%;
+    background: #ff7043; // Orange theme color
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover { background: darken(#ff7043, 8%); }
+  }
+}
+// Password Requirements
+.password-hints {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 20px 0;
+  color: #777;
+  font-size: 0.85rem;
+  
+  li::before {
+    content: "•";
+    margin-right: 8px;
+  }
+}
+
+// Danger Zone Styling
+.danger-zone {
+  border: 1px solid #ff5252;
+  padding: 24px;
+  border-radius: 8px;
+  
+  h3 { color: #ff5252; margin-top: 0; }
+  
+  .delete-btn {
+    background: #ff5252;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 15px;
+    
+    &:hover { background: darken(#ff5252, 10%); }
+  }
+}
+ .save-changes-btn {
+    height: 50px;
+    width: 100%;
+    background: #ff7043; // Orange theme color
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover { background: darken(#ff7043, 8%); }
+  }
