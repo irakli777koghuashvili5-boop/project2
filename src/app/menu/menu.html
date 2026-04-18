@@ -85,7 +85,7 @@
               </div>
               <div class="price">${{ item.price }}</div>
             </div>
-            <button class="add-to-cart">Add to Cart</button>
+            <button class="add-to-cart" (click)="addToCart(item.id)">Add to Cart</button>
           </div>
         </article>
       }

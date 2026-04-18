@@ -15,49 +15,49 @@
       <p>Update your personal details</p>
     </header>
 
-    <form class="profile-form" (onSubmit)="editData()" >
-      <div class="form-group picture-group">
-        <label>Picture</label>
-        <div class="picture-placeholder">
-          <i class="fa-solid fa-user"></i>
-        </div>
-      </div>
+  <form class="profile-form" #form="ngForm" (ngSubmit)="saveChanges(form)">
+  <div class="form-group picture-group">
+    <label>Picture</label>
+    <div class="picture-placeholder">
+      <i class="fa-solid fa-user"></i>
+    </div>
+  </div>
 
-      <div class="form-row">
-        <div class="form-group flex-1">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" >
-        </div>
-        <div class="form-group flex-1">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" >
-        </div>
-      </div>
+  <div class="form-row">
+    <div class="form-group flex-1">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" [(ngModel)]="userData.firstName" id="firstName" required>
+    </div>
+    <div class="form-group flex-1">
+      <label for="lastName">Last Name</label>
+      <input type="text" name="lastName" [(ngModel)]="userData.lastName" id="lastName" required>
+    </div>
+  </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email">
-      </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" name="email" [(ngModel)]="userData.email" disabled style="color: grey;" id="email">
+  </div>
 
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="Enter phone number">
-      </div>
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phoneNumber" [(ngModel)]="userData.phoneNumber" placeholder="Enter phone number">
+  </div>
 
-      <div class="form-group">
-        <label for="address">Address</label>
-        <textarea id="address" rows="4" placeholder="Enter your address"></textarea>
-      </div>
+  <div class="form-group">
+    <label for="address">Address</label>
+    <textarea id="address" rows="4" name="address" [(ngModel)]="userData.address" placeholder="Enter your address"></textarea>
+  </div>
 
-      <div class="form-group">
-        <label for="age">Age</label>
-        <input type="number" id="age" placeholder="Enter your age">
-      </div>
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" [(ngModel)]="userData.age" placeholder="Enter your age">
+  </div>
 
-      <div class="form-actions">
-        <button type="submit" class="save-changes-btn">Save Changes</button>
-      </div>
-    </form>
+  <div class="form-actions">
+    <button type="submit" class="save-changes-btn" [disabled]="form.invalid">Save Changes</button>
+  </div>
+</form>
   </div>
 }
     @else if (activeSection === 'password') {
@@ -67,18 +67,18 @@
     <p>Update your password</p>
   </header>
 
-  <form class="profile-form">
+  <form class="profile-form" #passform="ngForm" (ngSubmit)="passChange(passform)" >
     <div class="form-group">
       <label for="currentPassword">Current Password</label>
-      <input type="password" id="currentPassword" placeholder="Enter current password">
+      <input type="password"  ngModel id="currentPassword" name="oldPassword" placeholder="Enter current password">
     </div>
     <div class="form-group">
       <label for="newPassword">New Password</label>
-      <input type="password" id="newPassword" placeholder="Enter new password">
+      <input type="password"  ngModel id="newPassword" name="newPassword" placeholder="Enter new password">
     </div>
     <div class="form-group">
       <label for="confirmPassword">Confirm New Password</label>
-      <input type="password" id="confirmPassword" placeholder="Confirm new password">
+      <input type="password" ngModel id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
     </div>
 
     <ul class="password-hints">
@@ -101,7 +101,7 @@
   <div class="danger-zone">
     <h3>Danger Zone</h3>
     <p>Once you delete your account, there is no going back. Please be certain.</p>
-    <button type="button" class="delete-btn">Delete My Account</button>
+    <button type="button" (click)="deleteData()" class="delete-btn">Delete My Account</button>
   </div>
 </div>
     }

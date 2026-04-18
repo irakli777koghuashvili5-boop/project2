@@ -42,11 +42,11 @@
 
       <footer class="product-actions">
         <div class="quantity-control">
-          <button class="qty-btn">-</button>
-          <span class="qty-num">1</span>
-          <button class="qty-btn">+</button>
+          <button class="qty-btn" (click)="updateQty(-1)">-</button>
+          <span class="qty-num">{{qty}}</span>
+          <button class="qty-btn" (click)="updateQty(1)">+</button>
         </div>
-        <button class="add-to-cart">Add to Cart</button>
+        <button class="add-to-cart" (click)="addToCart()">Add to Cart</button>
       </footer>
     </div>
   </div>
@@ -75,7 +75,7 @@
             <div class="price">{{item.price}}$</div>
           </div>
           
-          <button class="add-btn">Add to Cart</button>
+          <button class="add-btn" (click)="addLikedIntoCart(item.id)">Add to Cart</button>
         </div>
       </article>
     }

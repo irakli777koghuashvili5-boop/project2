@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -24,6 +24,7 @@ export class Details {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   showProduct() {
@@ -34,7 +35,7 @@ export class Details {
         this.api.getAll(`/api/products/${this.productId}`).subscribe({
           next: (res: any) => {
             this.products = res.data;
-            this.relatedProducts = res; 
+            this.relatedProducts = res;
             if (res.data && res.data.categoryId) {
               this.getRelatedProducts(res.data.categoryId);
             }
@@ -46,6 +47,13 @@ export class Details {
       }
     });
   }
+  qty: number = 1;
+
+  updateQty(delta: number) {
+    const newQty = this.qty + delta;
+    if (newQty < 1) return;
+    this.qty = newQty;
+  }
 
   ngOnInit() {
     this.showProduct();
@@ -54,10 +62,40 @@ export class Details {
     this.api.getAll(`/api/products/filter/?take=4&page=1&categoryId=${id}`).subscribe({
       next: (res: any) => {
         console.log(res.data.products);
-        this.MightLike = res.data.products.filter((el: any)=> el.name !== this.products.name);
+        this.MightLike = res.data.products.filter((el: any) => el.name !== this.products.name);
         this.cdr.detectChanges();
       },
       error: (err) => console.error(err),
     });
+  }
+  addToCart() {
+    this.api
+      .postAll(`/api/cart/add-to-cart`, {
+        productId: this.productId,
+        quantity: this.qty,
+      })
+      .subscribe({
+        next: (res: any) => {
+          alert(`${this.qty} ${this.products.name} added to cart`);
+          this.cdr.detectChanges();
+          this.router.navigate(['/cart']);
+        },
+        error: (err) => console.error(err),
+      });
+  }
+  addLikedIntoCart(id: number){
+    this.api
+      .postAll(`/api/cart/add-to-cart`, {
+        productId: id,
+        quantity: 1,
+      })
+      .subscribe({
+        next: (res: any) => {
+          alert('Product added to cart');
+          this.cdr.detectChanges();
+          this.router.navigate(['/cart']);
+        },
+        error: (err) => console.error(err),
+      });
   }
 }

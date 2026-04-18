@@ -4,6 +4,12 @@ $text-gray: #666;
 .product-page {
   padding: 40px 20px;
   background-color: #fff;
+  padding-top: 75px;
+  padding-bottom: 75px;
+  @media (max-width: 992px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
 
 .product-container {

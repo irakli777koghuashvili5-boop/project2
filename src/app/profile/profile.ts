@@ -1,25 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
+  standalone: true,
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
 export class Profile {
-  constructor(private api: Services, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private api: Services,
+    private cdr: ChangeDetectorRef,
+  ) {}
   activeSection: 'personal' | 'password' | 'account' = 'personal';
 
   setSection(section: 'personal' | 'password' | 'account') {
     this.activeSection = section;
   }
 
-  ngOnInit(){
-    this.api.getAll(`/api/users/me`).subscribe({
-      next: (resp) => {
-        console.log(resp);
+  ngOnInit() {
+    this.getData();
+  }
+  userData: any;
+  getData() {
+    this.api.getAll(`/api/users/profile`).subscribe({
+      next: (resp: any) => {
+        this.userData = resp.data;
+        console.log(this.userData);
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -27,18 +37,41 @@ export class Profile {
       },
     });
   }
-
-
-
-
-  editData(){
-    this.api.putAll(`/api/users/edit`, {
-      firstName: 'string',
-      lastName: 'string',
-      phoneNumber: 'string',
-      picture: 'string',
-      address: 'string',
-      age: 0,
-    });
+  saveChanges(form: NgForm) {
+    alert('Changes saved successfully!');
+    console.log(form.value);
+    this.api.putAll(`/api/users/edit`, form.value)
+    .subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    })
+  }
+  passChange(form: NgForm){
+    console.log(form.value);
+    this.api.putAll(`/api/users/change-password`, form.value)
+    .subscribe({
+      next: (res=> {
+        console.log(res);
+      }),
+      error: (err) => {
+        console.log(err);
+      },
+    })
+    
+  }
+  deleteData(){
+    this.api.deleteAll(`/api/users/delete`).subscribe({
+      next: (res=> {
+        console.log(res);
+      }),
+      error: (err => {
+        console.log(err);
+      })
+    })
   }
 }

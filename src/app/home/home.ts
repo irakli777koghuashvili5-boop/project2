@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -20,6 +20,7 @@ export class Home {
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
+    private router: Router,
   ) {}
   DisplayProducts: any = [];
   ngOnInit() {
@@ -30,6 +31,21 @@ export class Home {
           console.log(res.data.products);
           this.DisplayProducts = res.data.products;
           this.cdr.detectChanges();
+        },
+        error: (err) => console.error(err),
+      });
+  }
+  addToCart(id: number) {
+    this.api
+      .postAll(`/api/cart/add-to-cart`, {
+        productId: id,
+        quantity: 1,
+      })
+      .subscribe({
+        next: (res: any) => {
+          alert('Product added to cart');
+          this.cdr.detectChanges();
+          this.router.navigate(['/cart']);
         },
         error: (err) => console.error(err),
       });
