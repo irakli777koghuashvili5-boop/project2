@@ -60,19 +60,26 @@
     <div class="filter-overlay" (click)="toggleFilters()"></div>
   }
 
-  <section class="content-area">
-    <header class="menu-header">
-      <h1>Menu</h1>
-      <p>Showing {{ CardInside.length }} products</p>
-      <button class="mobile-filter-trigger" (click)="toggleFilters()">
-  <i class="fa-solid fa-filter"></i> Filters
-</button>
+ <section class="content-area">
+  <header class="menu-header">
+    <h1>Menu</h1>
+    <p>Showing {{ CardInside.length }} products</p>
+    <button class="mobile-filter-trigger" (click)="toggleFilters()">
+      <i class="fa-solid fa-filter"></i> Filters
+    </button>
+  </header>
 
-    </header>
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading menu...</p>
+    </div>
+  }
 
+  @if (!isLoading) {
     <main class="product-grid">
       @for (item of CardInside; track item.id) {
-        <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}" >
+        <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}">
           <div class="card-image">
             <img [src]="item.image" [alt]="item.name">
           </div>
@@ -81,23 +88,35 @@
             <p class="product-description">{{ item.description }}</p>
             <div class="card-footer">
               <div class="rating">
-                <span class="star">{{getStars(item.rate)}}</span> {{ item.rate }}
+                <span class="star">{{ getStars(item.rate) }}</span> {{ item.rate }}
               </div>
               <div class="price">${{ item.price }}</div>
             </div>
-            <button class="add-to-cart" (click)="addToCart(item.id)">Add to Cart</button>
+            <button class="add-to-cart" (click)="addToCart(item.id); $event.stopPropagation()">
+              Add to Cart
+            </button>
           </div>
         </article>
       }
     </main>
 
     <div class="pagination-container">
-      <button class="pag-btn" (click)="onPrevious()" [disabled]="currentPage === 1" >
+      <button class="pag-btn" (click)="onPrevious()" [disabled]="currentPage === 1">
         ← Previous
       </button>
       <button class="pag-btn" (click)="onNext()" [disabled]="currentPage === ApplyLimitComponent">
         Next →
       </button>
     </div>
-  </section>
+  }
+
+</section>
+@if(showScrollBtn){
+<button class="scroll-top-btn" (click)="scrollToTop()">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+}
 </div>
+
+
+

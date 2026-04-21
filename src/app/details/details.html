@@ -1,3 +1,12 @@
+     @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading menu...</p>
+    </div>
+  }
+
+  @if (!isLoading) {
+
 <div class="product-page">
   <div class="product-container">
     <div class="product-visual">
@@ -51,11 +60,18 @@
     </div>
   </div>
 </div>
-
+}
 <section class="related-section">
   <div class="container">
     <h2 class="section-title">You May Also Like</h2>
+      @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading menu...</p>
+    </div>
+  }
 
+  @if (!isLoading) {
     <div class="related-flex-container">
       @for (item of MightLike; track item.id) {
       <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}">
@@ -80,5 +96,7 @@
       </article>
     }
       </div>
+
+    }
   </div>
 </section>

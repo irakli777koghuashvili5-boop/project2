@@ -20,6 +20,7 @@ export class Details {
   relatedProducts: any = {};
   catId: number = 0;
   MightLike: any = [];
+  isLoading: boolean = true;
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
@@ -36,6 +37,7 @@ export class Details {
           next: (res: any) => {
             this.products = res.data;
             this.relatedProducts = res;
+            this.isLoading = false;
             if (res.data && res.data.categoryId) {
               this.getRelatedProducts(res.data.categoryId);
             }
@@ -59,9 +61,11 @@ export class Details {
     this.showProduct();
   }
   getRelatedProducts(id: number) {
+    this.isLoading = true;
     this.api.getAll(`/api/products/filter/?take=4&page=1&categoryId=${id}`).subscribe({
       next: (res: any) => {
         console.log(res.data.products);
+        this.isLoading = false;
         this.MightLike = res.data.products.filter((el: any) => el.name !== this.products.name);
         this.cdr.detectChanges();
       },
@@ -69,6 +73,10 @@ export class Details {
     });
   }
   addToCart() {
+    if (!localStorage.getItem('accessToken')) {
+      alert("log in first")
+      this.router.navigate(['/log-in']);
+    }
     this.api
       .postAll(`/api/cart/add-to-cart`, {
         productId: this.productId,
@@ -84,6 +92,10 @@ export class Details {
       });
   }
   addLikedIntoCart(id: number){
+     if (!localStorage.getItem('accessToken')) {
+       alert('log in first');
+       this.router.navigate(['/log-in']);
+     }
     this.api
       .postAll(`/api/cart/add-to-cart`, {
         productId: id,

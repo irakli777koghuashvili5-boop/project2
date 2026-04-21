@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { Services } from '../service/services';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +23,18 @@ export class Home {
     private router: Router,
   ) {}
   DisplayProducts: any = [];
+  isLoading: boolean = true;
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  showScrollBtn: boolean = false;
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.showScrollBtn = window.scrollY > 300;
+  }
+
   ngOnInit() {
     this.api
       .getAll(`/api/products/filter?take=6&page=1&maxPrice=500&minPrice=0&query=&rate=0`)
@@ -30,12 +42,17 @@ export class Home {
         next: (res: any) => {
           console.log(res.data.products);
           this.DisplayProducts = res.data.products;
+          this.isLoading = false;
           this.cdr.detectChanges();
         },
         error: (err) => console.error(err),
       });
   }
   addToCart(id: number) {
+    if (!localStorage.getItem('accessToken')) {
+      alert('log in first');
+      this.router.navigate(['/log-in']);
+    }
     this.api
       .postAll(`/api/cart/add-to-cart`, {
         productId: id,

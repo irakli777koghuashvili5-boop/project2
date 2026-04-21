@@ -1,0 +1,30 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64">
+      <stop offset="0%" stop-color="#FF7A4D"></stop>
+      <stop offset="100%" stop-color="#FF5A2E"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"></rect>
+
+  <!-- Stylized F -->
+  <path d="
+    M23 16
+    C21.9 16 21 16.9 21 19
+    V46
+    C21 47.1 21.9 48 23 48
+    C24.1 48 25 47.1 25 46
+    V34
+    H37
+    C38.7 34 40 32.7 40 31
+    C40 29.3 38.7 28 37 28
+    H25
+    V22
+    H43
+    C44.7 22 46 20.7 46 19
+    C46 17.3 44.7 16 43 16
+    H23
+    Z
+  " fill="white"></path>
+</svg>

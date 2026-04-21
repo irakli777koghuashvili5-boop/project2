@@ -13,7 +13,15 @@
 <section class="popular-section">
   <div class="container">
     <h2 class="section-title">Popular Dishes</h2>
+    
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading menu...</p>
+    </div>
+  }
 
+  @if (!isLoading) {
     <div class="product-flex-container">
           @for (item of DisplayProducts; track item.id) {
       <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}" >
@@ -38,7 +46,7 @@
       </article>
     }
     </div>
-
+  }
   </div>
 </section>
 
@@ -60,4 +68,9 @@
       <button class="explore-btn" routerLink="/menu"  >Explore Our Menu</button>
     </div>
   </div>
+  @if(showScrollBtn){
+<button class="scroll-top-btn" (click)="scrollToTop()">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+}
 </section>

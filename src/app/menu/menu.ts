@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { Services } from '../service/services';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
@@ -22,11 +22,23 @@ export class Menu {
   spiciness: number = 0;
   rating: number = 0;
   isFilterOpen: boolean = false;
+  isLoading: boolean = true;
 
   filters = {
     MinPrice: 0,
     MaxPrice: 500,
   };
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  showScrollBtn: boolean = false;
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.showScrollBtn = window.scrollY > 300;
+  }
 
   options: Options = {
     floor: 0,
@@ -48,17 +60,26 @@ export class Menu {
     this.TestingLoad();
   }
   loadPage(page: number) {
+    this.isLoading = true;
     this.api.getAll(`/api/products?Take=12&Page=${page}`).subscribe({
       next: (res: any) => {
         this.CardInside = res.data.products || [];
         this.currentPage = page;
+        this.isLoading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+        this.isLoading = false;
+      },
     });
   }
+
   onFilterChange() {
+    this.isLoading = true;
+
     let catNum = this.CategoryArr.filter((el) => el.selected === true).map((el) => el.id)[0] || 0;
+
     if (catNum <= this.CategoryArr.length && catNum > 0) {
       this.api
         .getAll(
@@ -67,9 +88,14 @@ export class Menu {
         .subscribe({
           next: (res: any) => {
             this.CardInside = res.data.products || [];
+            this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: (err) => console.error(err),
+          error: (err) => {
+            console.error(err);
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          },
         });
     } else {
       this.api
@@ -79,9 +105,14 @@ export class Menu {
         .subscribe({
           next: (res: any) => {
             this.CardInside = res.data.products || [];
+            this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: (err) => console.error(err),
+          error: (err) => {
+            console.error(err);
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          },
         });
     }
   }
@@ -134,17 +165,23 @@ export class Menu {
   clearFilters() {
     this.loadPage(1);
   }
-  addToCart(id: number){
-    this.api.postAll(`/api/cart/add-to-cart`, {
-      productId: id,
-      quantity: 1,
-    }).subscribe({
-      next: (res: any) => {
-        alert('Product added to cart')
-        this.cdr.detectChanges();
-        this.router.navigate(['/cart']);
-      },
-      error: (err) => console.error(err),
-    })
+  addToCart(id: number) {
+    if (!localStorage.getItem('accessToken')) {
+      alert('log in first');
+      this.router.navigate(['/log-in']);
+    }
+    this.api
+      .postAll(`/api/cart/add-to-cart`, {
+        productId: id,
+        quantity: 1,
+      })
+      .subscribe({
+        next: (res: any) => {
+          alert('Product added to cart');
+          this.cdr.detectChanges();
+          this.router.navigate(['/cart']);
+        },
+        error: (err) => console.error(err),
+      });
   }
 }
