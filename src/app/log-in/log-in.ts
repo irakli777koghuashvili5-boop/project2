@@ -11,27 +11,37 @@ import { Services } from '../service/services';
   styleUrl: './log-in.scss',
 })
 export class LogIn {
-  constructor(private api: Services, private cdr: ChangeDetectorRef, private router: Router){}
+  passAndInp: boolean = false;
+  PassText(){
+    this.passAndInp = !this.passAndInp;
+  }
+  constructor(
+    private api: Services,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+  ) {}
   password: string = '';
   email: string = '';
-  SignIn(){
-    this.api.postAll(`/api/auth/login`, {
-      "email": this.email, 
-      "password": this.password
-    }).subscribe({
-      next: ((resp: any) => {
-        console.log(resp);
-        if(resp){
-          localStorage.setItem('accessToken', resp.data.accessToken);
-          localStorage.setItem('refreshToken', resp.data.refreshToken);
-          alert(`Logged in successfully`)
-          this.router.navigate(['/home']);
-        }
-        this.cdr.detectChanges();
-      }),
-      error: (err => {
-        console.log(err);
+  SignIn() {
+    this.api
+      .postAll(`/api/auth/login`, {
+        email: this.email,
+        password: this.password,
       })
-    });
+      .subscribe({
+        next: (resp: any) => {
+          console.log(resp);
+          if (resp) {
+            localStorage.setItem('accessToken', resp.data.accessToken);
+            localStorage.setItem('refreshToken', resp.data.refreshToken);
+            alert(`Logged in successfully`);
+            this.router.navigate(['/home']);
+          }
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

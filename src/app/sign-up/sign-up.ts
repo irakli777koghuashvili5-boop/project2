@@ -11,6 +11,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './sign-up.scss',
 })
 export class SignUp {
+  passAndInp: boolean = false;
+  PassText(){
+    this.passAndInp = !this.passAndInp;
+  }
   firstName: string = '';
   lastName: string = '';
   email: string = '';

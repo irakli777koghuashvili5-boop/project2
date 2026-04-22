@@ -14,8 +14,8 @@
       <div class="form-group">
         <label>Password</label>
         <div class="input-wrapper">
-          <input [(ngModel)]="password" name="password" type="password" placeholder="********">
-          <button type="button" class="view-btn">
+          <input [(ngModel)]="password" name="password" [type]="passAndInp == true ? 'text' : 'password'" placeholder="********">
+          <button (click)="PassText()" type="button" class="view-btn">
             <i class="fa-regular fa-eye"></i>
           </button>
         </div>
