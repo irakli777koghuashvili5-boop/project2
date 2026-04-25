@@ -65,7 +65,11 @@
     <h1>Menu</h1>
     <p>Showing {{ CardInside.length }} products</p>
     <button class="mobile-filter-trigger" (click)="toggleFilters()">
-      <i class="fa-solid fa-filter"></i> Filters
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M3 6h18"/>
+  <path d="M6 12h12"/>
+  <path d="M10 18h4"/>
+</svg> Filters
     </button>
   </header>
 
@@ -93,7 +97,7 @@
               <div class="price">${{ item.price }}</div>
             </div>
             <button class="add-to-cart" (click)="addToCart(item.id); $event.stopPropagation()">
-              Add to Cart
+               Add to Cart
             </button>
           </div>
         </article>
@@ -113,7 +117,11 @@
 </section>
 @if(showScrollBtn){
 <button class="scroll-top-btn" (click)="scrollToTop()">
-  <i class="fa-solid fa-arrow-up"></i>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 19V5"/>
+  <path d="M5 12l7-7 7 7"/>
+</svg>
 </button>
 }
 </div>
