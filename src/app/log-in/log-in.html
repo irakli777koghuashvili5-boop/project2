@@ -16,7 +16,9 @@
         <div class="input-wrapper">
           <input  name="password" required ngModel [type]="passAndInp == true ? 'text' : 'password'" placeholder="********">
           <button (click)="PassText()" type="button" class="view-btn">
-            <i class="fa-regular fa-eye"></i>
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
           </button>
         </div>
       </div>
