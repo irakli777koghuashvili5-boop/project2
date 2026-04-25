@@ -1,0 +1,34 @@
+<div class="container">
+  <h2>Verify Your Email</h2>
+  <p class="subtitle">
+    We sent a 6-digit code to <b>{{ELmail}}</b>
+  </p>
+
+  <form #myform="ngForm" (ngSubmit)="verifyEmail(myform)">
+    
+    <label for="pass">Verification Code</label>
+
+    <input
+      id="pass"
+      name="code"
+      ngModel
+      type="password"
+      placeholder="Enter 6-digit code"
+      required
+    />
+
+    <button [disabled]="myform.invalid" type="submit">
+      Verify
+    </button>
+
+  </form>
+
+  <div class="footer">
+    <span>Didn't receive the code?</span>
+    <a  (click)="resendCode()" >Resend Code</a>
+  </div>
+
+  <div class="back">
+    <a routerLink="/log-in">Back to Login</a>
+  </div>
+</div>

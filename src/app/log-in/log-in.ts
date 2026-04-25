@@ -20,13 +20,11 @@ export class LogIn {
     private cdr: ChangeDetectorRef,
     private router: Router,
   ) {}
-  password: string = '';
-  email: string = '';
-  SignIn() {
+
+  SignIn(form: any) {
     this.api
       .postAll(`/api/auth/login`, {
-        email: this.email,
-        password: this.password,
+        ...form.value
       })
       .subscribe({
         next: (resp: any) => {

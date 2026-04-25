@@ -42,6 +42,10 @@ export const routes: Routes = [
         canActivate: [guardGuard]
     },
     {
+        path: `verify-email`,
+        loadComponent: () => import('./verify-email/verify-email').then(m => m.VerifyEmail)
+    },
+    {
         path:"**",
         loadComponent: () => import('./error/error').then(m => m.Error)
     }

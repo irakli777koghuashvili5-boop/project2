@@ -5,28 +5,28 @@
       <p>Join us today</p>
     </header>
 
-    <form class="auth-form" (ngSubmit)="register()">
+    <form class="auth-form" #upForm="ngForm" (ngSubmit)="register(upForm)">
       <div class="form-row">
         <div class="form-group">
           <label>First Name</label>
-          <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="John">
+          <input  name="firstName" type="text" ngModel  required placeholder="John">
         </div>
         <div class="form-group">
           <label>Last Name</label>
-          <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="Doe">
+          <input name="lastName" type="text" ngModel required placeholder="Doe">
         </div>
       </div>
 
       <div class="form-group">
         <label>Email</label>
-        <input [(ngModel)]="email" name="email" type="email" placeholder="you@example.com">
+        <input  name="email" type="email" ngModel required placeholder="you@example.com">
       </div>
 
       <div class="form-group password-group">
         <label>Password</label>
         <div class="input-wrapper">
-          <input [(ngModel)]="password" name="password" [type]="passAndInp == true ? 'text' : 'password'" placeholder="********">
-          <button (click)="PassText()" type="button" class="toggle-password">
+          <input required ngModel  name="password" [type]="passAndInp == true ? 'text' : 'password'" placeholder="********">
+          <button  (click)="PassText()" type="button" class="toggle-password">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
             </svg>
@@ -40,7 +40,7 @@
         <li>At least one number</li>
       </ul>
 
-      <button type="submit" class="submit-btn">Create Account</button>
+      <button [disabled]="upForm.invalid" type="submit" class="submit-btn">Create Account</button>
     </form>
 
     <footer class="auth-footer">

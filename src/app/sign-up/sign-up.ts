@@ -1,5 +1,6 @@
+
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from '@angular/router';
 import { Services } from '../service/services';
 import { FormsModule } from '@angular/forms';
 
@@ -12,25 +13,29 @@ import { FormsModule } from '@angular/forms';
 })
 export class SignUp {
   passAndInp: boolean = false;
-  PassText(){
+upform: any;
+  PassText() {
     this.passAndInp = !this.passAndInp;
   }
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
-  password: string = '';
-  constructor(private api: Services, private cdr: ChangeDetectorRef) {}
-  register(){
+  constructor(
+    private api: Services,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+  ) {}
+  register(form: any) {
     this.api
       .postAll(`/api/auth/register`, {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
+        ...form.value
+
       })
       .subscribe({
-        next: (resp) => {
+        next: (resp: any) => {
           console.log(resp);
+          if (resp.data.token) {
+            localStorage.setItem(`email`, form.value.email);
+            alert(`verify your email`)
+            this.router.navigateByUrl('/verify-email');
+          }
           this.cdr.detectChanges();
         },
         error: (err) => {
