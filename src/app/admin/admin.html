@@ -1,0 +1,404 @@
+<div class="container">
+  <h1 class="title">Admin Dashboard</h1>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button [class.active]="activeTab === 'categories'" (click)="setTab('categories')">
+      Categories
+    </button>
+    <button [class.active]="activeTab === 'products'" (click)="setTab('products')">Products</button>
+  </div>
+
+  <!-- Card -->
+  @if (activeTab === 'categories') {
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h2>Categories</h2>
+          <p>Manage menu categories</p>
+        </div>
+
+        <button class="add-btn" (click)="openDrawer()">+ Add Category</button>
+      </div>
+
+      <!-- List -->
+      <div class="list">
+        @for (item of categories; track item.id) {
+          <div class="list-item">
+            <div class="left">
+              <span class="badge">{{ item.id }}</span>
+              <span class="name">{{ item.name }}</span>
+            </div>
+
+            <div class="right">
+              @if (item.canDelete == false) {
+                <span class="static">this is static</span>
+              } @else if (item.canDelete == true) {
+                <button class="icon-btn" (click)="openModal(item.id)">✏️</button>
+
+                <button class="icon-btn delete" (click)="deleteCat(item.id)">🗑️</button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Overlay -->
+@if (showDrawer) {
+  <div class="overlay" (click)="closeDrawer()"></div>
+}
+
+<div class="drawer" [class.open]="showDrawer">
+  <div class="drawer-header">
+    <h3>Category</h3>
+    <button (click)="closeDrawer()">✖</button>
+  </div>
+
+  <p class="subtitle">Enter a name for category.</p>
+
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="catText" placeholder="e.g. Burgers" />
+  </div>
+
+  <div class="drawer-footer">
+    <button class="cancel" (click)="closeDrawer()">Cancel</button>
+    <button class="create" (click)="createCategory()">Create</button>
+  </div>
+</div>
+
+@if (isOpen) {
+  <div class="overlay" (click)="closeModal()"></div>
+}
+@if (isOpen) {
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Category</h3>
+      <button class="modal-close" (click)="closeModal()">✕</button>
+    </div>
+
+    <p class="modal-sub">Enter a name for category.</p>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-input" placeholder="e.g. Burgers" [(ngModel)]="categoryName" />
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-ghost" (click)="closeModal()">Cancel</button>
+      <button class="btn-primary" (click)="edit()">edit</button>
+    </div>
+  </div>
+}
+
+@if (activeTab === 'products') {
+  <div class="cont">
+    <div class="products-container">
+      <!-- HEADER -->
+      <div class="products-header">
+        <div>
+          <h2>Products</h2>
+          <p>Manage menu products</p>
+        </div>
+
+        <button class="add-btn" (click)="openProductModal()">+ Add Product</button>
+      </div>
+
+      <!-- LIST -->
+      <div class="products-list">
+        @for (item of Products; track item.id) {
+          <div class="product-item">
+            <div class="left">
+              <img [src]="item.image" />
+
+              <div class="info">
+                <span class="name">{{ item.name }}</span>
+                <span class="price">{{ item.price }} $</span>
+              </div>
+            </div>
+
+            <div class="right">
+              @if (item.canDelete == false) {
+                <span class="static">This is static</span>
+              } @else {
+                <button class="icon-btn"  (click)="openPeoductEditModal(); productToEdit = item" >✏️</button>
+
+                <button class="icon-btn delete" (click)="deleteProduct(item.id)">🗑️</button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+
+      <div class="pagination">
+        <button (click)="onPrevious()" [disabled]="currentPage == 0">Previous</button>
+        <span>Page 2</span>
+        <button (click)="onNext()">Next</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showProductModal) {
+  <div class="overlay" (click)="closeProductModal()"></div>
+}
+
+@if (showProductModal) {
+  <form class="modal"  #productForm="ngForm" (ngSubmit)="createProduct(productForm.value)">
+    <div class="modal-header">
+      <h3>Add Product</h3>
+      <button class="modal-close" (click)="closeProductModal()">✕</button>
+    </div>
+    <!-- Name -->
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        name="name"
+        required
+        ngModel
+        type="text"
+        class="form-input"
+        placeholder="e.g. Cheeseburger"
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Description</label>
+      <input  
+        name="description"
+        required
+        ngModel
+        type="text"
+       class="form-input"
+        placeholder="Short description of the product"
+>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group">
+      <label>Price ($)</label>
+      <input 
+      name="price"
+      required
+      ngModel
+      type="number" 
+      class="form-input"
+       placeholder="0" />
+    </div>
+
+    <!-- Image URL -->
+    <div class="form-group">
+      <label>Image URL</label>
+      <input
+        name="image"
+        required
+        ngModel
+        type="text"
+        class="form-input"
+        placeholder="https://..."
+      />
+    </div>
+
+
+    <div class="form-group">
+      <label>Category</label>
+      <select name="categoryID" ngModel required class="form-input" >
+        <option value="">Select a category</option>
+        @for (cat of categories; track cat.id) {
+          <option [value]="cat.id">{{ cat.name }}</option>
+        }
+      </select>
+    </div>
+
+
+    <div class="form-group">
+      <label>Spiciness (0–5)</label>
+      <div class="spice-slider">
+        <input
+          name="spiciness"
+          [ngModel]="0"
+          type="range"
+          min="0"
+          max="5"
+          class="form-input"
+        />
+        <span>Level: {{ productForm.value.spiciness }}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label  style="display: flex; gap: 10px;" >Vegetarian   <div class="toggle-switch">
+        <input 
+        name="vegetarian"
+        [ngModel]="false"
+         type="checkbox"
+          id="vegetarian" />
+      </div></label>
+    
+    </div>
+
+    <div class="form-group">
+      <label>Cooking Method</label>
+      <input  
+      name="method"
+      ngModel
+      required=""
+      class="form-input"
+        placeholder="e.g. Grilled on open flame for 8 minutes"
+     >
+    </div>
+
+
+    <div class="form-group">
+      <label>Ingredients</label>
+      <input
+        required
+        [(ngModel)]="ing"
+        type="text"
+        class="form-input"
+        placeholder="beef, cheese, lettuce (comma-separated)"
+      />
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-ghost" (click)="closeProductModal()">Cancel</button>
+      <button class="btn-primary" [disabled]="productForm.invalid" type="submit" >Create</button>
+    </div>
+  </form>
+}
+
+
+
+@if (showEditProductModal) {
+  <div class="overlay" (click)="closeEditProductModal()"></div>
+}
+
+@if (showEditProductModal) {
+  <form class="modal" #editProductForm="ngForm" (ngSubmit)="editProduct(editProductForm.value)">
+    <div class="modal-header">
+      <h3>Edit Product</h3>
+      <button class="modal-close" (click)="closeEditProductModal()">✕</button>
+    </div>
+
+    <!-- Name -->
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        type="text"
+        ngModel
+        required
+        class="form-input"
+        placeholder="e.g. Cheeseburger"
+        name="name"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Description</label>
+      <input  class="form-input"
+        placeholder="Short description of the product"
+        ngModel
+        name="description"
+        required>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group">
+      <label>Price ($)</label>
+      <input
+        type="number"
+        class="form-input"
+        placeholder="0"
+        ngModel
+        name="price"
+        required
+      />
+    </div>
+
+    <!-- Image URL -->
+    <div class="form-group">
+      <label>Image URL</label>
+      <input
+        type="text"
+        class="form-input"
+        placeholder="https://..."
+        ngModel
+        name="image"
+        required
+      />
+    </div>
+
+    <!-- Category -->
+    <div class="form-group">
+      <label>Category</label>
+      <select class="form-input" ngModel name="categoryId" required>
+        <option value="">Select a category</option>
+        @for (cat of categories; track cat.id) {
+          <option [value]="cat.id">{{cat.name}}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Spiciness -->
+    <div class="form-group">
+      <label>Spiciness (0–5)</label>
+      <div class="spice-slider">
+        <input
+          type="range"
+          min="0"
+          max="5"
+          [ngModel]="0"
+          class="form-input"
+          name="spiciness"
+        />
+        <span>Level: {{ editProductForm.value.spiciness }}</span>
+      </div>
+    </div>
+
+    <!-- Vegetarian -->
+   <div class="form-group">
+      <label  style="display: flex; gap: 10px;" >Vegetarian   <div class="toggle-switch">
+        <input 
+        name="vegetarian"
+        [ngModel]="false"
+         type="checkbox"
+          id="vegetarian" />
+      </div></label>
+    
+    </div>
+
+    <!-- Cooking Method -->
+    <div class="form-group">
+      <label>Cooking Method</label>
+      <input  class="form-input" ngModel
+        placeholder="e.g. Grilled on open flame for 8 minutes"
+        name="cookingMethod">
+        
+    
+    </div>
+
+    <!-- Ingredients -->
+    <div class="form-group">
+      <label>Ingredients</label>
+      <input
+        type="text"
+        class="form-input"
+        ngModel
+        placeholder="beef, cheese, lettuce (comma-separated)"
+      />
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-ghost" (click)="closeEditProductModal()">Cancel</button>
+      <button class="btn-primary" [disabled]="editProductForm.invalid" type="submit">Update</button>
+    </div>
+  </form>
+}

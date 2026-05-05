@@ -46,6 +46,11 @@ export const routes: Routes = [
         loadComponent: () => import('./verify-email/verify-email').then(m => m.VerifyEmail)
     },
     {
+        path: `admin`,
+        loadComponent: () => import('./admin/admin').then(m => m.Admin),
+        canActivate: [guardGuard]
+    },
+    {
         path:"**",
         loadComponent: () => import('./error/error').then(m => m.Error)
     }
