@@ -11,7 +11,7 @@ export class Services {
     return this.http.get(this.baseURL + url, {
       headers: {
         'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
   }
@@ -19,7 +19,7 @@ export class Services {
     return this.http.post(this.baseURL + url, body, {
       headers: {
         'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
   }
@@ -27,7 +27,7 @@ export class Services {
     return this.http.put(this.baseURL + url, body, {
       headers: {
         'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
   }
@@ -35,7 +35,17 @@ export class Services {
     return this.http.delete(this.baseURL + url, {
       headers: {
         'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
-}}
+  }
+  refreshToken() {
+    return this.http.post(this.baseURL + '/api/auth/refresh-access-token/1', {
+       headers: {
+        'X-API-KEY': 'a6778c7c-fe28-4945-8097-f97ad4cb5446',
+        refreshToken: localStorage.getItem('refreshToken'),
+      },
+    });
+   
+  }
+}

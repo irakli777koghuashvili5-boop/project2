@@ -32,7 +32,20 @@ export class VerifyEmail {
           this.cdr.detectChanges();
         },
         error: (err) => {
-          console.log(err);
+           if (err.status === 401) {
+             this.api.refreshToken().subscribe({
+               next: (res: any) => {
+                 console.log(res);
+                 localStorage.setItem('accessToken', res.data.accessToken);
+                 localStorage.setItem('refreshToken', res.data.refreshToken);
+                 this.cdr.detectChanges();
+                 this.verifyEmail(form);
+               },
+               error: (err) => {
+                 console.log(err);
+               },
+             });
+           };
         },
       });
   }
@@ -46,7 +59,20 @@ export class VerifyEmail {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log(err);
+         if (err.status === 401) {
+           this.api.refreshToken().subscribe({
+             next: (res: any) => {
+               console.log(res);
+               localStorage.setItem('accessToken', res.data.accessToken);
+               localStorage.setItem('refreshToken', res.data.refreshToken);
+               this.cdr.detectChanges();
+               this.resendCode();
+             },
+             error: (err) => {
+               console.log(err);
+             },
+           });
+         };
       }
     })
   }

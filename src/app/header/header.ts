@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
+import { Services } from '../service/services';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,13 @@ import { Router, RouterLink } from "@angular/router";
 })
 export class Header {
   isMenuOpen: boolean = false;
-  isProfileMenuOpen = false;
-  constructor(private el: ElementRef, private router: Router) {}
+  isProfileMenuOpen: boolean = false;
+  userName: string = ''
+  constructor(private el: ElementRef, private router: Router, private api: Services, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(){
+    this.getUser()
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -20,6 +26,34 @@ export class Header {
       document.body.style.overflow = 'auto';
     }
   }
+  getUser(){
+    this.api.getAll(`/api/users/me`)
+    .subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        this.userName = resp.data.firstName
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.getUser();
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      }
+    })
+
+  }
+  
 
   closeMenu() {
     this.isMenuOpen = false;

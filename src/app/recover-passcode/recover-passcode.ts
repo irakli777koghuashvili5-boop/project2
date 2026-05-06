@@ -17,7 +17,22 @@ export class RecoverPasscode {
         console.log(res);
         alert("recovery code has been sent to your email: " + form.value.email)
        },
-      error: (err) => {console.log(err);}
+      error: (err) => {
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.forgotPass(form);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      }
     })
   }
 }

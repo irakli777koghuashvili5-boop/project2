@@ -181,7 +181,21 @@ export class Menu {
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                console.log(res);
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('refreshToken', res.data.refreshToken);
+                this.addToCart(id);
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
+          }
+        },
       });
   }
 }

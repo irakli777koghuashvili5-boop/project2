@@ -124,7 +124,7 @@
               @if (item.canDelete == false) {
                 <span class="static">This is static</span>
               } @else {
-                <button class="icon-btn"  (click)="openPeoductEditModal(); productToEdit = item" >✏️</button>
+                <button class="icon-btn" (click)="openPeoductEditModal(item)" >✏️</button>
 
                 <button class="icon-btn delete" (click)="deleteProduct(item.id)">🗑️</button>
               }
@@ -151,7 +151,7 @@
   <form class="modal"  #productForm="ngForm" (ngSubmit)="createProduct(productForm.value)">
     <div class="modal-header">
       <h3>Add Product</h3>
-      <button class="modal-close" (click)="closeProductModal()">✕</button>
+      <button class="modal-close" type="button" (click)="closeProductModal()">✕</button>
     </div>
     <!-- Name -->
     <div class="form-group">
@@ -207,7 +207,7 @@
 
     <div class="form-group">
       <label>Category</label>
-      <select name="categoryID" ngModel required class="form-input" >
+      <select name="categoryId" ngModel required class="form-input" >
         <option value="">Select a category</option>
         @for (cat of categories; track cat.id) {
           <option [value]="cat.id">{{ cat.name }}</option>
@@ -235,7 +235,7 @@
       <label  style="display: flex; gap: 10px;" >Vegetarian   <div class="toggle-switch">
         <input 
         name="vegetarian"
-        [ngModel]="false"
+        ngModel
          type="checkbox"
           id="vegetarian" />
       </div></label>
@@ -247,7 +247,6 @@
       <input  
       name="method"
       ngModel
-      required=""
       class="form-input"
         placeholder="e.g. Grilled on open flame for 8 minutes"
      >
@@ -257,7 +256,9 @@
     <div class="form-group">
       <label>Ingredients</label>
       <input
+        name="ingredients"
         required
+        ngModel
         [(ngModel)]="ing"
         type="text"
         class="form-input"
@@ -266,7 +267,7 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn-ghost" (click)="closeProductModal()">Cancel</button>
+      <button class="btn-ghost" (click)="closeProductModal()" type="button"  >Cancel</button>
       <button class="btn-primary" [disabled]="productForm.invalid" type="submit" >Create</button>
     </div>
   </form>
@@ -282,19 +283,18 @@
   <form class="modal" #editProductForm="ngForm" (ngSubmit)="editProduct(editProductForm.value)">
     <div class="modal-header">
       <h3>Edit Product</h3>
-      <button class="modal-close" (click)="closeEditProductModal()">✕</button>
+      <button class="modal-close" type="button" (click)="closeEditProductModal()">✕</button>
     </div>
 
     <!-- Name -->
     <div class="form-group">
       <label>Name</label>
       <input
+        name="name"
         type="text"
-        ngModel
-        required
         class="form-input"
         placeholder="e.g. Cheeseburger"
-        name="name"
+        [(ngModel)]="productToEdit.name"
         required
       />
     </div>
@@ -302,22 +302,25 @@
     <!-- Description -->
     <div class="form-group">
       <label>Description</label>
-      <input  class="form-input"
-        placeholder="Short description of the product"
-        ngModel
+      <input
         name="description"
-        required>
+        type="text"
+        class="form-input"
+        placeholder="Short description"
+        [(ngModel)]="productToEdit.description"
+        required
+      />
     </div>
 
     <!-- Price -->
     <div class="form-group">
       <label>Price ($)</label>
       <input
+        name="price"
         type="number"
         class="form-input"
         placeholder="0"
-        ngModel
-        name="price"
+        [(ngModel)]="productToEdit.price"
         required
       />
     </div>
@@ -326,22 +329,26 @@
     <div class="form-group">
       <label>Image URL</label>
       <input
+        name="image"
         type="text"
         class="form-input"
         placeholder="https://..."
-        ngModel
-        name="image"
-        required
+        [(ngModel)]="productToEdit.image"
       />
     </div>
 
     <!-- Category -->
     <div class="form-group">
       <label>Category</label>
-      <select class="form-input" ngModel name="categoryId" required>
-        <option value="">Select a category</option>
+      <select
+        name="categoryId"
+        class="form-input"
+        [(ngModel)]="productToEdit.categoryId"
+        required
+      >
+        <option [ngValue]="null">Select a category</option>
         @for (cat of categories; track cat.id) {
-          <option [value]="cat.id">{{cat.name}}</option>
+          <option [ngValue]="cat.id">{{ cat.name }}</option>
         }
       </select>
     </div>
@@ -351,54 +358,56 @@
       <label>Spiciness (0–5)</label>
       <div class="spice-slider">
         <input
+          name="spiciness"
           type="range"
           min="0"
           max="5"
-          [ngModel]="0"
           class="form-input"
-          name="spiciness"
+          [(ngModel)]="productToEdit.spiciness"
         />
-        <span>Level: {{ editProductForm.value.spiciness }}</span>
+        <span>Level: {{ productToEdit.spiciness }}</span>
       </div>
     </div>
 
     <!-- Vegetarian -->
-   <div class="form-group">
-      <label  style="display: flex; gap: 10px;" >Vegetarian   <div class="toggle-switch">
-        <input 
-        name="vegetarian"
-        [ngModel]="false"
-         type="checkbox"
-          id="vegetarian" />
-      </div></label>
-    
+    <div class="form-group">
+      <label style="display: flex; gap: 10px;">
+        Vegetarian
+        <input
+          name="vegetarian"
+          type="checkbox"
+          [(ngModel)]="productToEdit.vegetarian"
+        />
+      </label>
     </div>
 
     <!-- Cooking Method -->
     <div class="form-group">
       <label>Cooking Method</label>
-      <input  class="form-input" ngModel
-        placeholder="e.g. Grilled on open flame for 8 minutes"
-        name="cookingMethod">
-        
-    
+      <input
+        name="method"
+        type="text"
+        class="form-input"
+        placeholder="e.g. Grilled on open flame"
+        [(ngModel)]="productToEdit.method"
+      />
     </div>
 
     <!-- Ingredients -->
     <div class="form-group">
-      <label>Ingredients</label>
+      <label>Ingredients (comma-separated)</label>
       <input
+        name="ingredients"
         type="text"
         class="form-input"
-        ngModel
-        placeholder="beef, cheese, lettuce (comma-separated)"
+        placeholder="beef, cheese, lettuce"
+        [(ngModel)]="ing2"
       />
-
     </div>
 
     <div class="modal-footer">
-      <button class="btn-ghost" (click)="closeEditProductModal()">Cancel</button>
-      <button class="btn-primary" [disabled]="editProductForm.invalid" type="submit">Update</button>
+      <button class="btn-ghost" type="button" (click)="closeEditProductModal()">Cancel</button>
+      <button class="btn-primary" type="submit">Update</button>
     </div>
   </form>
 }

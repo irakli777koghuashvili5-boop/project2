@@ -33,7 +33,20 @@ export class Profile {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log(err);
+        if(err.status === 401){
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.getData();
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
+        }
       },
     });
   }
@@ -47,7 +60,20 @@ export class Profile {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log(err);
+          if(err.status === 401){
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.saveChanges(form);
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
+        }
       },
     })
   }
@@ -59,7 +85,20 @@ export class Profile {
         console.log(res);
       }),
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.passChange(form);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
       },
     })
     
@@ -70,7 +109,20 @@ export class Profile {
         console.log(res);
       }),
       error: (err => {
-        console.log(err);
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.deleteData();
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
       })
     })
   }

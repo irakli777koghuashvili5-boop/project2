@@ -9,24 +9,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin.scss',
 })
 export class Admin {
+  Number(arg0: any): any {
+    throw new Error('Method not implemented.');
+  }
   activeTab: 'categories' | 'products' = 'categories';
   categories: any[] = [];
   showDrawer = false;
   catText: string = '';
 
-  // Product modal properties
   showProductModal = false;
-  productForm = {
-    name: '',
-    description: '',
-    price: 0,
-    imageUrl: '',
-    category: '',
-    spiciness: 0,
-    isVegetarian: false,
-    cookingMethod: '',
-    ingredients: '',
-  };
 
   constructor(
     private api: Services,
@@ -49,6 +40,22 @@ export class Admin {
         this.cdr.detectChanges();
         this.get_cat();
       },
+      error: (err) => {
+        if(err.status === 401){
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.deleteCat(id);
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          });
+        }
+      },
     });
   }
   edit() {
@@ -62,7 +69,22 @@ export class Admin {
           this.cdr.detectChanges();
           this.get_cat();
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                console.log(res);
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('refreshToken', res.data.refreshToken);
+                this.cdr.detectChanges();
+                this.edit();
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
+          }
+        },
       });
   }
   Products: any;
@@ -73,27 +95,77 @@ export class Admin {
 
   isOpen = false;
   categoryName = '';
-  productId : number = 0;
-  productToEdit : any
+  productId: number = 0;
+  productToEdit: any;
 
   CategoryId: any;
   showEditProductModal = false;
-  openPeoductEditModal() {
+
+  openPeoductEditModal(item: any) {
+    this.productToEdit = {
+      id: item.id,
+      name: item.name ?? '',
+      description: item.description ?? '',
+      price: item.price ?? 0,
+      image: item.image ?? item.imageUrl ?? '',
+      categoryId: item.categoryId ?? null,
+      spiciness: item.spiciness ?? 0,
+      vegetarian: item.vegetarian ?? item.isVegetarian ?? false,
+      method: item.method ?? item.cookingMethod ?? '',
+    };
+
+    this.ing2 = Array.isArray(item.ingredients)
+      ? item.ingredients.join(', ')
+      : (item.ingredients ?? '');
+
     this.showEditProductModal = true;
   }
 
   editProduct(form: any) {
-    console.log(form);
-    this.api.putAll(`/api/products/${this.productToEdit.id}`, form).subscribe({
+    let ingredientsArray: string[] = this.ing2
+      .split(',')
+      .map((i: string) => i.trim())
+      .filter((i: string) => i.length > 0);
+
+    let payload = {
+      name: form.name,
+      description: form.description,
+      price: Number(form.price),
+      image: form.image,
+      categoryId: Number(this.productToEdit.categoryId), 
+      spiciness: Number(form.spiciness),
+      vegetarian: this.productToEdit.vegetarian,
+      method: form.method,
+      ingredients: ingredientsArray,
+    };
+
+    console.log('edit payload →', payload);
+
+    this.api.putAll(`/api/products/${this.productToEdit.id}`, payload).subscribe({
       next: (resp: any) => {
         console.log(resp);
-        alert("edited succesfully")
+        alert('Edited successfully');
         this.cdr.detectChanges();
+        this.closeEditProductModal();
         this.getProducts(this.currentPage);
-    },
-    error: (err) => console.log(err)
-  }
-  )
+      },
+      error: (err: any) => {
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.editProduct(form);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      },
+    });
   }
 
   openModal(id: any) {
@@ -122,7 +194,6 @@ export class Admin {
 
   resetProductForm() {}
 
-
   createCategory() {
     this.api
       .postAll(`/api/categories`, {
@@ -136,13 +207,26 @@ export class Admin {
           this.get_cat();
         },
         error: (err) => {
-          console.log(err);
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                console.log(res);
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('refreshToken', res.data.refreshToken);
+                this.cdr.detectChanges();
+                this.createCategory();
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
+          };
         },
       });
   }
   ing: string = '';
 
-  ingr: any[] = this.ing.split(`,`);
+  ing2: string = '';
 
   deleteProduct(id: any) {
     this.api.deleteAll(`/api/products/${id}`).subscribe({
@@ -153,24 +237,60 @@ export class Admin {
         this.getProducts(this.currentPage);
       },
       error: (err) => {
-        console.log(err);
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.deleteProduct(id);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        };
       },
     });
   }
 
   createProduct(form: any) {
-    this.api.postAll(`/api/products`, form).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        alert('succeesfully created');
-        this.getProducts(this.currentPage);
-        this.cdr.detectChanges();
-        window.location.reload();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    let ingredientsArray = this.ing
+      .split(',')
+      .map((i: string) => i.trim())
+      .filter((i: string) => i);
+
+    let payload = {
+      ...form,
+      ingredients: ingredientsArray,
+    };
+    (console.log(payload),
+      this.api.postAll(`/api/products`, payload).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          alert('succeesfully created');
+          this.getProducts(this.currentPage);
+
+          this.closeProductModal();
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                console.log(res);
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('refreshToken', res.data.refreshToken);
+                this.cdr.detectChanges();
+                this.createProduct(form);
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
+          }
+        },
+      }));
   }
 
   ngOnInit() {
@@ -184,7 +304,22 @@ export class Admin {
         this.categories = resp.data;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.get_cat();
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      },
     });
   }
   currentPage: number = 1;
@@ -205,7 +340,22 @@ export class Admin {
         this.Products = resp.data.products;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.getProducts(page);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      },
     });
   }
 }
