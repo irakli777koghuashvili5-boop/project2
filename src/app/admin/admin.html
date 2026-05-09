@@ -34,7 +34,7 @@
               @if (item.canDelete == false) {
                 <span class="static">this is static</span>
               } @else if (item.canDelete == true) {
-                <button class="icon-btn" (click)="openModal(item.id)">✏️</button>
+                <button class="icon-btn" (click)="openModal(item)">✏️</button>
 
                 <button class="icon-btn delete" (click)="deleteCat(item.id)">🗑️</button>
               }
@@ -210,7 +210,7 @@
       <select name="categoryId" ngModel required class="form-input" >
         <option value="">Select a category</option>
         @for (cat of categories; track cat.id) {
-          <option [value]="cat.id">{{ cat.name }}</option>
+          <option ngModel [value]="cat.id">{{ cat.name }}</option>
         }
       </select>
     </div>
@@ -272,7 +272,6 @@
     </div>
   </form>
 }
-
 
 
 @if (showEditProductModal) {

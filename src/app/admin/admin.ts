@@ -9,9 +9,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin.scss',
 })
 export class Admin {
-  Number(arg0: any): any {
-    throw new Error('Method not implemented.');
-  }
   activeTab: 'categories' | 'products' = 'categories';
   categories: any[] = [];
   showDrawer = false;
@@ -37,8 +34,8 @@ export class Admin {
       next: (resp: any) => {
         console.log(resp);
         alert('deleted succesfully');
-        this.cdr.detectChanges();
         this.get_cat();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         if(err.status === 401){
@@ -102,23 +99,39 @@ export class Admin {
   showEditProductModal = false;
 
   openPeoductEditModal(item: any) {
-    this.productToEdit = {
-      id: item.id,
-      name: item.name ?? '',
-      description: item.description ?? '',
-      price: item.price ?? 0,
-      image: item.image ?? item.imageUrl ?? '',
-      categoryId: item.categoryId ?? null,
-      spiciness: item.spiciness ?? 0,
-      vegetarian: item.vegetarian ?? item.isVegetarian ?? false,
-      method: item.method ?? item.cookingMethod ?? '',
-    };
+          this.showEditProductModal = true;
+    let info : any
+  this.api.getAll(`/api/products/${item.id}`).subscribe({
+    next: (res: any) => {
+      console.log(res.data);
+      info = res.data;
+      info.ingredients = Array.isArray(item.ingredients)
+        ? item.ingredients.join(', ')
+        : (item.ingredients ?? '');
 
-    this.ing2 = Array.isArray(item.ingredients)
-      ? item.ingredients.join(', ')
-      : (item.ingredients ?? '');
+      this.productToEdit = {
+        id: item.id,
+        name: info.name,
+        description: info.description,
+        price: info.price,
+        image: item.image,
+        categoryId: info.categoryId,
+        spiciness: info.spiciness ?? 0,
+        vegetarian: info.vegetarian,
+        method: info.method,
+        ingredients: info.ingredients,
+      };
 
-    this.showEditProductModal = true;
+      console.log(this.productToEdit);
+
+
+    
+      this.cdr.detectChanges();
+    },
+    error: (err) => console.error(err),
+  });
+
+    
   }
 
   editProduct(form: any) {
@@ -138,8 +151,6 @@ export class Admin {
       method: form.method,
       ingredients: ingredientsArray,
     };
-
-    console.log('edit payload →', payload);
 
     this.api.putAll(`/api/products/${this.productToEdit.id}`, payload).subscribe({
       next: (resp: any) => {
@@ -168,9 +179,10 @@ export class Admin {
     });
   }
 
-  openModal(id: any) {
+  openModal(item: any) {
     this.isOpen = true;
-    this.CategoryId = id;
+    this.CategoryId = item.id;
+    this.categoryName = item.name
   }
 
   closeEditProductModal() {
@@ -205,6 +217,8 @@ export class Admin {
           alert('succeesfully created');
           this.cdr.detectChanges();
           this.get_cat();
+          this.closeDrawer();
+
         },
         error: (err) => {
           if (err.status === 401) {
@@ -352,10 +366,12 @@ export class Admin {
             },
             error: (err) => {
               console.log(err);
-            },
-          });
-        }
-      },
-    });
-  }
+        },
+       }
+      );
+     }
+    }
+   }
+  )
+ }
 }
