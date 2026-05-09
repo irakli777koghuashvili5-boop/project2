@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { Services } from '../service/services';
+import { Alert } from '../alert/alert';
 
 @Component({
   selector: 'app-log-in',
@@ -19,6 +20,7 @@ export class LogIn {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private alert: Services,
   ) {}
 
   SignIn(form: any) {
@@ -29,16 +31,23 @@ export class LogIn {
       .subscribe({
         next: (resp: any) => {
           console.log(resp);
+           this.alert.show("Logged in successfully");
           if (resp) {
             localStorage.setItem('accessToken', resp.data.accessToken);
             localStorage.setItem('refreshToken', resp.data.refreshToken);
-            alert(`Logged in successfully`);
-            this.router.navigate(['/home']);
+            this.cdr.detectChanges()
+            setTimeout(() => {
+              this.router.navigateByUrl('/home');
+            }, 1200);
           }
           this.cdr.detectChanges();
         },
         error: (err) => {
           console.log(err);
+          if(err.status === 400){
+            this.alert.show("Invalid email or password") 
+            this.cdr.detectChanges();
+          }
         },
       });
   }

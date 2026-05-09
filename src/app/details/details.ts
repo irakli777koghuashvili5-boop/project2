@@ -26,6 +26,7 @@ export class Details {
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
+    private alert: Services,
   ) {}
 
   showProduct() {
@@ -74,7 +75,7 @@ export class Details {
   }
   addToCart() {
     if (!localStorage.getItem('accessToken')) {
-      alert("log in first")
+      this.alert.show("log in first")
       this.router.navigate(['/log-in']);
     }
     this.api
@@ -84,7 +85,7 @@ export class Details {
       })
       .subscribe({
         next: (res: any) => {
-          alert(`${this.qty} ${this.products.name} added to cart`);
+          this.alert.show(`${this.qty} ${this.products.name} added to cart`);
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },
@@ -93,7 +94,7 @@ export class Details {
   }
   addLikedIntoCart(id: number){
      if (!localStorage.getItem('accessToken')) {
-       alert('log in first');
+       this.alert.show('log in first');
        this.router.navigate(['/log-in']);
      }
     this.api
@@ -103,7 +104,7 @@ export class Details {
       })
       .subscribe({
         next: (res: any) => {
-          alert('Product added to cart');
+          this.alert.show('Product added to cart');
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

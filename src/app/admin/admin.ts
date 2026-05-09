@@ -19,6 +19,7 @@ export class Admin {
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
+    private alert: Services,
   ) {}
 
   setTab(tab: 'categories' | 'products') {
@@ -33,7 +34,7 @@ export class Admin {
     this.api.deleteAll(`/api/categories/${id}`).subscribe({
       next: (resp: any) => {
         console.log(resp);
-        alert('deleted succesfully');
+        this.alert.show('deleted succesfully');
         this.get_cat();
         this.cdr.detectChanges();
       },
@@ -155,7 +156,7 @@ export class Admin {
     this.api.putAll(`/api/products/${this.productToEdit.id}`, payload).subscribe({
       next: (resp: any) => {
         console.log(resp);
-        alert('Edited successfully');
+        this.alert.show('Edited successfully');
         this.cdr.detectChanges();
         this.closeEditProductModal();
         this.getProducts(this.currentPage);
@@ -214,7 +215,7 @@ export class Admin {
       .subscribe({
         next: (resp: any) => {
           console.log(resp);
-          alert('succeesfully created');
+          this.alert.show('succeesfully created');
           this.cdr.detectChanges();
           this.get_cat();
           this.closeDrawer();
@@ -246,7 +247,7 @@ export class Admin {
     this.api.deleteAll(`/api/products/${id}`).subscribe({
       next: (resp: any) => {
         console.log(resp);
-        alert('deleted succesfully');
+        this.alert.show('deleted succesfully');
         this.cdr.detectChanges();
         this.getProducts(this.currentPage);
       },
@@ -283,7 +284,7 @@ export class Admin {
       this.api.postAll(`/api/products`, payload).subscribe({
         next: (res: any) => {
           console.log(res);
-          alert('succeesfully created');
+          this.alert.show('succeesfully created');
           this.getProducts(this.currentPage);
 
           this.closeProductModal();

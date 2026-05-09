@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Services } from '../service/services';
+import { Alert } from '../alert/alert';
 
 @Component({
   selector: 'app-recover-passcode',
@@ -9,14 +10,19 @@ import { Services } from '../service/services';
   styleUrl: './recover-passcode.scss',
 })
 export class RecoverPasscode {
-  constructor(private api: Services, private cdr: ChangeDetectorRef) {}
-  forgotPass(form: any){
-    this.api.postAll(`/api/auth/forgot-password/${form.value.email}`, {})
-    .subscribe({
+
+  constructor(
+    private api: Services,
+    private cdr: ChangeDetectorRef,
+    private alert: Services,
+  ) {}
+  forgotPass(form: any) {
+    this.api.postAll(`/api/auth/forgot-password/${form.value.email}`, {}).subscribe({
       next: (res) => {
         console.log(res);
-        alert("recovery code has been sent to your email: " + form.value.email)
-       },
+        this.alert.show(`Recover password link sent to ${form.value.email}`)
+        this.cdr.detectChanges();
+      },
       error: (err) => {
         if (err.status === 401) {
           this.api.refreshToken().subscribe({
@@ -32,7 +38,7 @@ export class RecoverPasscode {
             },
           });
         }
-      }
-    })
+      },
+    });
   }
 }

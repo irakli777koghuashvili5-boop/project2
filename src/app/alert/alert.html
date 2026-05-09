@@ -1,0 +1,19 @@
+
+  @if (alertOpen) {
+  <div class="alertBody">
+    <div class="alertText">
+      <div class="alertTop">
+        <h2>Alert</h2>
+        <button
+          class="alertClose"
+          (click)="closeAlert()"
+          aria-label="Close alert">
+          ×
+        </button>
+      </div>
+      <div class="alertMiddle">
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  </div>
+}

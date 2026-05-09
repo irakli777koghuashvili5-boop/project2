@@ -4,9 +4,10 @@ import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 
+
 @Component({
   selector: 'app-home',
-  imports: [NgxSliderModule, FormsModule, RouterLink],
+  imports: [NgxSliderModule, FormsModule, RouterLink,],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -21,6 +22,7 @@ export class Home {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private alert: Services,
   ) {}
   DisplayProducts: any = [];
   isLoading: boolean = true;
@@ -50,7 +52,7 @@ export class Home {
   }
   addToCart(id: number) {
     if (!localStorage.getItem('accessToken')) {
-      alert('log in first');
+      this.alert.show('log in first');
       this.router.navigate(['/log-in']);
     }
     this.api
@@ -60,7 +62,7 @@ export class Home {
       })
       .subscribe({
         next: (res: any) => {
-          alert('Product added to cart');
+          this.alert.show('Product added to cart');
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

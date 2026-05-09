@@ -14,6 +14,7 @@ export class Profile {
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
+    private alert: Services,
   ) {}
   activeSection: 'personal' | 'password' | 'account' = 'personal';
 
@@ -51,7 +52,7 @@ export class Profile {
     });
   }
   saveChanges(form: NgForm) {
-    alert('Changes saved successfully!');
+    this.alert.show('Changes saved successfully!');
     console.log(form.value);
     this.api.putAll(`/api/users/edit`, form.value)
     .subscribe({

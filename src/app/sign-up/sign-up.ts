@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Services } from '../service/services';
 import { FormsModule } from '@angular/forms';
+import { Alert } from '../alert/alert';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,8 +13,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './sign-up.scss',
 })
 export class SignUp {
+
   passAndInp: boolean = false;
-upform: any;
+  upform: any;
   PassText() {
     this.passAndInp = !this.passAndInp;
   }
@@ -21,20 +23,23 @@ upform: any;
     private api: Services,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private alert: Services,
   ) {}
   register(form: any) {
     this.api
       .postAll(`/api/auth/register`, {
-        ...form.value
-
+        ...form.value,
       })
       .subscribe({
         next: (resp: any) => {
           console.log(resp);
+          this.alert.show('verify your email');
+          this.cdr.detectChanges();
           if (resp.data.token) {
             localStorage.setItem(`email`, form.value.email);
-            alert(`verify your email`)
-            this.router.navigateByUrl('/verify-email');
+             setTimeout(() => {
+               this.router.navigateByUrl('/verify-email');
+             }, 1000);
           }
           this.cdr.detectChanges();
         },

@@ -1,21 +1,30 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener } from '@angular/core';
-import { Router, RouterLink } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { Services } from '../service/services';
+import { Alert } from '../alert/alert';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
+
+
   isMenuOpen: boolean = false;
   isProfileMenuOpen: boolean = false;
-  userName: string = ''
-  constructor(private el: ElementRef, private router: Router, private api: Services, private cdr: ChangeDetectorRef) {}
+  userName: string = '';
+  constructor(
+    private el: ElementRef,
+    private router: Router,
+    private api: Services,
+    private cdr: ChangeDetectorRef,
+    private alert: Services,
+  ) {}
 
-  ngOnInit(){
-    this.getUser()
+  ngOnInit() {
+    this.getUser();
   }
 
   toggleMenu() {
@@ -26,12 +35,11 @@ export class Header {
       document.body.style.overflow = 'auto';
     }
   }
-  getUser(){
-    this.api.getAll(`/api/users/me`)
-    .subscribe({
+  getUser() {
+    this.api.getAll(`/api/users/me`).subscribe({
       next: (resp: any) => {
         console.log(resp);
-        this.userName = resp.data.firstName
+        this.userName = resp.data.firstName;
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -49,11 +57,9 @@ export class Header {
             },
           });
         }
-      }
-    })
-
+      },
+    });
   }
-  
 
   closeMenu() {
     this.isMenuOpen = false;
@@ -80,10 +86,11 @@ export class Header {
     }
   }
 
-  logOut(){
+  logOut() {
+    this.alert.show('Logged out successfully');
+    this.cdr.detectChanges();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    alert(`Logged out successfully`);
     this.router.navigate(['/home']);
   }
 }

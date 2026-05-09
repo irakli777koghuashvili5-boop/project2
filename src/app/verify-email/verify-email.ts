@@ -16,6 +16,7 @@ export class VerifyEmail {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private alert: Services,
   ) {}
 
   verifyEmail(form: any) {
@@ -27,53 +28,55 @@ export class VerifyEmail {
       .subscribe({
         next: (res) => {
           console.log(res);
-          alert('Now Log In');
-          this.router.navigateByUrl('/log-in');
+          this.alert.show('Now log in');
+          this.cdr.detectChanges();
+          setTimeout(() => {
+            this.router.navigateByUrl('/log-in');
+          }, 1000);
           this.cdr.detectChanges();
         },
         error: (err) => {
-           if (err.status === 401) {
-             this.api.refreshToken().subscribe({
-               next: (res: any) => {
-                 console.log(res);
-                 localStorage.setItem('accessToken', res.data.accessToken);
-                 localStorage.setItem('refreshToken', res.data.refreshToken);
-                 this.cdr.detectChanges();
-                 this.verifyEmail(form);
-               },
-               error: (err) => {
-                 console.log(err);
-               },
-             });
-           };
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                console.log(res);
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('refreshToken', res.data.refreshToken);
+                this.cdr.detectChanges();
+                this.verifyEmail(form);
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
+          }
         },
       });
   }
 
-  resendCode(){
-    this.api.postAll(`/api/auth/resend-email-verification/${this.ELmail}`, {})
-    .subscribe({
+  resendCode() {
+    this.api.postAll(`/api/auth/resend-email-verification/${this.ELmail}`, {}).subscribe({
       next: (res) => {
         console.log(res);
-        alert(`code has been resent to ${this.ELmail}`)
+        this.alert.show(`Verification code resent to ${this.ELmail}`)
         this.cdr.detectChanges();
       },
       error: (err) => {
-         if (err.status === 401) {
-           this.api.refreshToken().subscribe({
-             next: (res: any) => {
-               console.log(res);
-               localStorage.setItem('accessToken', res.data.accessToken);
-               localStorage.setItem('refreshToken', res.data.refreshToken);
-               this.cdr.detectChanges();
-               this.resendCode();
-             },
-             error: (err) => {
-               console.log(err);
-             },
-           });
-         };
-      }
-    })
+        if (err.status === 401) {
+          this.api.refreshToken().subscribe({
+            next: (res: any) => {
+              console.log(res);
+              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('refreshToken', res.data.refreshToken);
+              this.cdr.detectChanges();
+              this.resendCode();
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      },
+    });
   }
 }

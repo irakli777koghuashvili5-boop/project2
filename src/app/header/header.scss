@@ -72,6 +72,13 @@ $header-height: 80px;
       &::after { width: 100%; }
     }
   }
+
+  .nav-link.active {
+    color: $primary;
+    &::after {
+      width: 100%;
+    }
+  }
 }
 
 // Actions (Cart, Login, Sign Up)
@@ -201,6 +208,7 @@ $header-height: 80px;
       transition: color 0.2s;
 
       &:hover { color: $primary; }
+      &.active { color: $primary; }
       &.login { font-size: 1.2rem; color: $text-light; }
     }
 

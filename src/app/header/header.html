@@ -3,8 +3,8 @@
     <a routerLink="/home" class="logo">Foodie</a>
 
     <nav class="desktop-nav">
-      <a routerLink="/home" class="nav-link">Home</a>
-      <a routerLink="/menu" class="nav-link">Menu</a>
+      <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+      <a routerLink="/menu" routerLinkActive="active" class="nav-link">Menu</a>
     </nav>
 
     <div class="actions-group">
@@ -50,9 +50,12 @@
 
   <div class="mobile-menu-overlay" [class.open]="isMenuOpen">
     <nav class="mobile-nav">
-      <a routerLink="/home" class="mobile-link" (click)="closeMenu()">Home</a>
-      <a routerLink="/menu" class="mobile-link" (click)="closeMenu()">Menu</a>
+      <a routerLink="/home" routerLinkActive="active" class="mobile-link" (click)="closeMenu()">Home</a>
+      <a routerLink="/menu" routerLinkActive="active" class="mobile-link" (click)="closeMenu()">Menu</a>
       <hr class="divider">
     </nav>
   </div>
 </header>
+
+
+

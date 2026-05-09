@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +42,8 @@ export class Services {
   }
   refreshToken() {
     return this.http.post(
-      this.baseURL + `/api/auth/refresh-access-token/${localStorage.getItem('refreshToken')}`,{},
+      this.baseURL + `/api/auth/refresh-access-token/${localStorage.getItem('refreshToken')}`,
+      {},
       {
         headers: {
           'X-API-KEY': 'cfe71798-dfb0-40ff-bba6-548eb575e662',
@@ -49,5 +51,27 @@ export class Services {
         },
       },
     );
+  }
+  private alertState = new BehaviorSubject
+  <{
+    open: boolean;
+    message: string;
+  }>
+  ({ open: false, message: '' });
+
+  alert$ = this.alertState.asObservable();
+
+  show(message: string) {
+    this.alertState.next({
+      open: true,
+      message: message,
+    });
+  }
+
+  hide() {
+    this.alertState.next({
+      open: false,
+      message: '',
+    });
   }
 }
