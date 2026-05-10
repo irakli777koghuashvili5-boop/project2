@@ -12,6 +12,7 @@ export class Cart {
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
+    private alert: Services
   ) {}
   ngOnInit() {
     this.getData();
@@ -66,6 +67,10 @@ export class Cart {
         }
       },
     });
+  }
+
+  checkOut(){
+    this.alert.show(`Purchased succesfully!`)
   }
 
   updateQty(id: number, num: number) {

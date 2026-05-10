@@ -50,7 +50,7 @@
         <span>Total</span>
         <span class="amount" id="grand-total">${{cartData.totalPrice + cartData.totalPrice * 0.1}}</span>
       </div>
-      <button class="checkout-btn">Proceed to Checkout</button>
+      <button class="checkout-btn"  (click)="checkOut()"  >Proceed to Checkout</button>
     </div>
   </div>
 </div>

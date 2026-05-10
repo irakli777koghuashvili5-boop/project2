@@ -8,36 +8,30 @@ import { BehaviorSubject } from 'rxjs';
 export class Services {
   constructor(private http: HttpClient) {}
   baseURL = `https://restaurantapi.stepacademy.ge`;
+  private getHeaders() {
+    return {
+      'X-API-KEY': 'cfe71798-dfb0-40ff-bba6-548eb575e662',
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    };
+  }
   getAll(url: string) {
     return this.http.get(this.baseURL + url, {
-      headers: {
-        'X-API-KEY': 'cfe71798-dfb0-40ff-bba6-548eb575e662',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+      headers: this.getHeaders()
     });
   }
   postAll(url: string, body: any) {
     return this.http.post(this.baseURL + url, body, {
-      headers: {
-        'X-API-KEY': 'cfe71798-dfb0-40ff-bba6-548eb575e662',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+      headers: this.getHeaders()
     });
   }
   putAll(url: string, body: any) {
     return this.http.put(this.baseURL + url, body, {
-      headers: {
-        'X-API-KEY': 'cfe71798-dfb0-40ff-bba6-548eb575e662',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+      headers: this.getHeaders()
     });
   }
   deleteAll(url: string) {
     return this.http.delete(this.baseURL + url, {
-      headers: {
-        'X-API-KEY': 'cfe71798-dfb0-40ff-bba6-548eb575e662',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+      headers: this.getHeaders()
     });
   }
   refreshToken() {
