@@ -53,6 +53,8 @@ export class Profile {
   }
   saveChanges(form: NgForm) {
     this.alert.show('Changes saved successfully!');
+    this.cdr.detectChanges();
+
     console.log(form.value);
     this.api.putAll(`/api/users/edit`, form.value)
     .subscribe({

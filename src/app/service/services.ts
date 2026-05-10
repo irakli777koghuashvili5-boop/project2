@@ -16,22 +16,22 @@ export class Services {
   }
   getAll(url: string) {
     return this.http.get(this.baseURL + url, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
     });
   }
   postAll(url: string, body: any) {
     return this.http.post(this.baseURL + url, body, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
     });
   }
   putAll(url: string, body: any) {
     return this.http.put(this.baseURL + url, body, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
     });
   }
   deleteAll(url: string) {
     return this.http.delete(this.baseURL + url, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
     });
   }
   refreshToken() {
@@ -46,12 +46,11 @@ export class Services {
       },
     );
   }
-  private alertState = new BehaviorSubject
-  <{
+
+  private alertState = new BehaviorSubject<{
     open: boolean;
     message: string;
-  }>
-  ({ open: false, message: '' });
+  }>({ open: false, message: '' });
 
   alert$ = this.alertState.asObservable();
 
@@ -68,4 +67,5 @@ export class Services {
       message: '',
     });
   }
+ 
 }
