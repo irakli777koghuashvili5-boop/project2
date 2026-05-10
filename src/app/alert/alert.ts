@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
 
 @Component({
@@ -12,10 +12,14 @@ export class Alert {
   alertOpen = false;
   message = '';
 
-  constructor(private alertService: Services) {
+  constructor(private alertService: Services, private cdr: ChangeDetectorRef) {
     this.alertService.alert$.subscribe((data: any) => {
       this.alertOpen = data.open;
       this.message = data.message;
+
+
+
+      this.cdr.detectChanges()
     });
   }
 
