@@ -7,7 +7,7 @@ import { Loader } from './loader/loader';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Alert, Loader],
+  imports: [RouterOutlet, Header, Footer, Alert,],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

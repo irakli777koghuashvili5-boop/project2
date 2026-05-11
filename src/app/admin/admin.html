@@ -134,11 +134,17 @@
       </div>
 
 
-      <div class="pagination">
-        <button (click)="onPrevious()" [disabled]="currentPage == 0">Previous</button>
-        <span>Page 2</span>
-        <button (click)="onNext()">Next</button>
-      </div>
+     <div class="pagination">
+  <button (click)="onPrevious()" [disabled]="currentPage === 1">
+    Previous
+  </button>
+
+  <span>Page {{ currentPage }}</span>
+
+  <button (click)="onNext()" [disabled]="!hasMore">
+    Next
+  </button>
+</div>
     </div>
   </div>
 }

@@ -39,7 +39,7 @@ export class Admin {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        if(err.status === 401){
+        if (err.status === 401) {
           this.api.refreshToken().subscribe({
             next: (res: any) => {
               console.log(res);
@@ -50,7 +50,7 @@ export class Admin {
             },
             error: (err) => {
               console.log(err);
-            }
+            },
           });
         }
       },
@@ -100,39 +100,35 @@ export class Admin {
   showEditProductModal = false;
 
   openPeoductEditModal(item: any) {
-          this.showEditProductModal = true;
-    let info : any
-  this.api.getAll(`/api/products/${item.id}`).subscribe({
-    next: (res: any) => {
-      console.log(res.data);
-      info = res.data;
-      info.ingredients = Array.isArray(item.ingredients)
-        ? item.ingredients.join(', ')
-        : (item.ingredients ?? '');
+    this.showEditProductModal = true;
+    let info: any;
+    this.api.getAll(`/api/products/${item.id}`).subscribe({
+      next: (res: any) => {
+        console.log(res.data);
+        info = res.data;
+        info.ingredients = Array.isArray(item.ingredients)
+          ? item.ingredients.join(', ')
+          : (item.ingredients ?? '');
 
-      this.productToEdit = {
-        id: item.id,
-        name: info.name,
-        description: info.description,
-        price: info.price,
-        image: item.image,
-        categoryId: info.categoryId,
-        spiciness: info.spiciness ?? 0,
-        vegetarian: info.vegetarian,
-        method: info.method,
-        ingredients: info.ingredients,
-      };
+        this.productToEdit = {
+          id: item.id,
+          name: info.name,
+          description: info.description,
+          price: info.price,
+          image: item.image,
+          categoryId: info.categoryId,
+          spiciness: info.spiciness ?? 0,
+          vegetarian: info.vegetarian,
+          method: info.method,
+          ingredients: info.ingredients,
+        };
 
-      console.log(this.productToEdit);
+        console.log(this.productToEdit);
 
-
-    
-      this.cdr.detectChanges();
-    },
-    error: (err) => console.error(err),
-  });
-
-    
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err),
+    });
   }
 
   editProduct(form: any) {
@@ -146,7 +142,7 @@ export class Admin {
       description: form.description,
       price: Number(form.price),
       image: form.image,
-      categoryId: Number(this.productToEdit.categoryId), 
+      categoryId: Number(this.productToEdit.categoryId),
       spiciness: Number(form.spiciness),
       vegetarian: this.productToEdit.vegetarian,
       method: form.method,
@@ -183,7 +179,7 @@ export class Admin {
   openModal(item: any) {
     this.isOpen = true;
     this.CategoryId = item.id;
-    this.categoryName = item.name
+    this.categoryName = item.name;
   }
 
   closeEditProductModal() {
@@ -219,7 +215,6 @@ export class Admin {
           this.cdr.detectChanges();
           this.get_cat();
           this.closeDrawer();
-
         },
         error: (err) => {
           if (err.status === 401) {
@@ -235,7 +230,7 @@ export class Admin {
                 console.log(err);
               },
             });
-          };
+          }
         },
       });
   }
@@ -265,7 +260,7 @@ export class Admin {
               console.log(err);
             },
           });
-        };
+        }
       },
     });
   }
@@ -338,41 +333,42 @@ export class Admin {
     });
   }
   currentPage: number = 1;
+  hasMore: boolean = true;
+
   onNext() {
-    this.currentPage = this.currentPage + 1;
-    this.getProducts(this.currentPage);
-  }
-  onPrevious() {
-    if (this.currentPage > 1) {
-      this.currentPage = this.currentPage - 1;
-      this.getProducts(this.currentPage);
+    if (this.hasMore) {
+      this.getProducts(this.currentPage + 1);
     }
   }
 
-  getProducts(page: any) {
-    this.api.getAll(`/api/products?Take=10&Page=${page}`).subscribe({
+  onPrevious() {
+    if (this.currentPage > 1) {
+      this.getProducts(this.currentPage - 1);
+    }
+  }
+
+  getProducts(page: number) {
+    this.api.getAll(`/api/products?Take=12&Page=${page}`).subscribe({
       next: (resp: any) => {
-        this.Products = resp.data.products;
+        this.Products = resp.data.products || [];
+
+        this.currentPage = page; // ✅ REQUIRED FIX
+        this.hasMore = resp.data.hasMore;
+
         this.cdr.detectChanges();
       },
       error: (err) => {
         if (err.status === 401) {
           this.api.refreshToken().subscribe({
             next: (res: any) => {
-              console.log(res);
               localStorage.setItem('accessToken', res.data.accessToken);
               localStorage.setItem('refreshToken', res.data.refreshToken);
-              this.cdr.detectChanges();
+
               this.getProducts(page);
             },
-            error: (err) => {
-              console.log(err);
-        },
-       }
-      );
-     }
-    }
-   }
-  )
- }
+          });
+        }
+      },
+    });
+  }
 }

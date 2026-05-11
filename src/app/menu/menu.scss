@@ -585,7 +585,6 @@ $primary-orange: #ff7043;
 
   position: sticky;
   top: 80px;
-  
   // Layout logic
   display: flex;
   flex-direction: column;
@@ -597,10 +596,9 @@ $primary-orange: #ff7043;
 
   // Header stays at the top
   .sidebar-header {
-    padding: 7px;
+    padding: 6.5px;
     flex-shrink: 0; 
     border-bottom: 1px solid #f9f9f9;
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
