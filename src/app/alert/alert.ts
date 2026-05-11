@@ -16,10 +16,6 @@ export class Alert {
     this.alertService.alert$.subscribe((data: any) => {
       this.alertOpen = data.open;
       this.message = data.message;
-
-
-
-      this.cdr.detectChanges()
     });
   }
 

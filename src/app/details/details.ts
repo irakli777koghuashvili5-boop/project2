@@ -3,6 +3,7 @@ import { Services } from '../service/services';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Loader } from '../loader/loader';
 import { finalize } from 'rxjs';
+import { Products } from '../models/model';
 
 @Component({
   selector: 'app-details',
@@ -18,7 +19,7 @@ export class Details {
     return filledStars + emptyStars;
   }
   productId: string | null = null;
-  products: any = [];
+  products!: Products
   relatedProducts: any = {};
   catId: number = 0;
   MightLike: any = [];

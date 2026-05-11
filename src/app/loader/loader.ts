@@ -12,7 +12,7 @@ export class Loader {
   constructor(private cdr: ChangeDetectorRef, private loaderService: Services){
     this.loaderService.loader$.subscribe((res) => {
       this.isLoading = res.open;
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     })
   }
 
