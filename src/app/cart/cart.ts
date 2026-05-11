@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
 import { Loader } from '../loader/loader';
 import { finalize } from 'rxjs';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-cart',
-  imports: [Loader],
+  imports: [Loader, RouterLink],
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
@@ -20,6 +21,7 @@ export class Cart {
     this.getData();
   }
   cartData: any = {};
+  textChange: boolean = false;
   getData() {
     this.loader.showLoader();
 
@@ -32,6 +34,9 @@ export class Cart {
     )
     .subscribe({
       next: (resp: any) => {
+        if(resp.data.items.length <= 0){
+          this.textChange = true;
+        }
         console.log(resp.data);
         this.cartData = resp.data;
         this.cdr.detectChanges();
@@ -81,7 +86,36 @@ export class Cart {
   }
 
   checkOut(){
-    this.alert.showAlert(`Purchased succesfully!`)
+    this.loader.showLoader()
+    this.api
+      .postAll(`/api/cart/checkout`, {})
+      .pipe(
+        finalize(() => {
+          this.loader.hideLoader();
+        }),
+      )
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.alert.showAlert("Order Placed");
+          this.getData();
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.log(err);
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                console.log(res);
+                this.cdr.detectChanges();
+              },
+              error: (err) => {
+                console.error(err);
+              },
+            });
+          }
+        },
+      });
   }
 
   updateQty(id: number, num: number) {
