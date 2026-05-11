@@ -61,6 +61,10 @@
   }
 
  <section class="content-area">
+   
+
+
+    
   <header class="menu-header">
     <h1>Menu</h1>
     <p>Showing {{ CardInside.length }} products</p>
@@ -72,15 +76,9 @@
 </svg> Filters
     </button>
   </header>
+     <app-loader></app-loader>
+ 
 
-  @if (isLoading) {
-    <div class="loading-overlay">
-      <div class="spinner"></div>
-      <p>Loading menu...</p>
-    </div>
-  }
-
-  @if (!isLoading) {
     <main class="product-grid">
       @for (item of CardInside; track item.id) {
         <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}">
@@ -103,6 +101,7 @@
         </article>
       }
     </main>
+  
 
     <div class="pagination-container">
       <button class="pag-btn" (click)="onPrevious()" [disabled]="currentPage === 1">
@@ -112,7 +111,7 @@
         Next →
       </button>
     </div>
-  }
+  
 
 </section>
 @if(showScrollBtn){

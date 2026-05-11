@@ -1,11 +1,6 @@
-     @if (isLoading) {
-    <div class="loading-overlay">
-      <div class="spinner"></div>
-      <p>Loading menu...</p>
-    </div>
-  }
 
-  @if (!isLoading) {
+
+<app-loader></app-loader>
 
 <div class="product-page">
   <div class="product-container">
@@ -23,7 +18,7 @@
         <div class="price">${{products.price}}</div>
         @if(products.vegetarian == true){
         <div class="badge vegetarian">
-         <img style="height: 20px;" src="leaf.svg" alt=""> Vegetarian
+         <img style="height: 30px;" src="leaf.svg" alt=""> Vegetarian
         </div>
       }
       </header>
@@ -60,18 +55,10 @@
     </div>
   </div>
 </div>
-}
+
 <section class="related-section">
   <div class="container">
     <h2 class="section-title">You May Also Like</h2>
-      @if (isLoading) {
-    <div class="loading-overlay">
-      <div class="spinner"></div>
-      <p>Loading menu...</p>
-    </div>
-  }
-
-  @if (!isLoading) {
     <div class="related-flex-container">
       @for (item of MightLike; track item.id) {
       <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}">
@@ -97,6 +84,6 @@
     }
       </div>
 
-    }
+    
   </div>
 </section>

@@ -16,14 +16,8 @@
   <div class="container">
     <h2 class="section-title">Popular Dishes</h2>
     
-  @if (isLoading) {
-    <div class="loading-overlay">
-      <div class="spinner"></div>
-      <p>Loading menu...</p>
-    </div>
-  }
+   <app-loader></app-loader>
 
-  @if (!isLoading) {
     <div class="product-flex-container">
           @for (item of DisplayProducts; track item.id) {
       <article class="product-card" routerLink="/details" [queryParams]="{id: item.id}" >
@@ -48,7 +42,7 @@
       </article>
     }
     </div>
-  }
+  
   </div>
 </section>
 

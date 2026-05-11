@@ -33,7 +33,7 @@ export class SignUp {
       .subscribe({
         next: (resp: any) => {
           console.log(resp);
-          this.alert.show('verify your email');
+          this.alert.showAlert('verify your email');
           this.cdr.detectChanges();
           if (resp.data.token) {
             localStorage.setItem(`email`, form.value.email);

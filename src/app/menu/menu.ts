@@ -3,10 +3,12 @@ import { Services } from '../service/services';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
+import { finalize } from 'rxjs';
+import { Loader } from '../loader/loader';
 
 @Component({
   selector: 'app-menu',
-  imports: [NgxSliderModule, FormsModule, RouterLink],
+  imports: [NgxSliderModule, FormsModule, RouterLink, Loader],
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
 })
@@ -22,7 +24,8 @@ export class Menu {
   spiciness: number = 0;
   rating: number = 0;
   isFilterOpen: boolean = false;
-  isLoading: boolean = true;
+  needLoad: boolean = false
+
 
   filters = {
     MinPrice: 0,
@@ -54,30 +57,42 @@ export class Menu {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private alert: Services,
+    private loader: Services
   ) {}
   ngOnInit() {
     this.loadPage(1);
     this.loadCategory();
     this.TestingLoad();
   }
+
   loadPage(page: number) {
-    this.isLoading = true;
-    this.api.getAll(`/api/products?Take=12&Page=${page}`).subscribe({
+    this.needLoad = true
+    this.loader.showLoader();
+
+    this.api.getAll(`/api/products?Take=12&Page=${page}`)
+    .pipe(
+      finalize(() => {
+        this.needLoad = false
+        this.loader.hideLoader();
+      })
+    )
+    .subscribe({
       next: (res: any) => {
         this.CardInside = res.data.products || [];
         this.currentPage = page;
-        this.isLoading = false;
+
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
-        this.isLoading = false;
+
       },
     });
   }
 
   onFilterChange() {
-    this.isLoading = true;
+    this.needLoad = true
+    this.loader.showLoader()
 
     let catNum = this.CategoryArr.filter((el) => el.selected === true).map((el) => el.id)[0] || 0;
 
@@ -86,32 +101,44 @@ export class Menu {
         .getAll(
           `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&CategoryId=${catNum}&Take=30&Page=1`,
         )
-        .subscribe({
-          next: (res: any) => {
-            this.CardInside = res.data.products || [];
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          },
-          error: (err) => {
-            console.error(err);
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          },
-        });
-    } else {
-      this.api
-        .getAll(
-          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&Take=30&Page=1`,
+        .pipe(
+          finalize(() => {
+            this.needLoad = false
+            this.loader.hideLoader();
+          })
         )
         .subscribe({
           next: (res: any) => {
             this.CardInside = res.data.products || [];
-            this.isLoading = false;
+
             this.cdr.detectChanges();
           },
           error: (err) => {
             console.error(err);
-            this.isLoading = false;
+
+            this.cdr.detectChanges();
+          },
+        });
+    } 
+    else {
+      this.api
+        .getAll(
+          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&Take=30&Page=1`,
+        )
+        .pipe(
+          finalize(() => {
+            this.loader.hideLoader();
+          })
+        )
+        .subscribe({
+          next: (res: any) => {
+            this.CardInside = res.data.products || [];
+
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error(err);
+
             this.cdr.detectChanges();
           },
         });
@@ -131,7 +158,8 @@ export class Menu {
     this.isFilterOpen = !this.isFilterOpen;
     if (this.isFilterOpen) {
       document.body.style.overflow = 'hidden';
-    } else {
+    }
+    else {
       document.body.style.overflow = 'auto';
     }
   }
@@ -168,7 +196,7 @@ export class Menu {
   }
   addToCart(id: number) {
     if (!localStorage.getItem('accessToken')) {
-      this.alert.show('log in first');
+      this.alert.showAlert('log in first');
       this.router.navigate(['/log-in']);
     }
     this.api
@@ -178,7 +206,7 @@ export class Menu {
       })
       .subscribe({
         next: (res: any) => {
-          this.alert.show('Product added to cart');
+          this.alert.showAlert('Product added to cart');
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

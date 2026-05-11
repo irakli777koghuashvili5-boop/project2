@@ -24,6 +24,6 @@ export class Alert {
   }
 
   closeAlert() {
-    this.alertService.hide();
+    this.alertService.hideAlert();
   }
 }

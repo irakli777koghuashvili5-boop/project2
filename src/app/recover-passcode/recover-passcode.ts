@@ -20,7 +20,7 @@ export class RecoverPasscode {
     this.api.postAll(`/api/auth/forgot-password/${form.value.email}`, {}).subscribe({
       next: (res) => {
         console.log(res);
-        this.alert.show(`Recover password link sent to ${form.value.email}`)
+        this.alert.showAlert(`Recover password link sent to ${form.value.email}`)
         this.cdr.detectChanges();
       },
       error: (err) => {

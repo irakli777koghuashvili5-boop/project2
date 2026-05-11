@@ -70,7 +70,7 @@ export class Cart {
   }
 
   checkOut(){
-    this.alert.show(`Purchased succesfully!`)
+    this.alert.showAlert(`Purchased succesfully!`)
   }
 
   updateQty(id: number, num: number) {

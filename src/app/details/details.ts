@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Loader } from '../loader/loader';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink],
+  imports: [RouterLink, Loader],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
@@ -20,25 +22,34 @@ export class Details {
   relatedProducts: any = {};
   catId: number = 0;
   MightLike: any = [];
-  isLoading: boolean = true;
+
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
     private alert: Services,
+    private loader: Services
   ) {}
 
   showProduct() {
+    this.loader.showLoader();
     this.route.queryParams.subscribe((par: any) => {
       this.productId = par['id'];
 
       if (this.productId) {
-        this.api.getAll(`/api/products/${this.productId}`).subscribe({
+        this.api.getAll(`/api/products/${this.productId}`)
+        .pipe(
+          finalize(() => {
+            this.loader.hideLoader();
+            this.cdr.detectChanges()
+          })
+        )
+        .subscribe({
           next: (res: any) => {
             this.products = res.data;
             this.relatedProducts = res;
-            this.isLoading = false;
+
             if (res.data && res.data.categoryId) {
               this.getRelatedProducts(res.data.categoryId);
             }
@@ -62,11 +73,11 @@ export class Details {
     this.showProduct();
   }
   getRelatedProducts(id: number) {
-    this.isLoading = true;
+
     this.api.getAll(`/api/products/filter/?take=4&page=1&categoryId=${id}`).subscribe({
       next: (res: any) => {
         console.log(res.data.products);
-        this.isLoading = false;
+
         this.MightLike = res.data.products.filter((el: any) => el.name !== this.products.name);
         this.cdr.detectChanges();
       },
@@ -75,7 +86,7 @@ export class Details {
   }
   addToCart() {
     if (!localStorage.getItem('accessToken')) {
-      this.alert.show("log in first")
+      this.alert.showAlert("log in first")
       this.router.navigate(['/log-in']);
     }
     this.api
@@ -85,7 +96,7 @@ export class Details {
       })
       .subscribe({
         next: (res: any) => {
-          this.alert.show(`${this.qty} ${this.products.name} added to cart`);
+          this.alert.showAlert(`${this.qty} ${this.products.name} added to cart`);
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },
@@ -94,7 +105,7 @@ export class Details {
   }
   addLikedIntoCart(id: number){
      if (!localStorage.getItem('accessToken')) {
-       this.alert.show('log in first');
+       this.alert.showAlert('log in first');
        this.router.navigate(['/log-in']);
      }
     this.api
@@ -104,7 +115,7 @@ export class Details {
       })
       .subscribe({
         next: (res: any) => {
-          this.alert.show('Product added to cart');
+          this.alert.showAlert('Product added to cart');
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

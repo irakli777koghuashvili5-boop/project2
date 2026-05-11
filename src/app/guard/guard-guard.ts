@@ -9,7 +9,7 @@ export const guardGuard: CanActivateFn = (route, state) => {
   if (!localStorage.getItem('accessToken')) {
     let router = inject(Router);
     router.navigate(['/log-in']);
-    alert.show(`Log in first!`)
+    alert.showAlert(`Log in first!`)
     return false;
   }
   return true;

@@ -3,11 +3,13 @@ import { Services } from '../service/services';
 import { NgxSliderModule, Options } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
+import { Loader } from '../loader/loader';
+import { finalize } from 'rxjs';
 
 
 @Component({
   selector: 'app-home',
-  imports: [NgxSliderModule, FormsModule, RouterLink,],
+  imports: [NgxSliderModule, FormsModule, RouterLink, Loader],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -23,9 +25,9 @@ export class Home {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private alert: Services,
+    private loader: Services
   ) {}
   DisplayProducts: any = [];
-  isLoading: boolean = true;
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -36,23 +38,34 @@ export class Home {
   onScroll() {
     this.showScrollBtn = window.scrollY > 300;
   }
+  getProduct(){
+    this.loader.showLoader();
+
+     this.api
+       .getAll(`/api/products/filter?take=6&page=1&maxPrice=500&minPrice=0&query=&rate=0`)
+       .pipe(
+         finalize(() => {
+           this.loader.hideLoader();
+           this.cdr.detectChanges();
+         })
+       )
+       .subscribe({
+         next: (res: any) => {
+           console.log(res.data.products);
+           this.DisplayProducts = res.data.products;
+    
+           this.cdr.detectChanges();
+         },
+         error: (err) => console.error(err),
+       });
+  }
 
   ngOnInit() {
-    this.api
-      .getAll(`/api/products/filter?take=6&page=1&maxPrice=500&minPrice=0&query=&rate=0`)
-      .subscribe({
-        next: (res: any) => {
-          console.log(res.data.products);
-          this.DisplayProducts = res.data.products;
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
-        error: (err) => console.error(err),
-      });
+    this.getProduct();
   }
   addToCart(id: number) {
     if (!localStorage.getItem('accessToken')) {
-      this.alert.show('log in first');
+      this.alert.showAlert('log in first');
       this.router.navigate(['/log-in']);
     }
     this.api
@@ -62,7 +75,7 @@ export class Home {
       })
       .subscribe({
         next: (res: any) => {
-          this.alert.show('Product added to cart');
+          this.alert.showAlert('Product added to cart');
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

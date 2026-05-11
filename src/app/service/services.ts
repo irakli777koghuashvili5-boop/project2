@@ -54,18 +54,34 @@ export class Services {
 
   alert$ = this.alertState.asObservable();
 
-  show(message: string) {
+  showAlert(message: string) {
     this.alertState.next({
       open: true,
       message: message,
     });
   }
 
-  hide() {
+  hideAlert() {
     this.alertState.next({
       open: false,
       message: '',
     });
   }
- 
+  
+  private loaderState = new BehaviorSubject<{ open: boolean }>({
+    open: false,
+  });
+
+  loader$ = this.loaderState.asObservable();
+
+  showLoader() {
+    this.loaderState.next({
+      open: true,
+    });
+  }
+  hideLoader() {
+    this.loaderState.next({
+      open: false,
+    });
+  }
 }

@@ -52,7 +52,7 @@ export class Profile {
     });
   }
   saveChanges(form: NgForm) {
-    this.alert.show('Changes saved successfully!');
+    this.alert.showAlert('Changes saved successfully!');
     this.cdr.detectChanges();
 
     console.log(form.value);

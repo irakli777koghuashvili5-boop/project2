@@ -87,7 +87,7 @@ export class Header {
   }
 
   logOut() {
-    this.alert.show('Logged out successfully');
+    this.alert.showAlert('Logged out successfully');
     this.cdr.detectChanges();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

@@ -31,7 +31,7 @@ export class LogIn {
       .subscribe({
         next: (resp: any) => {
           console.log(resp);
-           this.alert.show("Logged in successfully");
+           this.alert.showAlert("Logged in successfully");
           if (resp) {
             localStorage.setItem('accessToken', resp.data.accessToken);
             localStorage.setItem('refreshToken', resp.data.refreshToken);
@@ -45,7 +45,7 @@ export class LogIn {
         error: (err) => {
           console.log(err);
           if(err.status === 400){
-            this.alert.show("Invalid email or password") 
+            this.alert.showAlert("Invalid email or password") 
             this.cdr.detectChanges();
           }
         },

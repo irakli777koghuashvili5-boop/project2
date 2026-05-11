@@ -28,7 +28,7 @@ export class VerifyEmail {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.alert.show('Now log in');
+          this.alert.showAlert('Now log in');
           this.cdr.detectChanges();
           setTimeout(() => {
             this.router.navigateByUrl('/log-in');
@@ -58,7 +58,7 @@ export class VerifyEmail {
     this.api.postAll(`/api/auth/resend-email-verification/${this.ELmail}`, {}).subscribe({
       next: (res) => {
         console.log(res);
-        this.alert.show(`Verification code resent to ${this.ELmail}`)
+        this.alert.showAlert(`Verification code resent to ${this.ELmail}`)
         this.cdr.detectChanges();
       },
       error: (err) => {

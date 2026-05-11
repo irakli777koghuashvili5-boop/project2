@@ -1,8 +1,54 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <path d="M50,5 C75,5 95,25 95,55 C95,80 75,95 50,95 C25,95 5,80 5,55 C5,25 25,5 50,5 Z" fill="none" stroke="white" stroke-width="3"/>
-  <line x1="50" y1="10" x2="50" y2="90" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <line x1="50" y1="35" x2="22" y2="55" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="50" y1="55" x2="20" y2="70" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="50" y1="35" x2="78" y2="55" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="50" y1="55" x2="80" y2="70" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <g transform="rotate(45 50 50)">
+    <!-- Leaf shape -->
+    <path d="M 50 10 Q 75 30 75 55 Q 75 80 50 90 Q 25 80 25 55 Q 25 30 50 10" 
+          fill="url(#leafGradient)" 
+          stroke="#1B5E20" 
+          stroke-width="1.5"
+          stroke-linejoin="round"/>
+    
+    <!-- Leaf vein (center line) -->
+    <path d="M 50 10 Q 50 50 50 90" 
+          stroke="#1B5E20" 
+          stroke-width="1.2"
+          fill="none"
+          stroke-linecap="round"
+          opacity="0.6"/>
+    
+    <!-- Left side veins -->
+    <path d="M 45 25 Q 35 35 30 50" 
+          stroke="#1B5E20" 
+          stroke-width="0.8"
+          fill="none"
+          opacity="0.5"/>
+    
+    <path d="M 42 40 Q 30 50 25 65" 
+          stroke="#1B5E20" 
+          stroke-width="0.8"
+          fill="none"
+          opacity="0.5"/>
+    
+    <!-- Right side veins -->
+    <path d="M 55 25 Q 65 35 70 50" 
+          stroke="#1B5E20" 
+          stroke-width="0.8"
+          fill="none"
+          opacity="0.5"/>
+    
+    <path d="M 58 40 Q 70 50 75 65" 
+          stroke="#1B5E20" 
+          stroke-width="0.8"
+          fill="none"
+          opacity="0.5"/>
+    
+    <!-- Shine effect -->
+    <ellipse cx="40" cy="35" rx="12" ry="15" fill="#81C784" opacity="0.4"/>
+  </g>
 </svg>
