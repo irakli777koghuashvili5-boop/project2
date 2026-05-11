@@ -29,7 +29,7 @@ export class Menu {
 
   filters = {
     MinPrice: 0,
-    MaxPrice: 500,
+    MaxPrice: 50,
   };
 
   scrollToTop() {
@@ -45,7 +45,7 @@ export class Menu {
 
   options: Options = {
     floor: 0,
-    ceil: 500,
+    ceil: 50,
     step: 10,
     translate: (value: number): string => `$${value}`,
   };

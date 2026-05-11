@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
-import { CartData, CartItem, CartProduct } from '../models/model';
+import { Loader } from '../loader/loader';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
-  imports: [],
+  imports: [Loader],
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
@@ -12,14 +13,24 @@ export class Cart {
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
-    private alert: Services
+    private alert: Services,
+    private loader: Services,
   ) {}
   ngOnInit() {
     this.getData();
   }
   cartData: any = {};
   getData() {
-    this.api.getAll(`/api/cart`).subscribe({
+    this.loader.showLoader();
+
+    this.api.getAll(`/api/cart`)
+    .pipe(
+      finalize(() => {
+        this.loader.hideLoader();
+        this.cdr.detectChanges()
+      })
+    )
+    .subscribe({
       next: (resp: any) => {
         console.log(resp.data);
         this.cartData = resp.data;
