@@ -104,7 +104,7 @@ export class Menu {
     if (catNum <= this.CategoryArr.length && catNum > 0) {
       this.api
         .getAll(
-          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&CategoryId=${catNum}&Take=${this.takeNum}&Page=${this.currentPage}`,
+          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&CategoryId=${catNum}&Take=${this.takeNum}&Page=${this.currentPage}&vegetarian=${this.isVegie}`,
         )
         .pipe(
           finalize(() => {
@@ -115,10 +115,9 @@ export class Menu {
         .subscribe({
           next: (res: any) => {
             this.CardInside = res.data.products || [];
-            this.hasMore = res.data.hasMore
+            this.hasMore = res.data.hasMore;
             this.cdr.detectChanges();
             console.log(this.hasMore);
-            
           },
           error: (err) => {
             console.error(err);
@@ -129,7 +128,7 @@ export class Menu {
     } else {
       this.api
         .getAll(
-          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&Take=${this.takeNum}&Page=${this.currentPage}`,
+          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&Take=${this.takeNum}&Page=${this.currentPage}&vegetarian=${this.isVegie}`,
         )
         .pipe(
           finalize(() => {
@@ -139,10 +138,9 @@ export class Menu {
         .subscribe({
           next: (res: any) => {
             this.CardInside = res.data.products || [];
-            this.hasMore = res.data.hasMore
-            this.cdr.detectChanges()
+            this.hasMore = res.data.hasMore;
+            this.cdr.detectChanges();
             console.log(this.hasMore);
-            
           },
           error: (err) => {
             console.error(err);
