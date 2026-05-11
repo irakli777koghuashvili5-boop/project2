@@ -19,7 +19,7 @@ export class Details {
     return filledStars + emptyStars;
   }
   productId: string | null = null;
-  products!: Products
+  products: Products = {} as Products;
   relatedProducts: any = {};
   catId: number = 0;
   MightLike: any = [];
@@ -30,7 +30,7 @@ export class Details {
     private route: ActivatedRoute,
     private router: Router,
     private alert: Services,
-    private loader: Services
+    private loader: Services,
   ) {}
 
   showProduct() {
@@ -39,26 +39,27 @@ export class Details {
       this.productId = par['id'];
 
       if (this.productId) {
-        this.api.getAll(`/api/products/${this.productId}`)
-        .pipe(
-          finalize(() => {
-            this.loader.hideLoader();
-            this.cdr.detectChanges()
-          })
-        )
-        .subscribe({
-          next: (res: any) => {
-            this.products = res.data;
-            this.relatedProducts = res;
+        this.api
+          .getAll(`/api/products/${this.productId}`)
+          .pipe(
+            finalize(() => {
+              this.loader.hideLoader();
+              this.cdr.detectChanges();
+            }),
+          )
+          .subscribe({
+            next: (res: any) => {
+              this.products = res.data;
+              this.relatedProducts = res;
 
-            if (res.data && res.data.categoryId) {
-              this.getRelatedProducts(res.data.categoryId);
-            }
+              if (res.data && res.data.categoryId) {
+                this.getRelatedProducts(res.data.categoryId);
+              }
 
-            this.cdr.detectChanges();
-          },
-          error: (err) => console.error(err),
-        });
+              this.cdr.detectChanges();
+            },
+            error: (err) => console.error(err),
+          });
       }
     });
   }
@@ -74,7 +75,6 @@ export class Details {
     this.showProduct();
   }
   getRelatedProducts(id: number) {
-
     this.api.getAll(`/api/products/filter/?take=4&page=1&categoryId=${id}`).subscribe({
       next: (res: any) => {
         console.log(res.data.products);
@@ -87,7 +87,7 @@ export class Details {
   }
   addToCart() {
     if (!localStorage.getItem('accessToken')) {
-      this.alert.showAlert("log in first")
+      this.alert.showAlert('log in first');
       this.router.navigate(['/log-in']);
     }
     this.api
@@ -104,11 +104,11 @@ export class Details {
         error: (err) => console.error(err),
       });
   }
-  addLikedIntoCart(id: number){
-     if (!localStorage.getItem('accessToken')) {
-       this.alert.showAlert('log in first');
-       this.router.navigate(['/log-in']);
-     }
+  addLikedIntoCart(id: number) {
+    if (!localStorage.getItem('accessToken')) {
+      this.alert.showAlert('log in first');
+      this.router.navigate(['/log-in']);
+    }
     this.api
       .postAll(`/api/cart/add-to-cart`, {
         productId: id,
