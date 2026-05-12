@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Services } from '../service/services';
 import { FormsModule } from '@angular/forms';
+import { Loader } from '../loader/loader';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
-  imports: [FormsModule],
+  imports: [FormsModule, Loader],
   templateUrl: './admin.html',
   styleUrl: './admin.scss',
 })
@@ -20,6 +22,7 @@ export class Admin {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private alert: Services,
+    private loader: Services,
   ) {}
 
   setTab(tab: 'categories' | 'products') {
@@ -309,7 +312,14 @@ export class Admin {
   }
 
   get_cat() {
-    this.api.getAll(`/api/categories`).subscribe({
+    this.loader.showLoader();
+    this.api.getAll(`/api/categories`)
+    .pipe(
+      finalize(() => {
+        this.loader.hideLoader();
+        this.cdr.detectChanges();
+      }))
+    .subscribe({
       next: (resp: any) => {
         this.categories = resp.data;
         this.cdr.detectChanges();
@@ -348,11 +358,19 @@ export class Admin {
   }
 
   getProducts(page: number) {
-    this.api.getAll(`/api/products?Take=12&Page=${page}`).subscribe({
+    this.loader.showLoader();
+    this.api.getAll(`/api/products?Take=12&Page=${page}`)
+    .pipe(
+      finalize(()=>{
+        this.loader.hideLoader();
+        this.cdr.detectChanges();
+      })
+    )
+    .subscribe({
       next: (resp: any) => {
         this.Products = resp.data.products || [];
 
-        this.currentPage = page; // ✅ REQUIRED FIX
+        this.currentPage = page; 
         this.hasMore = resp.data.hasMore;
 
         this.cdr.detectChanges();
