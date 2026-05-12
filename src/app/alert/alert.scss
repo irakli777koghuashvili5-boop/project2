@@ -50,9 +50,8 @@
   font-size: 15px;
   margin: 0;
 }
-
 .alertClose {
-  border: none;
+  border: 2px solid transparent; /* important */
   background: orange;
   color: white;
   width: 32px;
@@ -60,14 +59,12 @@
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
-
   transition: 0.25s ease;
 }
-
 .alertClose:hover {
   background: white;
   color: orange;
-  border: 2px solid orange;
+  border-color: orange;
   transform: rotate(90deg);
 }
 

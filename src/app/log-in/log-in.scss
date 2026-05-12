@@ -149,3 +149,29 @@ $border-soft: #e0e0e0;
     &:hover { text-decoration: underline; }
   }
 }
+.errors {
+  margin-top: 8px;
+}
+
+.error-alert {
+  background: rgba(255, 70, 70, 0.12);
+  border: 1px solid rgba(255, 70, 70, 0.35);
+  color: #ff6b6b;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

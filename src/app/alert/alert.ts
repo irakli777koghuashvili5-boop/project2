@@ -1,23 +1,17 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Services } from '../service/services';
 
 @Component({
   standalone: true,
   selector: 'app-alert',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './alert.html',
   styleUrl: './alert.scss',
 })
 export class Alert {
-  alertOpen = false;
-  message = '';
 
-  constructor(private alertService: Services, private cdr: ChangeDetectorRef) {
-    this.alertService.alert$.subscribe((data: any) => {
-      this.alertOpen = data.open;
-      this.message = data.message;
-    });
-  }
+  constructor(public alertService: Services) {}
 
   closeAlert() {
     this.alertService.hideAlert();

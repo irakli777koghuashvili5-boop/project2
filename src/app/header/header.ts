@@ -40,6 +40,7 @@ export class Header {
       next: (resp: any) => {
         console.log(resp);
         this.userName = resp.data.firstName;
+        this.api.setUser(resp.data);
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -49,6 +50,7 @@ export class Header {
               console.log(res);
               localStorage.setItem('accessToken', res.data.accessToken);
               localStorage.setItem('refreshToken', res.data.refreshToken);
+              
               this.cdr.detectChanges();
               this.getUser();
             },

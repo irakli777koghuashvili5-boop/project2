@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { Services } from '../service/services';
@@ -21,33 +21,36 @@ export class LogIn {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private alert: Services,
+    private ngZone : NgZone
   ) {}
 
   SignIn(form: any) {
     this.api
       .postAll(`/api/auth/login`, {
-        ...form.value
+        ...form.value,
       })
       .subscribe({
         next: (resp: any) => {
           console.log(resp);
-           this.alert.showAlert("Logged in successfully");
-          if (resp) {
-            localStorage.setItem('accessToken', resp.data.accessToken);
-            localStorage.setItem('refreshToken', resp.data.refreshToken);
-            this.cdr.detectChanges()
-            setTimeout(() => {
-              this.router.navigateByUrl('/home');
-            }, 1200);
-          }
+          this.alert.showAlert('Logged in successfully');
+          localStorage.setItem('accessToken', resp.data.accessToken);
+          localStorage.setItem('refreshToken', resp.data.refreshToken);
+          this.cdr.detectChanges();
+          setTimeout(() => {
+            this.router.navigateByUrl('/home');
+          }, 300);
           this.cdr.detectChanges();
         },
         error: (err) => {
-          console.log(err);
-          if(err.status === 400){
-            this.alert.showAlert("Invalid email or password") 
-            this.cdr.detectChanges();
-          }
+            if (err.status === 400) {
+              this.alert.showAlert('Invalid email or password');
+            } else if (err.status === 404) {
+              this.alert.showAlert('User not found');
+            } else if (err.status === 406) {
+              this.alert.showAlert('Email not verified code sent to email');
+            } else if (err.status === 401) {
+              this.alert.showAlert('Invalid email or password');
+            }
         },
       });
   }

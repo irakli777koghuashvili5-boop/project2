@@ -15,6 +15,7 @@ export class Admin {
   categories: any[] = [];
   showDrawer = false;
   catText: string = '';
+  getNumForApi: number = 12;
 
   showProductModal = false;
 
@@ -359,7 +360,7 @@ export class Admin {
 
   getProducts(page: number) {
     this.loader.showLoader();
-    this.api.getAll(`/api/products?Take=12&Page=${page}`)
+    this.api.getAll(`/api/products?Take=${this.getNumForApi}&Page=${page}`)
     .pipe(
       finalize(()=>{
         this.loader.hideLoader();

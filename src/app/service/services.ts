@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
@@ -67,7 +67,7 @@ export class Services {
       message: '',
     });
   }
-  
+
   private loaderState = new BehaviorSubject<{ open: boolean }>({
     open: false,
   });
@@ -83,5 +83,14 @@ export class Services {
     this.loaderState.next({
       open: false,
     });
+  }
+
+  user = signal<any>(null);
+  setUser(user: any) {
+    this.user.set(user);
+  }
+
+  clearUser() {
+    this.user.set(null);
   }
 }
