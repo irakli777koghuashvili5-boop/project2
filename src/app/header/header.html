@@ -29,7 +29,7 @@
             <div class="profile-dropdown">
               <div class="dropdown-header">Hello: {{ $any(this).api.user()?.firstName }} </div>
               <a routerLink="/profile" class="dropdown-item" (click)="closeProfileMenu()">Profile</a>
-              <button (click)="logOut()" class="dropdown-item">Logout</button>
+              <button (click)="logOut()" style="color: red;" class="dropdown-item">Logout</button>
             </div>
           }
         </div>

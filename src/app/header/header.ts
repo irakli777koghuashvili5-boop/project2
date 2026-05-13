@@ -21,6 +21,7 @@ export class Header {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private alert: Services,
+    private refreshHeader : Services
   ) {}
 
   ngOnInit() {
@@ -40,7 +41,7 @@ export class Header {
       next: (resp: any) => {
         console.log(resp);
         this.userName = resp.data.firstName;
-        this.api.setUser(resp.data);
+        this.refreshHeader.setUser(resp.data);
         this.cdr.detectChanges();
       },
       error: (err) => {

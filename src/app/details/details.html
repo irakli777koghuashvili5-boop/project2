@@ -30,12 +30,19 @@
       <section class="info-block">
         <h3>Ingredients:</h3>
         <div class="ingredients-list">
-          <div class="ing-col">
+          @if(elongateNeeded){
+             <div class="ing-col">
             {{products.ingredients?.[0]}}
           </div>
           <div class="ing-col">
             {{products.ingredients?.[1]}}
           </div>
+          }
+          @if(!elongateNeeded){
+            <div class="ing-col">
+            {{products.ingredients}}
+          </div>
+          }
         </div>
       </section>
 

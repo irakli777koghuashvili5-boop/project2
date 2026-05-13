@@ -15,6 +15,7 @@ export class Profile {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private alert: Services,
+    private refreshHeader : Services
   ) {}
   activeSection: 'personal' | 'password' | 'account' = 'personal';
 
@@ -60,6 +61,15 @@ export class Profile {
     .subscribe({
       next: (resp: any) => {
         console.log(resp);
+        this.api.getAll(`/api/users/me`).subscribe({
+          next: (userResp: any) => {
+            console.log(userResp.data.firstName);
+            this.refreshHeader.setUser(userResp.data);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
         this.cdr.detectChanges();
       },
       error: (err) => {

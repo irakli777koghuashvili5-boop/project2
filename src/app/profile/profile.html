@@ -14,7 +14,7 @@
       <h2>Personal Information</h2>
       <p>Update your personal details</p>
     </header>
-
+  @if(userData){
   <form class="profile-form" #form="ngForm" (ngSubmit)="saveChanges(form)">
   <div class="form-group picture-group">
     <div class="picture-placeholder">
@@ -60,6 +60,7 @@
     <button type="submit" class="save-changes-btn" [disabled]="form.invalid">Save Changes</button>
   </div>
 </form>
+  }
   </div>
 }
     @else if (activeSection === 'password') {

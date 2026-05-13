@@ -506,3 +506,15 @@ $text-color: #555;
   }
 }
 
+.product-description {
+  color: #666 !important;
+  line-height: 1.7 !important;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}

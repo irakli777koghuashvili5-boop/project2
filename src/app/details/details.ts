@@ -23,6 +23,7 @@ export class Details {
   relatedProducts: any = {};
   catId: number = 0;
   MightLike: any = [];
+  elongateNeeded : boolean = false
 
   constructor(
     private api: Services,
@@ -51,6 +52,13 @@ export class Details {
             next: (res: any) => {
               this.products = res.data;
               this.relatedProducts = res;
+              if(res.data.ingredients.length <= 2){
+                this.elongateNeeded = true
+              } 
+              else{
+                this.elongateNeeded = false
+              }
+
 
               if (res.data && res.data.categoryId) {
                 this.getRelatedProducts(res.data.categoryId);
