@@ -49,7 +49,7 @@ export class Menu {
   options: Options = {
     floor: 0,
     ceil: 50,
-    step: 10,
+    step: 5,
     translate: (value: number): string => `$${value}`,
   };
 
