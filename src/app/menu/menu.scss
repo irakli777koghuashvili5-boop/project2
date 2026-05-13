@@ -1059,3 +1059,362 @@ body {
   line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+$primary-orange: #ff7a2d;
+$glass-bg: rgba(255, 255, 255, 0.8);
+$border-color: rgba(255, 140, 60, 0.2);
+
+.filters-sidebar {
+  background: $glass-bg !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid $border-color !important;
+  border-radius: 28px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100vh - 100px) !important;
+  position: sticky;
+  top: 40px;
+  overflow: hidden;
+
+  // Header with a soft gradient background
+  .sidebar-header {
+    padding: 24px !important;
+    background: linear-gradient(to bottom, rgba(255, 112, 67, 0.05), transparent);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03) !important;
+
+    h3 {
+      font-size: 1.4rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+    }
+  }
+
+  .scrollable-content {
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important; // More breathing room between sections
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba($primary-orange, 0.2) !important;
+    }
+  }
+
+  // Filter Group Styling
+  .filter-group, .filter-search {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+
+    label {
+      font-size: 0.85rem !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      color: #888 !important;
+      font-weight: 700 !important;
+    }
+  }
+
+  // Search Input Enhancement
+  .custom-input {
+    background: #fff !important;
+    border: 1.5px solid #eee !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    
+    &:focus {
+      border-color: $primary-orange !important;
+      box-shadow: 0 0 0 4px rgba($primary-orange, 0.1) !important;
+    }
+  }
+
+  // Custom Checkbox Style
+  .checkbox-item {
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+    
+    &:hover {
+      background: rgba($primary-orange, 0.05);
+      .label-text { color: $primary-orange; }
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      margin-right: 12px;
+    }
+  }
+
+  // Range Slider Labels
+  .range-label {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    color: $primary-orange;
+    margin-top: 8px;
+    background: rgba($primary-orange, 0.08);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+
+  .sidebar-footer {
+    padding: 20px !important;
+    background: #fff !important;
+    
+  
+  }
+}
+$primary-orange: #ff7a2d;
+$primary-light: #fff5f0;
+$glass-bg: rgba(255, 255, 255, 0.85);
+$primary-orange: #ff7a2d;
+$primary-light: #fff5f0;
+
+.filters-sidebar {
+  width: 320px !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 32px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100vh - 80px) !important;
+  position: sticky;
+  top: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04) !important;
+  animation: slideInLeft 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  // For Mobile Drawer
+  @media (max-width: 992px) {
+    position: fixed !important;
+    left: -100% !important;
+    top: 0 !important;
+    height: 100vh !important;
+    z-index: 2000 !important;
+    transition: left 0.4s ease !important;
+    
+    &.active { left: 0 !important; }
+  }
+}
+
+$primary-orange: #ff7a2d;
+$deep-orange: #f4511e; // Darker shade for gradient depth
+
+.custom-range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px; // Slimmer, more modern track
+  background: linear-gradient(90deg, $primary-orange 0%, $deep-orange 100%) !important;
+  border-radius: 10px;
+  outline: none;
+  border: none !important; // Removing the previous border for a cleaner look
+  margin: 20px 0;
+
+  // Webkit (Chrome, Safari, Edge) Thumb
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border: 3px solid $primary-orange; // Thicker border for better contrast
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 
+      0 0 0 4px rgba($primary-orange, 0.1), // Outer soft glow
+      0 4px 10px rgba(0, 0, 0, 0.15);       // Bottom shadow for lift
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: scale(1.1);
+      background: $primary-light; // Slight color shift on hover
+      box-shadow: 
+        0 0 0 6px rgba($primary-orange, 0.2),
+        0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Firefox Thumb
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    border: 3px solid $primary-orange;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.range-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba($primary-orange, 0.1) 0%, rgba($deep-orange, 0.05) 100%);
+  color: $deep-orange;
+  font-weight: 700;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  border: 1px solid rgba($primary-orange, 0.1);
+}
+
+$primary-orange: #ff7a2d;
+$deep-orange: #f4511e;
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+
+  // 1. The Scrollbar Track (The background of the "side thingy")
+  &::-webkit-scrollbar {
+    width: 6px; // Keep it slim and elegant
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; // Keeps the glassmorphism look clean
+    margin: 10px; // Gives the thumb room to breathe
+  }
+
+  // 2. The Scrollbar Thumb (The actual dragger)
+  &::-webkit-scrollbar-thumb {
+    // Gradient feel
+    background: linear-gradient(to bottom, $primary-orange, $deep-orange);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3); // Adds a slight glossy edge
+    
+    // Subtle shadow to make it pop from the background
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+  }
+
+  // 3. Hover Effect - Make it glow when they interact with it
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, lighten($primary-orange, 5%), $deep-orange);
+    box-shadow: 0 0 8px rgba($primary-orange, 0.4);
+    width: 8px; // Slight visual expansion
+  }
+}
+
+// Firefox support (Firefox is more limited with gradients on scrollbars)
+.scrollable-content {
+  scrollbar-width: thin;
+  scrollbar-color: $primary-orange transparent;
+}
+
+// Mobile / Tablet overrides
+@media (max-width: 992px) {
+  .filters-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: -100% !important; 
+    width: 100% !important;      // Covers full width
+    max-width: none !important;  // Removes the 320px limit
+    height: 100vh !important;    // Covers full height
+    z-index: 2000 !important;
+    border-radius: 0 !important; // Sharp edges for full-screen feel
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    &.active {
+      left: 0 !important;
+    }
+
+    .sidebar-header {
+       padding: 30px 24px !important; // Larger header for mobile
+    }
+  }
+}
+
+.sidebar-footer {
+  padding: 24px !important;
+  background: #fff !important;
+  border-top: 1px solid rgba(255, 122, 45, 0.1) !important;
+
+  .clear-btn {
+    width: 100%;
+    height: 60px; // Thicker, more touch-friendly
+    background: linear-gradient(135deg, #ff9f43 0%, #ff7a2d 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 20px !important;
+    font-weight: 800 !important;
+    font-size: 1rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 122, 45, 0.3) !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      transform: translateY(-3px) !important;
+      box-shadow: 0 15px 30px rgba(255, 122, 45, 0.4) !important;
+      background: linear-gradient(135deg, #ffab5e 0%, #ff8a45 100%) !important;
+    }
+
+    &:active {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 5px 15px rgba(255, 122, 45, 0.3) !important;
+    }
+  }
+}
+
+.close-drawer {
+  @media (max-width: 992px) {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: #fff5f0 !important;
+    color: #ff7a2d !important;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    
+    &:active {
+      background: #ff7a2d !important;
+      color: #fff !important;
+    }
+  }
+}
+
+.sidebar-footer {
+  padding: 24px !important;
+  background: #fff !important; 
+  border-top: 1px solid rgba(255, 122, 45, 0.1) !important;
+
+  .clear-btn {
+    width: 100%;
+    height: 55px;
+    // Premium Orange Gradient
+    background: linear-gradient(135deg, #ff9f43 0%, #ff7a2d 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 16px !important;
+    font-weight: 800 !important;
+    font-size: 0.95rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    
+    // Orange glow shadow
+    box-shadow: 0 8px 20px rgba(255, 122, 45, 0.3) !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      transform: translateY(-3px) !important;
+      // Brighter glow on hover
+      box-shadow: 0 12px 25px rgba(255, 122, 45, 0.4) !important;
+      background: linear-gradient(135deg, #ffab5e 0%, #ff8a45 100%) !important;
+    }
+
+    &:active {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 10px rgba(255, 122, 45, 0.2) !important;
+    }
+  }
+}
