@@ -294,7 +294,6 @@ $header-height: 80px;
   top: 100%; // Places it right below the button
   right: 0;
   margin-top: 10px;
-  width: 180px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
@@ -319,5 +318,88 @@ $header-height: 80px;
     text-decoration: none;
     
     &:hover { background: #f9f9f9; color: #ff6633; }
+  }
+}
+
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 12px); // Gap from button
+  right: 0;
+  width: 200px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  z-index: 1000;
+  
+  // Center anchor for the scale animation
+  transform-origin: top right;
+  
+  // Animation Entry (Key part)
+  animation: dropdownPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  .dropdown-header {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    margin-bottom: 4px;
+    
+    span {
+        display: block;
+        color: #333;
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: none;
+    }
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    color: #444;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    
+    // Icon color
+    svg { opacity: 0.7; }
+
+    &:hover {
+      background: rgba($primary, 0.1);
+      color: $primary;
+      transform: translateX(4px);
+      
+      svg { opacity: 1; stroke: $primary; }
+    }
+  }
+}
+
+// The "Pop" Keyframe
+@keyframes dropdownPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
