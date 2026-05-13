@@ -98,9 +98,7 @@ export class Menu {
   onFilterChange() {
     this.needLoad = true;
     this.loader.showLoader();
-
     let catNum = this.CategoryArr.filter((el) => el.selected === true).map((el) => el.id)[0] || 0;
-
     if (catNum <= this.CategoryArr.length && catNum > 0) {
       this.api
         .getAll(

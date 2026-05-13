@@ -372,6 +372,7 @@ export class Admin {
         this.Products = resp.data.products || [];
 
         this.currentPage = page; 
+        this.cdr.detectChanges()
         this.hasMore = resp.data.hasMore;
 
         this.cdr.detectChanges();

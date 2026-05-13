@@ -119,9 +119,7 @@
       <button class="pag-btn" (click)="onPrevious()" [disabled]="currentPage === 1">
         ← Previous
       </button>
-      <!-- <button class="pag-btn" (click)="onNext()" [disabled]="currentPage === ApplyLimitComponent">
-        Next →
-      </button> -->
+
       <button class="pag-btn" (click)="onNext() "  [disabled]="!hasMore" >
         Next →
       </button>
