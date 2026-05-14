@@ -309,31 +309,44 @@ $header-height: 80px;
   &:hover {
     background-color: darken(#ff6633, 10%);
   }
-}
-.cart-btn {
+}.cart-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 12px; // Increases tap area for mobile devices
+  padding: 12px;
   color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; // Makes it circular on hover/active
-  transition: background-color 0.2s ease;
+  border-radius: 50%;
+  transition: all 0.25s ease;
 
-  // Active state for mobile touch
-  &:active {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
-  // Ensure the SVG scales properly
   svg {
     width: 24px;
     height: 24px;
     stroke: currentColor;
+    transition: all 0.25s ease;
   }
-}
+
+  &:hover {
+    color: $primary;
+    background: rgba($primary, 0.08);
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  // ACTIVE ROUTE
+  &.active {
+    color: $primary;
+    background: rgba($primary, 0.12);
+
+    svg {
+      stroke: $primary;
+    }
+  }
+} 
 
 // Media Query adjustment
 @media (max-width: 768px) {
@@ -467,3 +480,5 @@ $header-height: 80px;
     transform: scale(1) translateY(0);
   }
 }
+
+

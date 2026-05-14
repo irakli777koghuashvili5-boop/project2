@@ -275,6 +275,10 @@ export class Admin {
       .map((i: string) => i.trim())
       .filter((i: string) => i);
 
+    if (form.vegetarian == '' || form.vegetarian == undefined || form.vegetarian == null) {
+      form.vegetarian = false;
+    }
+
     let payload = {
       ...form,
       ingredients: ingredientsArray,
