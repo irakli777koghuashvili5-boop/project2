@@ -6,10 +6,219 @@
     font-family: 'Times New Roman', Times, serif !important;
 }
 
+/* Light Mode (Default) */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+  --header-bg: rgba(255, 255, 255, 0.523);
+  --card-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #e5e5e5;
+  --text-secondary: #b0b0b0;
+  --border-color: #404040;
+  --header-bg: rgba(26, 26, 26, 0.85);
+  --card-bg: #242424;
+  --input-bg: #333333;
+}
+
+/* Apply dark mode to elements */
+[data-theme="dark"] {
+  body, html {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  .glass-header {
+    background: var(--header-bg);
+    border-bottom-color: var(--border-color);
+  }
+
+  .logo {
+    color: #ff7043;
+  }
+
+  .nav-link {
+    color: var(--text-primary);
+
+    &:hover {
+      color: #ff7043;
+    }
+  }
+
+  .nav-link.active {
+    color: #ff7043;
+  }
+
+  .cart-btn,
+  .theme-toggle-btn,
+  .profile-btn,
+  .hamburger-btn .line {
+    color: var(--text-primary);
+
+    &:hover {
+      color: #ff7043;
+    }
+  }
+
+  .signup-btn {
+    background: #ff7043;
+    color: white;
+
+    &:hover {
+      background: #f4511e;
+    }
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+  }
+
+  .product-title {
+    color: var(--text-primary);
+  }
+
+  .product-description {
+    color: var(--text-secondary);
+  }
+
+  .price {
+    color: #ff7a2d;
+  }
+
+  .filters-sidebar {
+    background: rgba(41, 41, 41, 0.9);
+    border-color: var(--border-color);
+  }
+
+  .sidebar-header h3 {
+    color: var(--text-primary);
+  }
+
+  .custom-input {
+    background: var(--input-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &::placeholder {
+      color: var(--text-secondary);
+    }
+  }
+
+  .checkbox-item label,
+  .filter-group label {
+    color: var(--text-primary);
+  }
+
+  .toggle-switch input:checked + .toggle-slider {
+    background: #ff7043;
+  }
+
+  .range-label {
+    background: rgba(255, 122, 45, 0.1);
+    color: #ff7a2d;
+    border-color: rgba(255, 122, 45, 0.2);
+  }
+
+  .clear-btn {
+    background: var(--input-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &:hover {
+      background: var(--bg-secondary);
+    }
+  }
+
+  .pag-btn {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+
+    &:hover:not(:disabled) {
+      background: var(--bg-secondary);
+      color: #ff7043;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .menu-header h1 {
+    color: var(--text-primary);
+  }
+
+  .menu-header p {
+    color: var(--text-secondary);
+  }
+
+  .scroll-top-btn {
+    background: #ff7043;
+    color: white;
+  }
+
+  .profile-dropdown {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  .dropdown-header {
+    color: var(--text-primary);
+  }
+
+  .dropdown-item {
+    color: var(--text-primary);
+
+    &:hover {
+      background: var(--bg-secondary);
+    }
+  }
+
+  .mobile-menu-overlay {
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .mobile-nav {
+    background: var(--bg-secondary);
+  }
+
+  .mobile-link {
+    color: var(--text-primary);
+  }
+
+  .loading-overlay {
+    background: rgba(26, 26, 26, 0.95);
+
+    p {
+      color: var(--text-secondary);
+    }
+  }
+
+  .spinner {
+    border-color: #404040;
+    border-top-color: #ff7043;
+  }
+
+  .filter-overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
 
 
 
-/* Customizing ngx-slider to match your Foodie brand */
+
 .ngx-slider {
   .ngx-slider-bar {
     background: #e0e0e0; // Background of the bar

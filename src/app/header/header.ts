@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { ChangeDetectorRef, Component, ElementRef, HostListener, signal } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Services } from '../service/services';
 import { Alert } from '../alert/alert';
 
@@ -10,8 +10,6 @@ import { Alert } from '../alert/alert';
   styleUrl: './header.scss',
 })
 export class Header {
-
-
   isMenuOpen: boolean = false;
   isProfileMenuOpen: boolean = false;
   userName: string = '';
@@ -21,12 +19,15 @@ export class Header {
     private api: Services,
     private cdr: ChangeDetectorRef,
     private alert: Services,
-    private refreshHeader : Services
+    private refreshHeader: Services,
   ) {}
 
   ngOnInit() {
+
     this.getUser();
   }
+
+
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -51,7 +52,7 @@ export class Header {
               console.log(res);
               localStorage.setItem('accessToken', res.data.accessToken);
               localStorage.setItem('refreshToken', res.data.refreshToken);
-              
+
               this.cdr.detectChanges();
               this.getUser();
             },

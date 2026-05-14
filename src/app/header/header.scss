@@ -29,7 +29,9 @@ $header-height: 80px;
   padding: 0 40px;
   height: 100%;
 
-  @media (max-width: 768px) { padding: 0 20px; }
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 }
 
 // Logo
@@ -69,7 +71,9 @@ $header-height: 80px;
 
     &:hover {
       color: $primary;
-      &::after { width: 100%; }
+      &::after {
+        width: 100%;
+      }
     }
   }
 
@@ -94,11 +98,40 @@ $header-height: 80px;
     color: $text-dark;
     display: flex;
     align-items: center;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
 
     &:hover {
       color: $primary;
       transform: translateY(-2px);
+    }
+  }
+
+  .theme-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $text-dark;
+    display: flex;
+    align-items: center;
+    transition:
+      transform 0.3s ease,
+      color 0.3s ease;
+    padding: 0;
+    margin-left: 10px;
+
+    &:hover {
+      color: $primary;
+      transform: rotate(20deg);
+    }
+
+    &:active {
+      transform: rotate(20deg) scale(0.95);
+    }
+
+    svg {
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
   }
 
@@ -107,7 +140,9 @@ $header-height: 80px;
     color: $text-dark;
     font-weight: 500;
     transition: color 0.2s;
-    &:hover { color: $primary; }
+    &:hover {
+      color: $primary;
+    }
   }
 }
 
@@ -128,8 +163,10 @@ $header-height: 80px;
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba($primary, 0.4);
   }
-  
-  &:active { transform: translateY(0); }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 // Animated Hamburger Menu
@@ -154,19 +191,24 @@ $header-height: 80px;
 
   // Morph to 'X' animation
   &.active {
-    .line-1 { transform: rotate(45deg) translate(0, -1px); }
-    .line-2 { opacity: 0; }
-    .line-3 { transform: rotate(-45deg) translate(0, 1px); }
+    .line-1 {
+      transform: rotate(45deg) translate(0, -1px);
+    }
+    .line-2 {
+      opacity: 0;
+    }
+    .line-3 {
+      transform: rotate(-45deg) translate(0, 1px);
+    }
   }
-  @media (min-width: 450px) { 
-    login-link{
+  @media (min-width: 450px) {
+    login-link {
       display: none;
     }
-    signup-btn{
+    signup-btn {
       display: none;
     }
-    
-   }
+  }
 }
 
 // Mobile Menu Overlay
@@ -181,7 +223,7 @@ $header-height: 80px;
   display: flex;
   flex-direction: column;
   padding: 40px 20px;
-  
+
   // Animation setup
   opacity: 0;
   visibility: hidden;
@@ -207,9 +249,16 @@ $header-height: 80px;
       text-decoration: none;
       transition: color 0.2s;
 
-      &:hover { color: $primary; }
-      &.active { color: $primary; }
-      &.login { font-size: 1.2rem; color: $text-light; }
+      &:hover {
+        color: $primary;
+      }
+      &.active {
+        color: $primary;
+      }
+      &.login {
+        font-size: 1.2rem;
+        color: $text-light;
+      }
     }
 
     .divider {
@@ -230,12 +279,20 @@ $header-height: 80px;
 }
 
 // Responsive Toggles
-.desktop-only { display: flex; }
-.mobile-only { display: none; }
+.desktop-only {
+  display: flex;
+}
+.mobile-only {
+  display: none;
+}
 
 @media (max-width: 768px) {
-  .desktop-nav { display: none; }
-  .mobile-only { display: flex; }
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-only {
+    display: flex;
+  }
 }
 .profile-btn {
   width: 40px;
@@ -248,7 +305,7 @@ $header-height: 80px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  
+
   &:hover {
     background-color: darken(#ff6633, 10%);
   }
@@ -296,10 +353,10 @@ $header-height: 80px;
   margin-top: 10px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   padding: 10px 0;
   z-index: 1000;
-  
+
   .dropdown-header {
     padding: 10px 20px;
     font-weight: 700;
@@ -316,11 +373,13 @@ $header-height: 80px;
     color: #333;
     cursor: pointer;
     text-decoration: none;
-    
-    &:hover { background: #f9f9f9; color: #ff6633; }
+
+    &:hover {
+      background: #f9f9f9;
+      color: #ff6633;
+    }
   }
 }
-
 
 .profile-wrapper {
   position: relative;
@@ -338,10 +397,10 @@ $header-height: 80px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 8px;
   z-index: 1000;
-  
+
   // Center anchor for the scale animation
   transform-origin: top right;
-  
+
   // Animation Entry (Key part)
   animation: dropdownPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
@@ -351,15 +410,15 @@ $header-height: 80px;
     color: #888;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     margin-bottom: 4px;
-    
+
     span {
-        display: block;
-        color: #333;
-        font-weight: 700;
-        font-size: 1rem;
-        text-transform: none;
+      display: block;
+      color: #333;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: none;
     }
   }
 
@@ -378,16 +437,21 @@ $header-height: 80px;
     text-decoration: none;
     border-radius: 10px;
     transition: all 0.2s ease;
-    
+
     // Icon color
-    svg { opacity: 0.7; }
+    svg {
+      opacity: 0.7;
+    }
 
     &:hover {
       background: rgba($primary, 0.1);
       color: $primary;
       transform: translateX(4px);
-      
-      svg { opacity: 1; stroke: $primary; }
+
+      svg {
+        opacity: 1;
+        stroke: $primary;
+      }
     }
   }
 }

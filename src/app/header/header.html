@@ -8,8 +8,48 @@
     </nav>
 
     <div class="actions-group">
+      <button
+        class="theme-toggle-btn"
+        aria-label="Toggle dark mode"
+      >
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+
+        
+      </button>
+
       <button routerLink="/cart" class="cart-btn" aria-label="Cart">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <circle cx="9" cy="21" r="1"></circle>
           <circle cx="20" cy="21" r="1"></circle>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -17,43 +57,73 @@
       </button>
 
       @if (isLoggedIn) {
-       <div class="profile-wrapper">
-  <button class="profile-btn" (click)="toggleProfileMenu()">
-    <!-- Profile SVG -->
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="7" r="4" />
-      <path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" />
-    </svg>
-  </button>
+        <div class="profile-wrapper">
+          <button class="profile-btn" (click)="toggleProfileMenu()">
+            <!-- Profile SVG -->
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="7" r="4" />
+              <path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" />
+            </svg>
+          </button>
 
-  @if (isProfileMenuOpen) {
-    <div class="profile-dropdown">
-      <div class="dropdown-header">
-        Logged in as
-        <span>{{ $any(this).api.user()?.firstName || 'User' }}</span>
-      </div>
-      
-      <a routerLink="/profile" class="dropdown-item" (click)="closeProfileMenu()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Profile
-      </a>
+          @if (isProfileMenuOpen) {
+            <div class="profile-dropdown">
+              <div class="dropdown-header">
+                Logged in as
+                <span>{{ $any(this).api.user()?.firstName || 'User' }}</span>
+              </div>
 
-      <button (click)="logOut()" class="dropdown-item logout">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span style="color: red;">Logout</span>
-      </button>
-    </div>
-  }
-</div>
+              <a routerLink="/profile" class="dropdown-item" (click)="closeProfileMenu()">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                Profile
+              </a>
+
+              <button (click)="logOut()" class="dropdown-item logout">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="red"
+                  stroke-width="2"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <span style="color: red">Logout</span>
+              </button>
+            </div>
+          }
+        </div>
       } @else {
         <button routerLink="/log-in" class="signup-btn">log in</button>
       }
     </div>
 
-    <button class="hamburger-btn mobile-only" 
-            [class.active]="isMenuOpen" 
-            (click)="toggleMenu()" 
-            aria-label="Toggle menu">
+    <button
+      class="hamburger-btn mobile-only"
+      [class.active]="isMenuOpen"
+      (click)="toggleMenu()"
+      aria-label="Toggle menu"
+    >
       <span class="line line-1"></span>
       <span class="line line-2"></span>
       <span class="line line-3"></span>
@@ -62,9 +132,13 @@
 
   <div class="mobile-menu-overlay" [class.open]="isMenuOpen">
     <nav class="mobile-nav">
-      <a routerLink="/home" routerLinkActive="active" class="mobile-link" (click)="closeMenu()">Home</a>
-      <a routerLink="/menu" routerLinkActive="active" class="mobile-link" (click)="closeMenu()">Menu</a>
-      <hr class="divider">
+      <a routerLink="/home" routerLinkActive="active" class="mobile-link" (click)="closeMenu()"
+        >Home</a
+      >
+      <a routerLink="/menu" routerLinkActive="active" class="mobile-link" (click)="closeMenu()"
+        >Menu</a
+      >
+      <hr class="divider" />
     </nav>
   </div>
 </header>
