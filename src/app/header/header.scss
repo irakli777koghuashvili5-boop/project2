@@ -269,6 +269,8 @@ $header-height: 78px;
   border-radius: 22px;
 
   padding: 10px;
+  z-index: 1000;
+;
 
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.08),
@@ -372,6 +374,9 @@ $header-height: 78px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
   gap: 5px;
 
   cursor: pointer;
@@ -380,7 +385,7 @@ $header-height: 78px;
 
   .line {
     width: 22px;
-    height: 2px;
+    height: 1.7px;
 
     border-radius: 999px;
 
