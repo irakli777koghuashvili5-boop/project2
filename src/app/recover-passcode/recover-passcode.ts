@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Services } from '../service/services';
 import { Alert } from '../alert/alert';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recover-passcode',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './recover-passcode.html',
   styleUrl: './recover-passcode.scss',
 })

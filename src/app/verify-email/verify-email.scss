@@ -1,241 +1,298 @@
-/* EMAIL VERIFICATION FORM - SIMPLE ORANGE & WHITE */
+$primary-orange: #ff7a33;
+$soft-orange: #ff9b5c;
+$text-muted: #777;
+$border-soft: rgba(255, 140, 60, 0.14);
 
-.container {
-  max-width: 420px;
-  margin: 60px auto;
-  background: white;
-  border-radius: 12px;
-  padding: 40px;
-  box-shadow: 0 4px 20px rgba(255, 152, 0, 0.15);
-  border: 1px solid #ffe0b2;
-}
-
-.container h2 {
-  color: #ff9800;
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-  text-align: center;
-}
-
-.subtitle {
-  color: #666;
-  font-size: 14px;
-  text-align: center;
-  margin: 0 0 32px 0;
-  line-height: 1.6;
-}
-
-.subtitle b {
-  color: #ff9800;
-  font-weight: 600;
-}
-
-/* Form Styling */
-form {
+.auth-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+  padding: 24px;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(255, 170, 120, 0.22),
+      transparent 30%),
+    radial-gradient(circle at top right,
+      rgba(255, 140, 60, 0.16),
+      transparent 24%),
+    linear-gradient(180deg, #fffaf7 0%, #ffffff 100%);
 }
 
-label {
-  color: #333;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  display: block;
-}
-
-input[type="password"],
-input[type="text"] {
+.auth-card {
   width: 100%;
-  padding: 12px 14px;
-  border: 2px solid #ffe0b2;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #333;
-  background: #fff;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-  letter-spacing: 0.1em;
-  font-family: 'Courier New', monospace;
-}
+  max-width: 470px;
 
-input[type="password"]:focus,
-input[type="text"]:focus {
-  outline: none;
-  border-color: #ff9800;
-  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
-}
+  padding: 42px 38px;
 
-input::placeholder {
-  color: #bbb;
-}
+  border-radius: 32px;
 
-/* Submit Button */
-button[type="submit"] {
-  background: linear-gradient(135deg, #ff9800, #ffb74d);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 8px;
-  letter-spacing: 0.5px;
-}
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
 
-button[type="submit"]:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 152, 0, 0.3);
-}
+  border: 1px solid $border-soft;
 
-button[type="submit"]:active:not(:disabled) {
-  transform: translateY(0);
-}
+  box-shadow:
+    0 12px 40px rgba(255, 120, 60, 0.08),
+    0 2px 10px rgba(0, 0, 0, 0.03);
 
-button[type="submit"]:disabled {
-  background: #e0e0e0;
-  color: #999;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Footer - Resend Code */
-.footer {
   text-align: center;
-  padding: 20px 0;
-  border-top: 1px solid #ffe0b2;
-  border-bottom: 1px solid #ffe0b2;
-  margin-bottom: 20px;
+}
+
+.icon-box {
+  width: 74px;
+  height: 74px;
+
+  margin: 0 auto 24px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 155, 92, 0.18),
+    rgba(255, 107, 44, 0.12)
+  );
+
+  border: 1px solid rgba(255, 140, 60, 0.16);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: $primary-orange;
+
+  svg {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.auth-header {
+  margin-bottom: 32px;
+
+  h1 {
+    margin: 0 0 10px;
+
+    font-size: 2.2rem;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    color: #1f1f1f;
+  }
+
+  p {
+    margin: 0;
+
+    color: $text-muted;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    span {
+      color: $primary-orange;
+      font-weight: 700;
+      word-break: break-word;
+    }
+  }
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 24px;
+
+  label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 0.92rem;
+    font-weight: 700;
+
+    color: #232323;
+  }
+
+  input {
+    width: 100%;
+    height: 62px;
+
+    padding: 0 20px;
+
+    border-radius: 18px;
+    border: 1px solid rgba(255, 140, 60, 0.16);
+
+    background: rgba(255, 255, 255, 0.88);
+
+    box-sizing: border-box;
+
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    letter-spacing: 0.45em;
+    text-align: center;
+
+    color: #222;
+
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease,
+      transform 0.2s ease;
+
+    &::placeholder {
+      color: #c2c2c2;
+      letter-spacing: 0.35em;
+    }
+
+    &:focus {
+      outline: none;
+
+      border-color: $primary-orange;
+
+      box-shadow:
+        0 0 0 4px rgba($primary-orange, 0.12),
+        0 10px 24px rgba($primary-orange, 0.08);
+
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.primary-btn {
+  width: 100%;
+  height: 58px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    #ff9b5c 0%,
+    #ff6b2c 100%
+  );
+
+  color: white;
+
+  font-size: 1rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease,
+    opacity 0.2s ease;
+
+  box-shadow:
+    0 14px 32px rgba(255, 120, 60, 0.24);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 18px 40px rgba(255, 120, 60, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.985);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.divider {
+  margin: 30px 0 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  color: #a1a1a1;
+  font-size: 0.88rem;
+
+  &::before,
+  &::after {
+    content: "";
+
+    flex: 1;
+    height: 1px;
+
+    background: rgba(0, 0, 0, 0.06);
+  }
+}
+
+.actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-.footer span {
-  color: #666;
-  font-size: 14px;
-}
+.secondary-btn,
+.back-btn {
+  width: 100%;
+  height: 54px;
 
-.footer button {
-  background: white;
-  color: #ff9800;
-  border: 2px solid #ff9800;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 6px;
+  border-radius: 18px;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
   cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 0.3px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.footer button:hover {
-  background: #fff3e0;
-  border-color: #ff7043;
-  color: #ff7043;
+.secondary-btn {
+  border: 1px solid rgba(255, 140, 60, 0.18);
+
+  background: rgba(255, 255, 255, 0.7);
+
+  color: $primary-orange;
+
+  &:hover {
+    background: rgba(255, 140, 60, 0.08);
+    border-color: rgba(255, 140, 60, 0.3);
+
+    transform: translateY(-1px);
+  }
 }
 
-.footer button:active {
-  transform: scale(0.98);
-}
-
-/* Back to Login Button */
-.back {
-  text-align: center;
-  margin-top: 16px;
-}
-
-.back button {
-  background: transparent;
-  color: #ff9800;
+.back-btn {
   border: none;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 8px 0;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  letter-spacing: 0.3px;
-}
 
-.back button:hover {
-  color: #ff7043;
-  text-decoration: underline;
-}
+  background: transparent;
 
-.back button:active {
-  transform: scale(0.98);
-}
+  color: #888;
 
-/* Responsive */
-@media (max-width: 480px) {
-  .container {
-    margin: 40px 16px;
-    padding: 30px 20px;
-  }
-
-  .container h2 {
-    font-size: 24px;
-  }
-
-  .subtitle {
-    font-size: 13px;
-    margin-bottom: 28px;
-  }
-
-  input[type="password"],
-  input[type="text"] {
-    padding: 11px 12px;
-    font-size: 15px;
-  }
-
-  button[type="submit"] {
-    padding: 11px 20px;
-    font-size: 14px;
-  }
-
-  .footer {
-    padding: 16px 0;
-    margin-bottom: 16px;
-  }
-
-  .footer span {
-    font-size: 13px;
-  }
-
-  .footer button {
-    padding: 9px 18px;
-    font-size: 13px;
+  &:hover {
+    color: $primary-orange;
+    background: rgba(255, 140, 60, 0.05);
   }
 }
 
-@media (max-width: 360px) {
-  .container {
-    padding: 24px 16px;
+@media (max-width: 520px) {
+  .auth-card {
+    padding: 34px 22px;
+    border-radius: 26px;
   }
 
-  .container h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
+  .auth-header h1 {
+    font-size: 1.9rem;
   }
 
-  form {
-    gap: 14px;
-  }
-
-  input[type="password"],
-  input[type="text"] {
-    padding: 10px 11px;
-    font-size: 14px;
-  }
-
-  button[type="submit"] {
-    padding: 10px 18px;
-    font-size: 13px;
+  .form-group input {
+    height: 58px;
+    font-size: 1.1rem;
   }
 }

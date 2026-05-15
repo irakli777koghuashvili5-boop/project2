@@ -1,37 +1,61 @@
-<div class="container">
-  <h2>Verify Your Email</h2>
-  <p class="subtitle">
-    We sent a 6-digit code to <b>{{ELmail}}</b>
-  </p>
+<div class="auth-wrapper">
+  <div class="auth-card">
 
-  <form #myform="ngForm" (ngSubmit)="verifyEmail(myform)">
-    
-    <label for="pass">Verification Code</label>
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 12s-4 7-10 7S2 12 2 12s4-7 10-7 10 7 10 7z"/>
+        <path d="M12 9v3l2 2"/>
+      </svg>
+    </div>
 
-    <input
-      id="pass"
-      name="code"
-      ngModel
-      type="password"
-      placeholder="Enter 6-digit code"
-      required
-    />
+    <header class="auth-header">
+      <h1>Verify Email</h1>
+      <p>
+        We sent a 6-digit verification code to
+        <span>{{ ELmail }}</span>
+      </p>
+    </header>
 
-    <button [disabled]="myform.invalid" type="submit">
-      Verify
-    </button>
+    <form class="auth-form" #myform="ngForm" (ngSubmit)="verifyEmail(myform)">
 
-  </form>
+      <div class="form-group">
+        <label for="pass">Verification Code</label>
 
-  <div class="footer">
-    <span>Didn't receive the code?</span>
-    <button  (click)="resendCode()" >Resend Code</button>
-  </div>
+        <input
+          id="pass"
+          name="code"
+          ngModel
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          placeholder="000000"
+          required
+        />
+      </div>
 
-  <div class="back">
-    <button routerLink="/log-in">Back to Login</button>
+      <button
+        [disabled]="myform.invalid"
+        type="submit"
+        class="primary-btn"
+      >
+        Verify Email
+      </button>
+
+    </form>
+
+    <div class="divider">
+      <span>Didn't receive a code?</span>
+    </div>
+
+    <div class="actions">
+      <button class="secondary-btn" (click)="resendCode()">
+        Resend Code
+      </button>
+
+      <button class="back-btn" routerLink="/log-in">
+        Back to Login
+      </button>
+    </div>
+
   </div>
 </div>
-
-
-

@@ -25,7 +25,15 @@
       <div class="form-group password-group">
         <label>Password</label>
         <div class="input-wrapper">
-          <input required ngModel  name="password" [type]="passAndInp == true ? 'text' : 'password'" placeholder="********">
+          <input 
+          required 
+          ngModel  
+          minlength="8"
+          maxlength="16"
+          pattern="^(?=.*[A-Za-z])(?=.*\d).+$"  
+          name="password" 
+          [type]="passAndInp == true ? 'text' : 'password'" 
+          placeholder="********">
           <button  (click)="PassText()" type="button" class="toggle-password">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -33,6 +41,53 @@
           </button>
         </div>
       </div>
+      <div class="errors">
+
+  @if(upForm.controls['password']?.errors?.['required']
+    && upForm.controls['password']?.touched){
+
+    <div class="error-alert">
+      Password is required
+    </div>
+  }
+
+  @if(upForm.controls['password']?.errors?.['minlength']
+    && upForm.controls['password']?.touched){
+
+    <div class="error-alert">
+      Password must be at least 8 characters
+    </div>
+  }
+
+  @if(upForm.controls['password']?.errors?.['maxlength']
+    && upForm.controls['password']?.touched){
+
+    <div class="error-alert">
+      Password is too long
+    </div>
+  }
+
+  @if(upForm.controls['password']?.errors?.['pattern']
+    && upForm.controls['password']?.touched){
+
+    <div class="error-alert">
+      Password contains invalid characters
+    </div>
+  }
+
+  @if(upForm.controls['password']?.invalid
+    && !upForm.controls['password']?.errors?.['required']
+    && !upForm.controls['password']?.errors?.['minlength']
+    && !upForm.controls['password']?.errors?.['maxlength']
+    && !upForm.controls['password']?.errors?.['pattern']
+    && upForm.controls['password']?.touched){
+
+    <div class="error-alert">
+      Invalid password
+    </div>
+  }
+
+</div>
 
       <ul class="requirements">
         <li>At least 8 characters</li>
@@ -48,5 +103,3 @@
     </footer>
   </div>
 </div>
-
-
