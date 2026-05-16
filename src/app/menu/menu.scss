@@ -747,7 +747,7 @@ $primary-orange: #ff7043;
   bottom: 90px;
   right: 16px;
   z-index: 999;
-
+  rotate: 90deg;
   width: 64px ;
   height: 64px;
   border-radius: 50%;
@@ -767,7 +767,7 @@ $primary-orange: #ff7043;
 
   &:hover {
     background-color: #c0392b;
-    transform: translateY(-3px);
+    transform: translateY(3px);
   }
 
   &:active {
