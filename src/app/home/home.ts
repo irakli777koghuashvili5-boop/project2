@@ -36,7 +36,7 @@ export class Home {
 
   @HostListener('window:scroll')
   onScroll() {
-    this.showScrollBtn = window.scrollY > 300;
+    this.showScrollBtn = window.scrollY > 100;
   }
   getProduct(){
     this.loader.showLoader();

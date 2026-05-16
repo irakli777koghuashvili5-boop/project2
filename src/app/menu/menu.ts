@@ -70,7 +70,7 @@ export class Menu {
 
   @HostListener('window:scroll')
   onScroll() {
-    this.showScrollBtn = window.scrollY > 300;
+    this.showScrollBtn = window.scrollY > 100;
   }
 
   options: Options = {
