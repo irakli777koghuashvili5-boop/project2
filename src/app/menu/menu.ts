@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { finalize } from 'rxjs';
 import { Loader } from '../loader/loader';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-menu',
@@ -13,13 +14,39 @@ import { Loader } from '../loader/loader';
   styleUrl: './menu.scss',
 })
 export class Menu {
+  buildParams(page: number): HttpParams {
+    let catNum = this.CategoryArr.find((el) => el.selected)?.id || 0;
+    let params = new HttpParams();
+    if (this.query.trim()) {
+      params = params.set('Query', this.query);
+    }
+    if (this.spiciness > 0) {
+      params = params.set('Spiciness', this.spiciness);
+    }
+    if (this.rating > 0) {
+      params = params.set('Rate', this.rating);
+    }
+    if (this.filters.MinPrice > 0) {
+      params = params.set('MinPrice', this.filters.MinPrice);
+    }
+    if (this.filters.MaxPrice < 50) {
+      params = params.set('MaxPrice', this.filters.MaxPrice);
+    }
+    if (this.isVegie) {
+      params = params.set('vegetarian', true);
+    }
+    if (catNum > 0) {
+      params = params.set('CategoryId', catNum);
+    }
+    return params.set('Take', this.takeNum).set('Page', page);
+  }
   getStars(rating: number): string {
     let validRating = Math.max(0, rating || 0);
     let filledStars = '⭐'.repeat(validRating);
     let emptyStars = '☆'.repeat(validRating === 5 ? 5 - validRating : 6 - validRating);
     return filledStars + emptyStars;
   }
-  takeNum: number = 12
+  takeNum: number = 12;
   query: string = '';
   isVegie: boolean = false;
   spiciness: number = 0;
@@ -28,7 +55,7 @@ export class Menu {
   needLoad: boolean = false;
   itemsPerPage = 12;
   totalPages = 1;
-  hasMore : boolean = false;
+  hasMore: boolean = false;
 
   filters = {
     MinPrice: 0,
@@ -65,15 +92,16 @@ export class Menu {
   ngOnInit() {
     this.loadPage(1);
     this.loadCategory();
-    // this.TestingLoad();
   }
 
   loadPage(page: number) {
     this.needLoad = true;
     this.loader.showLoader();
 
+    let params = this.buildParams(page);
+
     this.api
-      .getAll(`/api/products?Take=${this.takeNum}&Page=${page}`)
+      .getAll('/api/products/filter', params)
       .pipe(
         finalize(() => {
           this.needLoad = false;
@@ -84,76 +112,21 @@ export class Menu {
         next: (res: any) => {
           this.CardInside = res.data.products || [];
           this.currentPage = page;
-          this.hasMore = res.data.hasMore
+          this.hasMore = res.data.hasMore;
+
           this.cdr.detectChanges();
-          console.log(this.hasMore);
-          
         },
         error: (err) => {
           console.error(err);
         },
       });
   }
-
   onFilterChange() {
-    this.needLoad = true;
-    this.loader.showLoader();
-    let catNum = this.CategoryArr.filter((el) => el.selected === true).map((el) => el.id)[0] || 0;
-    if (catNum <= this.CategoryArr.length && catNum > 0) {
-      this.api
-        .getAll(
-          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&CategoryId=${catNum}&Take=${this.takeNum}&Page=${this.currentPage}&vegetarian=${this.isVegie}`,
-        )
-        .pipe(
-          finalize(() => {
-            this.needLoad = false;
-            this.loader.hideLoader();
-          }),
-        )
-        .subscribe({
-          next: (res: any) => {
-            this.CardInside = res.data.products || [];
-            this.hasMore = res.data.hasMore;
-            this.cdr.detectChanges();
-            console.log(this.hasMore);
-          },
-          error: (err) => {
-            console.error(err);
-
-            this.cdr.detectChanges();
-          },
-        });
-    } else {
-      this.api
-        .getAll(
-          `/api/products/filter?Query=${this.query}&Spiciness=${this.spiciness}&Rate=${this.rating}&MinPrice=${this.filters.MinPrice}&MaxPrice=${this.filters.MaxPrice}&Take=${this.takeNum}&Page=${this.currentPage}&vegetarian=${this.isVegie}`,
-        )
-        .pipe(
-          finalize(() => {
-            this.loader.hideLoader();
-          }),
-        )
-        .subscribe({
-          next: (res: any) => {
-            this.CardInside = res.data.products || [];
-            this.hasMore = res.data.hasMore;
-            this.cdr.detectChanges();
-            console.log(this.hasMore);
-          },
-          error: (err) => {
-            console.error(err);
-
-            this.cdr.detectChanges();
-          },
-        });
-    }
+    this.loadPage(1);
   }
   onNext() {
-    // if (this.currentPage < this.ApplyLimitComponent) {
-
-    // }
-    if(this.hasMore){
-    this.loadPage(this.currentPage + 1);
+    if (this.hasMore) {
+      this.loadPage(this.currentPage + 1);
     }
   }
   onPrevious() {

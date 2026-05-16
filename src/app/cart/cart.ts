@@ -22,9 +22,9 @@ export class Cart {
   }
   cartData: any = {};
   textChange: boolean = false;
+  Items: number = 0
   getData() {
     this.loader.showLoader();
-
     this.api.getAll(`/api/cart`)
     .pipe(
       finalize(() => {
@@ -39,6 +39,8 @@ export class Cart {
         }
         console.log(resp.data);
         this.cartData = resp.data;
+        this.Items = resp.data.totalItems
+        console.log(this.Items);
         this.cdr.detectChanges();
       },
       error: (err) => {
