@@ -744,17 +744,17 @@ $primary-orange: #ff7043;
 
 .scroll-top-btn {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: 90px;
+  right: 16px;
   z-index: 999;
 
-  width: 48px;
-  height: 48px;
+  width: 64px ;
+  height: 64px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
 
-  background-color: #e74c3c; // your brand color
+  background-color:#ff6b00; // your brand color
   color: white;
   font-size: 18px;
 
@@ -933,15 +933,6 @@ body {
   transform: translateY(-2px) !important;
 }
 
-.scroll-top-btn {
-  width: 56px !important;
-  height: 56px !important;
-
-  backdrop-filter: blur(10px) !important;
-
-  box-shadow:
-    0 12px 24px rgba(0,0,0,0.18) !important;
-}
 
 .loaderBody {
   position: absolute !important;

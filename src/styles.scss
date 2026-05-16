@@ -6,6 +6,7 @@
     font-family: 'Times New Roman', Times, serif !important;
 }
 
+
 /* Light Mode (Default) */
 :root {
   --bg-primary: #ffffff;
@@ -260,4 +261,185 @@
 
 
 
+:root {
+      /* 1. Base Palette Redefinitions (Swapping to Orange/White Theme) */
+      --chat--color--primary: #ff6b00;                  /* Main Vibrant Orange */
+      --chat--color--primary-shade-50: #e56000;         /* Darker Hover Orange */
+      --chat--color--primary--shade-100: #cc5500;       /* Active Deep Orange */
+      --chat--color--secondary: #ff8c00;                /* Secondary Light Orange */
+      --chat--color-secondary-shade-50: #e07b00;
+      --chat--color-white: #ffffff;
+      --chat--color-light: rgba(255, 255, 255, 0.85);   /* Frosted White Background */
+      --chat--color-light-shade-50: rgba(255, 107, 0, 0.25); /* Orange-tinted glass borders */
+      --chat--color-light-shade-100: #cbd5e1;
+      --chat--color-medium: #94a3b8;
+      --chat--color-dark: #111827;                      /* Slate Black accents */
+      --chat--color-disabled: #cbd5e1;
+      --chat--color-typing: #ff6b00;
 
+      /* 2. Custom Layout & Size Adjustments */
+      --chat--border-radius: 16px;                      /* Smooth, premium rounding */
+      --chat--window--width: 380px;
+      --chat--window--height: 580px;
+      --chat--window--border-radius: 24px;
+      --chat--window--border: 1px solid var(--chat--color-light-shade-50);
+      --chat--transition-duration: 0.3s;
+
+      /* 3. Header Custom Colors */
+      --chat--header--background: linear-gradient(135deg, #ff6b00, #ff8c00);
+      --chat--header--color: var(--chat--color-white);
+
+      /* 4. Chat Message Overrides */
+      --chat--message--bot--background: var(--chat--color-white);
+      --chat--message--bot--color: var(--chat--color-dark);
+      --chat--message--user--background: linear-gradient(135deg, #ff6b00, #ff8c00);
+      --chat--message--user--color: #ff6b00;
+
+   
+      --chat--toggle--background: linear-gradient(135deg, #ff8c00, #ff5000);
+      --chat--toggle--hover--background: linear-gradient(135deg, #ff6b00, #e55000);
+    }
+
+    .chat-message-from-user{
+      border:#e55000 !important ;
+      background-color:#e55000 ;
+    }
+    .chat-button {
+      border: 2px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 8px 24px rgba(255, 80, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.3) !important;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+
+    .chat-button:hover {
+      transform: scale(1.12) translateY(-4px) !important;
+      box-shadow: 0 12px 28px rgba(255, 80, 0, 0.45), 0 0 0 6px rgba(255, 107, 0, 0.15) !important;
+    }
+
+    /* Chat Windows Container Wrapper - Sleek Premium Frost-Glass */
+    .chat-wrapper {
+      backdrop-filter: blur(20px) saturate(190%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 107, 0, 0.1) !important;
+      animation: chatFlyIn 0.45s cubic-bezier(0.23, 1, 0.32, 1) both !important;
+    }
+
+    /* Message Bubbles - Dynamic Entrance Scale Effect */
+    .chat-message-content {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+      animation: bubblePop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15) both !important;
+    }
+
+    /* Distinct Left Accent Bar for Bot / AI Responses */
+    .chat-message.bot .chat-message-content {
+      border-left: 3px solid #ff6b00 !important;
+      border-top-left-radius: 4px !important;
+    }
+
+    .chat-message-from-user .chat-message-content {
+      box-shadow: 0 6px 14px rgba(255, 107, 0, 0.2) !important;
+      border-top-right-radius: 4px !important;
+    }
+
+    /* Input Box Control Layout Updates */
+    .chat-input-container {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-top: 1px solid rgba(255, 107, 0, 0.15) !important;
+      padding: 12px 16px !important;
+    }
+
+    .chat-input {
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 24px !important;
+      padding: 12px 16px !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Active Orange Glow Ring on Input Focus */
+    .chat-input:focus {
+      border-color: #ff6b00 !important;
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2) !important;
+      background: #ffffff !important;
+    }
+
+    /* Micro-interactions for the Send Icon Button */
+    .chat-send-button {
+      background: #ff6b00 !important;
+      color: #ffffff !important;
+      border-radius: 50% !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .chat-send-button:hover {
+      background: #e56000 !important;
+      transform: scale(1.12) rotate(-5deg) !important;
+    }
+
+    /* Keyframes for Fluid Elastic Animation States */
+    @keyframes chatFlyIn {
+      0% { opacity: 0; transform: translateY(40px) scale(0.92); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes bubblePop {
+      0% { transform: scale(0.88) translateY(8px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    :root {
+      /* Existing colors ... */
+      --chat--color--primary: #ff6b00;
+      --chat--color--secondary: #ff8c00;
+      --chat--color-white: #ffffff;
+      --chat--color-dark: #111827;
+
+      /* Overriding Font Rules Globally */
+      --chat--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      --chat--message--font-size: 0.92rem !important;
+      --chat--message-line-height: 1.55 !important;
+      --chat--message--padding: 12px 16px !important;
+    }
+
+    /* Target the text inside the bubbles explicitly */
+    .chat-message-content {
+      font-family: var(--chat--font-family);
+      font-size: var(--chat--message--font-size);
+      line-height: var(--chat--message-line-height);
+      letter-spacing: -0.01em !important; /* Premium micro-tracking */
+    }
+
+    /* Human / User Text Adjustments (Crisp White on Orange) */
+    .chat-message.user .n8n-chat-message-content {
+      color: #ffffff !important;
+      font-weight: 500 !important;
+      text-shadow: 0 1px 2px rgba(180, 50, 0, 0.2) !important; /* Keeps text legible over orange background */
+    }
+
+    /* Bot / AI Text Adjustments (Clean Slate Black on White) */
+    .chat-message.bot .n8n-chat-message-content {
+      color: #1f2937 !important; /* Soft dark gray instead of blinding pure black */
+      font-weight: 400 !important;
+    }
+
+    /* Style the input text field typing area */
+    .chat-input {
+      font-family: var(--chat--font-family) !important;
+      font-size: 0.92rem !important;
+      color: #111827 !important;
+    }
+    
+    .chat-input::placeholder {
+      color: #94a3b8 !important;
+      font-weight: 400;
+    }
+    /* FORCE USER BUBBLE TO ORANGE WITH WHITE TEXT */
+.chat-message.user .chat-message-content,
+.chat-wrapper .chat-message-from-user .chat-message-content {
+  background: linear-gradient(135deg, #ff6b00, #ff8c00) !important;
+  color: #ffffff !important;
+}
+
+/* FORCE BOT BUBBLE TO WHITE WITH DARK TEXT */
+.chat-message.bot .chat-message-content,
+.chat-wrapper .chat-message.bot .chat-message-content {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
