@@ -42,7 +42,7 @@ export class Home {
     this.loader.showLoader();
 
      this.api
-       .getAll(`/api/products/filter?take=6&page=1&maxPrice=500&minPrice=0&query=&rate=0`)
+       .getAll(`/api/products/filter?take=6&page=1`)
        .pipe(
          finalize(() => {
            this.loader.hideLoader();
@@ -76,6 +76,7 @@ export class Home {
       .subscribe({
         next: (res: any) => {
           this.alert.showAlert('Product added to cart');
+          this.api.refreshCartCount();
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

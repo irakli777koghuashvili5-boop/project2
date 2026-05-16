@@ -173,6 +173,7 @@ export class Menu {
       .subscribe({
         next: (res: any) => {
           this.alert.showAlert('Product added to cart');
+          this.api.refreshCartCount();
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

@@ -106,6 +106,7 @@ export class Details {
       .subscribe({
         next: (res: any) => {
           this.alert.showAlert(`${this.qty} ${this.products.name} added to cart`);
+          this.api.refreshCartCount();
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },
@@ -125,6 +126,7 @@ export class Details {
       .subscribe({
         next: (res: any) => {
           this.alert.showAlert('Product added to cart');
+          this.api.refreshCartCount();
           this.cdr.detectChanges();
           this.router.navigate(['/cart']);
         },

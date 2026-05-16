@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component, ElementRef, HostListener, signal } from '
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Services } from '../service/services';
 import { Alert } from '../alert/alert';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -13,21 +14,31 @@ export class Header {
   isMenuOpen: boolean = false;
   isProfileMenuOpen: boolean = false;
   userName: string = '';
+
   constructor(
     private el: ElementRef,
     private router: Router,
-    private api: Services,
+    public api: Services,
     private cdr: ChangeDetectorRef,
     private alert: Services,
-    private refreshHeader: Services,
+    private refreshName: Services,
   ) {}
 
   ngOnInit() {
-
+    this.loadCart();
     this.getUser();
   }
 
-
+  loadCart() {
+    this.api.getAll('/api/cart').subscribe({
+      next: (resp: any) => {
+        this.api.setCartItem(resp.data.totalItems);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -42,7 +53,7 @@ export class Header {
       next: (resp: any) => {
         console.log(resp);
         this.userName = resp.data.firstName;
-        this.refreshHeader.setUser(resp.data);
+        this.refreshName.setUser(resp.data);
         this.cdr.detectChanges();
       },
       error: (err) => {

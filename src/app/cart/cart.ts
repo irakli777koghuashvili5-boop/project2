@@ -65,6 +65,8 @@ export class Cart {
     this.api.deleteAll(`/api/cart/remove-from-cart/${id}`).subscribe({
       next: (res) => {
         console.log(res);
+        this.api.refreshCartCount();
+        this.alert.showAlert('Product removed from cart');
         this.getData();
         this.cdr.detectChanges();
       },
@@ -99,6 +101,7 @@ export class Cart {
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.api.refreshCartCount();
           this.alert.showAlert("Order Placed");
           this.getData();
           this.cdr.detectChanges();

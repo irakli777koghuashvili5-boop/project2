@@ -528,3 +528,44 @@ $header-height: 78px;
     font-size: 0.9rem;
   }
 }
+
+.cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* cleaner badge */
+.cart-badge {
+  position: absolute;
+
+  top: -4px;
+  right: -4px;
+
+  min-width: 28px;
+  height: 18px;
+
+  padding: 0 5px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #ff7043, #ff8a65);
+  color: white;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+
+  border: 2px solid white;
+
+  box-shadow: 0 6px 14px rgba(255, 112, 67, 0.35);
+
+  transform: scale(1);
+  animation: popIn 0.2s ease;
+}

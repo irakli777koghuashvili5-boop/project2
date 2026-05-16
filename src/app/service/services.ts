@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { ChangeDetectorRef, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
@@ -94,4 +94,22 @@ export class Services {
   clearUser() {
     this.user.set(null);
   }
+
+  cartNum = signal<number>(0);
+
+  setCartItem(count: number) {
+    this.cartNum.set(count);
+  }
+
+  refreshCartCount() {
+    this.getAll('/api/cart').subscribe({
+      next: (resp: any) => {
+        this.cartNum.set(resp.data.totalItems);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
 }
