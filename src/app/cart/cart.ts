@@ -141,7 +141,6 @@ export class Cart {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.getData();
           this.cdr.detectChanges();
         },
         error: (err) => {
