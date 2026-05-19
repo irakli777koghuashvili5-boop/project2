@@ -12,6 +12,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class Profile {
   errorMessages: string[] = [];
+  passorm: any;
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
@@ -89,45 +90,35 @@ export class Profile {
     });
   }
   passChange(form: NgForm) {
+    if (form.invalid) return;
+
     if (form.value.newPassword !== form.value.confirmPassword) {
-      this.errorMessages = ['Passwords do not match'];
       return;
     }
-    console.log(form.value);
 
-    this.errorMessages = [];
-
-    this.api.putAll(`/api/users/change-password`, form.value).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-
-      error: (err) => {
-        if (err.status === 400) {
-          const errors = err.error?.errors;
-
-          if (errors) {
-            this.errorMessages = [];
-            Object.keys(errors).forEach((key) => {
-              errors[key].forEach((msg: string) => {
-                this.errorMessages.push(msg);
-              });
+    this.api
+      .putAll(`/api/users/change-password`, {
+        oldPassword: form.value.oldPassword,
+        newPassword: form.value.newPassword,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.alert.showAlert('Password changed successfully!');
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          if (err.status === 401) {
+            this.api.refreshToken().subscribe({
+              next: (res: any) => {
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('refreshToken', res.data.refreshToken);
+                this.passChange(form);
+              },
             });
           }
-        }
-        else if (err.status === 401) {
-          this.api.refreshToken().subscribe({
-            next: (res: any) => {
-              localStorage.setItem('accessToken', res.data.accessToken);
-              localStorage.setItem('refreshToken', res.data.refreshToken);
-              this.cdr.detectChanges();
-              this.passChange(form);
-            },
-            error: (err) => console.log(err),
-          });
-        }
-      },
-    });
+        },
+      });
   }
   deleteData() {
     this.api.deleteAll(`/api/users/delete`).subscribe({

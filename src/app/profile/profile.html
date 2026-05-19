@@ -69,41 +69,100 @@
     <h2>Change Password</h2>
     <p>Update your password</p>
   </header>
-  @if(errorMessages.length){
-<div class="error-box" >
-  <ul>
-    @for (err of errorMessages; track $index) {
-    <li >
-      {{ err }}
-    </li>
-  }
-  </ul>
-</div>
-}
+<form class="profile-form" #passform="ngForm" (ngSubmit)="passChange(passform)">
 
-  <form class="profile-form" #passform="ngForm" (ngSubmit)="passChange(passform)" >
-    <div class="form-group">
-      <label for="currentPassword">Current Password</label>
-      <input type="password"  ngModel id="currentPassword" name="oldPassword" placeholder="Enter current password">
-    </div>
-    <div class="form-group">
-      <label for="newPassword">New Password</label>
-      <input type="password"  ngModel id="newPassword" name="newPassword" placeholder="Enter new password">
-    </div>
-    <div class="form-group">
-      <label for="confirmPassword">Confirm New Password</label>
-      <input type="password" ngModel id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
-    </div>
+  <div class="form-group">
+    <label for="currentPassword">Current Password</label>
+    <input
+      type="password"
+      ngModel
+      id="currentPassword"
+      name="oldPassword"
+      placeholder="Enter current password"
+      #oldPassword="ngModel"
+      required
+    />
 
-    <ul class="password-hints">
-      <li>At least 8 characters</li>
-      <li>Uppercase and lowercase letters</li>
-      <li>At least one number</li>
-    </ul>
+    @if (oldPassword.touched && oldPassword.invalid) {
+      <div class="error-box">
+        @if (oldPassword.errors?.['required']) {
+          <small>Current password is required</small>
+        }
+      </div>
+    }
+  </div>
 
+  <div class="form-group">
+    <label for="newPassword">New Password</label>
+    <input
+      type="password"
+      ngModel
+      id="newPassword"
+      name="newPassword"
+      #newPassword="ngModel"
+      placeholder="Enter new password"
+      required
+      minlength="8"
+      maxlength="32"
+      pattern="^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9!@.?/]{8,32}$"
+    />
 
-    <button type="submit" class="save-changes-btn">Update Password</button>
-  </form>
+    @if (newPassword.touched && newPassword.invalid) {
+      <div class="error-box">
+
+        @if (newPassword.errors?.['required']) {
+          <small>Password is required</small>
+        }
+
+        @if (newPassword.errors?.['minlength']) {
+          <small>Minimum 8 characters required</small>
+        }
+
+        @if (newPassword.errors?.['maxlength']) {
+          <small>Maximum 32 characters allowed</small>
+        }
+
+        @if (newPassword.errors?.['pattern']) {
+          <small>
+            Must include lowercase + number, only ! @ . ? / allowed
+          </small>
+        }
+
+      </div>
+    }
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword">Confirm New Password</label>
+    <input
+      type="password"
+      ngModel
+      placeholder="Confirm new password"
+      id="confirmPassword"
+      name="confirmPassword"
+      #confirmPassword="ngModel"
+      required
+      minlength="8"
+      maxlength="32"
+    />
+
+    @if (
+      confirmPassword.touched &&
+      confirmPassword.value !== newPassword.value
+    ) {
+      <div class="error-box">
+        <small>Passwords do not match</small>
+      </div>
+    }
+  </div>
+  <button
+    type="submit"
+    [disabled]="passform.invalid || confirmPassword.value !== newPassword.value"
+    class="save-changes-btn"
+  >
+    Update Password
+  </button>
+
+</form>
 </div>
     } 
     @else if (activeSection === 'account') {

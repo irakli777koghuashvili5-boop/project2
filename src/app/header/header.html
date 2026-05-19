@@ -57,7 +57,7 @@
             <div class="profile-dropdown">
               <div class="dropdown-header">
                 Logged in as
-                <span>{{ $any(this).api.user()?.firstName || 'User' }}</span>
+                <span>{{ api.user()?.firstName || 'User' }}</span>
               </div>
 
               <a routerLink="/profile" class="dropdown-item" (click)="closeProfileMenu()">

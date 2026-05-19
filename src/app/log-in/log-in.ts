@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { Services } from '../service/services';
-import { Alert } from '../alert/alert';
 
 @Component({
   selector: 'app-log-in',
@@ -30,15 +29,29 @@ export class LogIn {
       })
       .subscribe({
         next: (resp: any) => {
-          console.log(resp);
+          this.api.setUser(resp.data);
           this.alert.showAlert('Logged in successfully');
           localStorage.setItem('accessToken', resp.data.accessToken);
           localStorage.setItem('refreshToken', resp.data.refreshToken);
-          this.api.setUser(resp.data.user);
+          console.log(resp);
           setTimeout(() => {
             this.router.navigateByUrl('/home');
           }, 300);
           this.cdr.detectChanges();
+
+          if(resp){
+            this.api.getAll(`/api/users/me`).subscribe({
+              next: (resp: any) => {
+                console.log(resp);
+                this.api.setUser(resp.data);
+                this.cdr.detectChanges();
+              },
+              error: (err) => {
+                console.log(err);
+              }
+            })
+
+          }
         },
         error: (err) => {
             if (err.status === 400) {
