@@ -11,11 +11,12 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './profile.scss',
 })
 export class Profile {
+  errorMessages: string[] = [];
   constructor(
     private api: Services,
     private cdr: ChangeDetectorRef,
     private alert: Services,
-    private refreshHeader : Services
+    private refreshHeader: Services,
   ) {}
   activeSection: 'personal' | 'password' | 'account' = 'personal';
 
@@ -35,7 +36,7 @@ export class Profile {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        if(err.status === 401){
+        if (err.status === 401) {
           this.api.refreshToken().subscribe({
             next: (res: any) => {
               console.log(res);
@@ -46,20 +47,17 @@ export class Profile {
             },
             error: (err) => {
               console.log(err);
-            }
-          })
+            },
+          });
         }
       },
     });
   }
   saveChanges(form: NgForm) {
-    this.alert.showAlert('Changes saved successfully!');
-    this.cdr.detectChanges();
-
     console.log(form.value);
-    this.api.putAll(`/api/users/edit`, form.value)
-    .subscribe({
+    this.api.putAll(`/api/users/edit`, form.value).subscribe({
       next: (resp: any) => {
+        this.alert.showAlert('Changes saved successfully!');
         console.log(resp);
         this.api.getAll(`/api/users/me`).subscribe({
           next: (userResp: any) => {
@@ -68,12 +66,12 @@ export class Profile {
           },
           error: (err) => {
             console.log(err);
-          }
+          },
         });
         this.cdr.detectChanges();
       },
       error: (err) => {
-          if(err.status === 401){
+        if (err.status === 401) {
           this.api.refreshToken().subscribe({
             next: (res: any) => {
               console.log(res);
@@ -84,44 +82,59 @@ export class Profile {
             },
             error: (err) => {
               console.log(err);
-            }
-          })
+            },
+          });
         }
       },
-    })
+    });
   }
-  passChange(form: NgForm){
+  passChange(form: NgForm) {
+    if (form.value.newPassword !== form.value.confirmPassword) {
+      this.errorMessages = ['Passwords do not match'];
+      return;
+    }
     console.log(form.value);
-    this.api.putAll(`/api/users/change-password`, form.value)
-    .subscribe({
-      next: (res=> {
+
+    this.errorMessages = [];
+
+    this.api.putAll(`/api/users/change-password`, form.value).subscribe({
+      next: (res) => {
         console.log(res);
-      }),
+      },
+
       error: (err) => {
-        if (err.status === 401) {
+        if (err.status === 400) {
+          const errors = err.error?.errors;
+
+          if (errors) {
+            this.errorMessages = [];
+            Object.keys(errors).forEach((key) => {
+              errors[key].forEach((msg: string) => {
+                this.errorMessages.push(msg);
+              });
+            });
+          }
+        }
+        else if (err.status === 401) {
           this.api.refreshToken().subscribe({
             next: (res: any) => {
-              console.log(res);
               localStorage.setItem('accessToken', res.data.accessToken);
               localStorage.setItem('refreshToken', res.data.refreshToken);
               this.cdr.detectChanges();
               this.passChange(form);
             },
-            error: (err) => {
-              console.log(err);
-            },
+            error: (err) => console.log(err),
           });
         }
       },
-    })
-    
+    });
   }
-  deleteData(){
+  deleteData() {
     this.api.deleteAll(`/api/users/delete`).subscribe({
-      next: (res=> {
+      next: (res) => {
         console.log(res);
-      }),
-      error: (err => {
+      },
+      error: (err) => {
         if (err.status === 401) {
           this.api.refreshToken().subscribe({
             next: (res: any) => {
@@ -136,7 +149,7 @@ export class Profile {
             },
           });
         }
-      })
-    })
+      },
+    });
   }
 }

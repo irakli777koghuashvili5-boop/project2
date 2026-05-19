@@ -21,7 +21,6 @@ export class LogIn {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private alert: Services,
-    private ngZone : NgZone
   ) {}
 
   SignIn(form: any) {
@@ -35,7 +34,7 @@ export class LogIn {
           this.alert.showAlert('Logged in successfully');
           localStorage.setItem('accessToken', resp.data.accessToken);
           localStorage.setItem('refreshToken', resp.data.refreshToken);
-          this.cdr.detectChanges();
+          this.api.setUser(resp.data.user);
           setTimeout(() => {
             this.router.navigateByUrl('/home');
           }, 300);

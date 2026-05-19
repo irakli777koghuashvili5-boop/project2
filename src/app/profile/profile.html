@@ -69,6 +69,17 @@
     <h2>Change Password</h2>
     <p>Update your password</p>
   </header>
+  @if(errorMessages.length){
+<div class="error-box" >
+  <ul>
+    @for (err of errorMessages; track $index) {
+    <li >
+      {{ err }}
+    </li>
+  }
+  </ul>
+</div>
+}
 
   <form class="profile-form" #passform="ngForm" (ngSubmit)="passChange(passform)" >
     <div class="form-group">
@@ -89,6 +100,7 @@
       <li>Uppercase and lowercase letters</li>
       <li>At least one number</li>
     </ul>
+
 
     <button type="submit" class="save-changes-btn">Update Password</button>
   </form>
